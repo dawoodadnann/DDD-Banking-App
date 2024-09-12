@@ -52,6 +52,9 @@ const Login = () => {
                     <Link to="/signup">
                         <button className="signup-btn">Sign up</button>
                     </Link>
+                    <Link to="/billing">
+                        <button className="signup-btn">Pay Bills</button>
+                    </Link>
                 </div>
             </div>
             <div className="login-box">

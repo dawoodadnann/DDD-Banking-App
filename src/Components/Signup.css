@@ -37,6 +37,8 @@ body, html {
 
 .logo {
     height: 50px;
+    mix-blend-mode: multiply;
+
 }
 
 .nav-buttons button {

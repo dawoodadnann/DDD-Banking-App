@@ -1,0 +1,82 @@
+.box{
+    background-color: #f0f4f8;
+    padding :50px;
+    margin: 50px;
+    height:200px;
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 5px solid black;
+    border-radius: 25%;
+    flex-direction: column;
+}
+ 
+.box:hover {
+    transform: scale(1.2); /* Makes the div 20% bigger on hover */
+    background-color: white;
+}
+.logo{
+    height:100px;
+    width: 100px;
+}
+.billing_page{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr ;
+}
+.b1{
+    grid-column:1/2 ;
+    grid-row: 1/2;
+}
+.b2{
+    grid-column:2/3 ;
+    grid-row: 2/3;
+}
+.b3{
+    grid-column:3/4 ;
+    grid-row: 3/4;
+}
+
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .popup-inner {
+    background-color: blanchedalmond;
+    padding: 20px;
+    border-radius: 10px;
+    width: 50%;
+    height: 75%;
+    text-align: center;
+  }
+  
+  select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+  
+  button {
+    padding: 10px 20px;
+    margin: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
