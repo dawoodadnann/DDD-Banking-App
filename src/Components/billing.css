@@ -1,5 +1,6 @@
 .box{
     background-color: #f0f4f8;
+    text-align: center;
     padding :50px;
     margin: 50px;
     height:200px;
@@ -55,8 +56,8 @@
     background-color: blanchedalmond;
     padding: 20px;
     border-radius: 10px;
-    width: 50%;
-    height: 75%;
+     width: 50%;
+   /* height: 75%; */
     text-align: center;
   }
   
@@ -79,4 +80,4 @@
   button:hover {
     background-color: #0056b3;
   }
-  
+ 
