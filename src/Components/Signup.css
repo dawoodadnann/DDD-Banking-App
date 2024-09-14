@@ -82,7 +82,7 @@ h3 {
     margin-bottom: 1.5rem;
 }
 
-form input {
+/* form input {
     width: 100%;
     padding: 0.75rem;
     margin: 0.5rem 0;
@@ -95,7 +95,7 @@ form input {
 form input:focus {
     outline: none;
     border-color: #007bff;
-}
+} */
 
 .submit-btn {
     width: 100%;
@@ -120,3 +120,42 @@ form input:focus {
     color: red;
     font-size: 0.875rem;
 }
+
+
+/* DYNAMIC INPUT TRANSITION */
+.textbox {
+    width: 100%;
+    padding: 0.75rem;
+    margin: 0.5rem 0;
+    border-radius: 25px; 
+    border: 1px solid #cccccc;
+    font-size: 16px;
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
+
+    
+  
+  }
+  
+  .ilabel {
+    position: absolute;
+    top: 1rem; 
+    left: 1.4rem;
+    cursor: text;
+    font-size: 16px; 
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;    
+    padding: 0 5px;
+  }
+  
+  .textbox:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .textbox:focus + .ilabel,
+  .textbox:not(:placeholder-shown) + .ilabel {
+    top: 0.2rem; 
+    left: 0.8rem; 
+    font-size: 12px;  
+    background-color: rgba(255, 255, 255, 0.7); 
+   
+  }
