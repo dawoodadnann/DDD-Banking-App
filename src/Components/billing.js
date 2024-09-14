@@ -33,19 +33,21 @@ const Billing = () => {
   // Bill companies for different bills
   const billCompanies = {
     Electricity: ["K-Electric", "WAPDA", "Reliance"],
-    Water: ["AquaFina", "Nestle","Dasani"],
+    Water: ["AquaFina", "Nestle", "Dasani"],
     Internet: ["PTCL", "Flash Fiber", "TNC"],
     Telephone: ["PTCL"],
     Tax: ["FBR"],
-    Education: ["FAST NUCES","The Educators","Bahria University"],
-    Government: ["Dam Donation Fund","Palestine Refugees Fund"],
-    CreditCard: ["MasterCard","Visa","Meezan Bank"],
-    Clubs: ["Creek CLub","Dreamworld Golf CLub","Pavilion End CLub"],
+    Education: ["FAST NUCES", "The Educators", "Bahria University"],
+    Government: ["Dam Donation Fund", "Palestine Refugees Fund"],
+    CreditCard: ["MasterCard", "Visa", "Meezan Bank"],
+    Clubs: ["Creek CLub", "Dreamworld Golf CLub", "Pavilion End CLub"],
     E_Challan: ["M-TAG"],
-    Nadra: ["Family Registration Form Fee","Missing CNIC Application Fee","Birth Certificate Issuance Fee"]
-  };
-
-  
+    Nadra: [
+      "Family Registration Form Fee",
+      "Missing CNIC Application Fee",
+      "Birth Certificate Issuance Fee",
+    ],
+  };
 
   const handleBoxClick = (billType) => {
     setSelectedBill(billType); // Set the selected bill type
@@ -119,11 +121,11 @@ const Billing = () => {
           </div>
           <div className="box" onClick={() => handleBoxClick("Gas")}>
             <h1>Gas Bill</h1>
-            <img src={bill_1} className="logo" alt="Gas Bill" />
+            <img src={bill_3} className="logo" alt="Gas Bill" />
           </div>
           <div className="box" onClick={() => handleBoxClick("Water")}>
             <h1>Water Bill</h1>
-            <img src={bill_3} className="logo" alt="Water Bill" />
+            <img src={bill_8} className="logo" alt="Water Bill" />
           </div>
           <div className="box" onClick={() => handleBoxClick("Internet")}>
             <h1>Internet Bill</h1>
@@ -131,11 +133,11 @@ const Billing = () => {
           </div>
           <div className="box" onClick={() => handleBoxClick("Telephone")}>
             <h1>Telephone Bill</h1>
-            <img src={bill_4} className="logo" alt="Telephone Bill" />
+            <img src={bill_12} className="logo" alt="Telephone Bill" />
           </div>
           <div className="box" onClick={() => handleBoxClick("Tax")}>
             <h1>Tax Payment</h1>
-            <img src={bill_5} className="logo" alt="Tax Payment" />
+            <img src={bill_9} className="logo" alt="Tax Payment" />
           </div>
           <div className="box" onClick={() => handleBoxClick("Education")}>
             <h1>Education</h1>
@@ -143,15 +145,15 @@ const Billing = () => {
           </div>
           <div className="box" onClick={() => handleBoxClick("Government")}>
             <h1>Government Fees</h1>
-            <img src={bill_12} className="logo" alt="Government Fees" />
+            <img src={bill_4} className="logo" alt="Government Fees" />
           </div>
           <div className="box" onClick={() => handleBoxClick("CreditCard")}>
             <h1>CreditCard Bill</h1>
-            <img src={bill_8} className="logo" alt="CreditCard Bill" />
+            <img src={bill_1} className="logo" alt="CreditCard Bill" />
           </div>
           <div className="box" onClick={() => handleBoxClick("Clubs")}>
-            <h1>BILL</h1>
-            <img src={bill_9} className="logo" alt="Clubs Membership" />
+            <h1>Clubs Membership</h1>
+            <img src={bill_5} className="logo" alt="Clubs Membership" />
           </div>
           <div className="box" onClick={() => handleBoxClick("E_Challan")}>
             <h1>E Challan</h1>
@@ -182,57 +184,87 @@ const Billing = () => {
                   </option>
                 ))}
               </select>
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="text"
+                  placeholder=" "
+                  value={Id}
+                  onChange={(e) => setId(e.target.value)}
+                  required
+                />
+                <label class="ilabel">ACCOUNT NUM / CUSTOMER NUM</label>
+              </div>
 
-              <input
-                type="text"
-                placeholder="ACCOUNT NUM / CUSTOMER NUM"
-                value={Id}
-                onChange={(e) => setId(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="USERNAME"
-                value={Username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-              />
-              <input
-                type="number"
-                placeholder="Bill Amount"
-                value={Amount}
-                onChange={(e) => setAmount(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Billing Month"
-                value={Month}
-                onChange={(e) => setMonth(e.target.value)}
-              />
-              <input
-                type="text"
-                placeholder="Email (optional)"
-                value={Email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-              />
-              <input
-                type="text"
-                placeholder="Address"
-                value={Address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-              />
-              <input
-                type="checkbox"
-                checked={Check}
-                onChange={(e) => setCheck(e.target.checked)}
-              />
-              <label>
-                I agree to the company policy, and I understand that any
-                vulnerabilities will not be considered as it is a test version.
-              </label>
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="text"
+                  placeholder=" "
+                  value={Username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                />
+                <label class="ilabel">USERNAME</label>
+              </div>
 
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="number"
+                  placeholder=" "
+                  value={Amount}
+                  onChange={(e) => setAmount(e.target.value)}
+                />
+                <label class="ilabel">Bill Amount</label>
+              </div>
+
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="text"
+                  placeholder=" "
+                  value={Month}
+                  onChange={(e) => setMonth(e.target.value)}
+                />
+                <label class="ilabel">Billing Month</label>
+              </div>
+
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="text"
+                  placeholder=" "
+                  value={Email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <label class="ilabel">Email (optional)</label>
+              </div>
+
+              <div class="form">
+                <input
+                  class="textbox"
+                  type="text"
+                  placeholder=" "
+                  value={Address}
+                  onChange={(e) => setAddress(e.target.value)}
+                  required
+                />
+                <label class="ilabel">Address</label>
+              </div>
+
+              <div id="c1">
+                <input
+                  type="checkbox"
+                  checked={Check}
+                  onChange={(e) => setCheck(e.target.checked)}
+                />
+                <label>
+                  I agree to the company policy, and I understand that any
+                  vulnerabilities will not be considered as it is a test
+                  version.
+                </label>
+              </div>
               <button onClick={closePopup}>Close</button>
               <button type="submit" onClick={() => alert("Proceed to payment")}>
                 Preview
@@ -244,19 +276,36 @@ const Billing = () => {
       {isPopup2Visible && (
         <div className="popup">
           <div className="popup-inner">
-          <h2>Preview Your Bill Payment Details</h2>
-            <p><strong>Bill Type:</strong> {SubmittedData.selectedBill}</p>
-            <p><strong>Username:</strong> {SubmittedData.Username}</p>
-            <p><strong>Account/Customer ID:</strong> {SubmittedData.Id}</p>
-            <p><strong>Amount:</strong> {SubmittedData.Amount}</p>
-            <p><strong>Month:</strong> {SubmittedData.Month}</p>
-            <p><strong>Email:</strong> {SubmittedData.Email}</p>
-            <p><strong>Address:</strong> {SubmittedData.Address}</p>
-            <p><strong>Policy Agreement:</strong> {Check ? "Agreed" : "Not Agreed"}</p>
+            <h2>Preview Your Bill Payment Details</h2>
+            <p>
+              <strong>Bill Type:</strong> {SubmittedData.selectedBill}
+            </p>
+            <p>
+              <strong>Username:</strong> {SubmittedData.Username}
+            </p>
+            <p>
+              <strong>Account/Customer ID:</strong> {SubmittedData.Id}
+            </p>
+            <p>
+              <strong>Amount:</strong> {SubmittedData.Amount}
+            </p>
+            <p>
+              <strong>Month:</strong> {SubmittedData.Month}
+            </p>
+            <p>
+              <strong>Email:</strong> {SubmittedData.Email}
+            </p>
+            <p>
+              <strong>Address:</strong> {SubmittedData.Address}
+            </p>
+            <p>
+              <strong>Policy Agreement:</strong>{" "}
+              {Check ? "Agreed" : "Not Agreed"}
+            </p>
             <button onClick={closePopup2}>Close</button>
-              <button type="submit" onClick={() => alert("Proceed to payment")}>
-                Pay Now
-              </button>
+            <button type="submit" onClick={() => alert("Proceed to payment")}>
+              Pay Now
+            </button>
           </div>
         </div>
       )}

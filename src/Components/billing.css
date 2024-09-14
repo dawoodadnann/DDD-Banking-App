@@ -80,4 +80,43 @@
   button:hover {
     background-color: #0056b3;
   }
- 
+  .form{
+    position :relative
+}
+
+#c2{
+  display: grid;
+  grid-template-columns: 0.25fr 0.75fr;
+}
+/* //Dynamic input box animation work */
+.textbox {
+  border: 2px solid white;
+  border-radius: 5px;
+  outline: none;
+  padding: 10px;
+  color: black;
+  font-size: 16px;
+  width: 100%;
+}
+
+.ilabel {
+  position: absolute;
+  top: 1rem; 
+  left: 1.4rem;
+  cursor: text;
+  font-size: 16px; 
+  transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;    
+  padding: 0 5px;
+}
+
+.textbox:focus {
+  border: 2px solid brown;
+}
+
+.textbox:focus + .ilabel,
+.textbox:not(:placeholder-shown) + .ilabel {
+  top: 0.2rem; 
+  left: 0.8rem; 
+  font-size: 12px;  
+  background-color: blanchedalmond;
+}
