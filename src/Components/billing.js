@@ -32,18 +32,18 @@ const Billing = () => {
 
   // Bill companies for different bills
   const billCompanies = {
-    Electricity: ["Company A", "Company B", "Company C"],
-    Water: ["Company D", "Company E"],
-    Internet: ["Company F", "Company G", "Company H"],
-    Telephone: [],
-    Tax: [],
-    Education: [],
-    Government: [],
-    CreditCard: [],
-    Clubs: [],
-    E_Challan: [],
-    Nadra: [],
-  };
+    Electricity: ["K-Electric", "WAPDA", "Reliance"],
+    Water: ["AquaFina", "Nestle","Dasani"],
+    Internet: ["PTCL", "Flash Fiber", "TNC"],
+    Telephone: ["PTCL"],
+    Tax: ["FBR"],
+    Education: ["FAST NUCES","The Educators","Bahria University"],
+    Government: ["Dam Donation Fund","Palestine Refugees Fund"],
+    CreditCard: ["MasterCard","Visa","Meezan Bank"],
+    Clubs: ["Creek CLub","Dreamworld Golf CLub","Pavilion End CLub"],
+    E_Challan: ["M-TAG"],
+    Nadra: ["Family Registration Form Fee","Missing CNIC Application Fee","Birth Certificate Issuance Fee"]
+  };
 
   
 
