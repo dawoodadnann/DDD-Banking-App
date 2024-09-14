@@ -3,13 +3,21 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
+    "@fontsource/open-sans": "^4.5.0",
+    "@fontsource/raleway": "^4.5.0",
+    "@fontsource/roboto": "^4.5.0",
+    "@react-icons/all-files": "^4.1.0",
+    "@types/react": "^17.0.80",
+    "@types/react-dom": "^18.3.0",
+    "classnames": "2.3.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-github-btn": "^1.2.1",
+    "react-icons": "^4.2.0",
     "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
+    "recharts": "^2.12.7",
+    "typescript": "^5.6.2",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -35,5 +43,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.11"
   }
 }

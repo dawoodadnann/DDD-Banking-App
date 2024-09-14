@@ -8,7 +8,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
 
-    // Function to  send data to the backend
+    // Function to send data to the backend
     const handleSubmit = async (e) => {
         e.preventDefault();
 
@@ -54,6 +54,9 @@ const Login = () => {
                     </Link>
                     <Link to="/billing">
                         <button className="signup-btn">Pay Bills</button>
+                    </Link>
+                    <Link to="/dashboard">
+                        <button className="signup-btn">Dashboard</button>
                     </Link>
                 </div>
             </div>

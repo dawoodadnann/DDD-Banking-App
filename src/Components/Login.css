@@ -33,7 +33,13 @@ body, html {
     position: fixed;
     top: 0;
     left: 0;
+    background-color: transparent; /* Transparent background */
+    background: none; /* Ensure no background color is inherited */
+    z-index: 1000; /* Ensure it stays above other elements */
+    border: none; /* Remove any border that might show up */
 }
+
+
 
 .logo {
     height: 50px;
