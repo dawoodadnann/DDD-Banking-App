@@ -17,45 +17,45 @@ export const RecentTransactions = () => {
 
         <tbody>
           <TableRow
-            cusId="#48149"
-            sku="Pro 1 Month"
-            date="Aug 2nd"
-            price="$9.75"
+            transactionId="#TXN48149"
+            description="ATM Withdrawal"
+            date="Sept 5th"
+            amount="$300"
             order={1}
           />
           <TableRow
-            cusId="#1942s"
-            sku="Pro 3 Month"
-            date="Aug 2nd"
-            price="$21.25"
+            transactionId="#TXN1942s"
+            description="Direct Deposit"
+            date="Sept 4th"
+            amount="$1500"
             order={2}
           />
           <TableRow
-            cusId="#4192"
-            sku="Pro 1 Year"
-            date="Aug 1st"
-            price="$94.75"
+            transactionId="#TXN4192"
+            description="Utility Bill Payment"
+            date="Sept 3rd"
+            amount="$120"
             order={3}
           />
           <TableRow
-            cusId="#99481"
-            sku="Pro 1 Month"
-            date="Aug 1st"
-            price="$9.44"
+            transactionId="#TXN99481"
+            description="Grocery Purchase"
+            date="Sept 2nd"
+            amount="$94.75"
             order={4}
           />
           <TableRow
-            cusId="#1304"
-            sku="Pro 1 Month"
-            date="Aug 1st"
-            price="$9.23"
+            transactionId="#TXN1304"
+            description="Money Transfer"
+            date="Sept 1st"
+            amount="$500"
             order={5}
           />
           <TableRow
-            cusId="#1304"
-            sku="Pro 3 Month"
-            date="Jul 31st"
-            price="$22.02"
+            transactionId="#TXN1305"
+            description="ATM Deposit"
+            date="Aug 31st"
+            amount="$700"
             order={6}
           />
         </tbody>
@@ -68,10 +68,10 @@ const TableHead = () => {
   return (
     <thead>
       <tr className="text-sm font-normal text-stone-500">
-        <th className="text-start p-1.5">Customer ID</th>
-        <th className="text-start p-1.5">SKU</th>
+        <th className="text-start p-1.5">Transaction ID</th>
+        <th className="text-start p-1.5">Description</th>
         <th className="text-start p-1.5">Date</th>
-        <th className="text-start p-1.5">Price</th>
+        <th className="text-start p-1.5">Amount</th>
         <th className="w-8"></th>
       </tr>
     </thead>
@@ -79,16 +79,16 @@ const TableHead = () => {
 };
 
 const TableRow = ({
-  cusId,
-  sku,
+  transactionId,
+  description,
   date,
-  price,
+  amount,
   order,
 }: {
-  cusId: string;
-  sku: string;
+  transactionId: string;
+  description: string;
   date: string;
-  price: string;
+  amount: string;
   order: number;
 }) => {
   return (
@@ -98,12 +98,12 @@ const TableRow = ({
           href="#"
           className="text-violet-600 underline flex items-center gap-1"
         >
-          {cusId} <FiArrowUpRight />
+          {transactionId} <FiArrowUpRight />
         </a>
       </td>
-      <td className="p-1.5">{sku}</td>
+      <td className="p-1.5">{description}</td>
       <td className="p-1.5">{date}</td>
-      <td className="p-1.5">{price}</td>
+      <td className="p-1.5">{amount}</td>
       <td className="w-8">
         <button className="hover:bg-stone-200 transition-colors grid place-content-center rounded text-sm size-8">
           <FiMoreHorizontal />

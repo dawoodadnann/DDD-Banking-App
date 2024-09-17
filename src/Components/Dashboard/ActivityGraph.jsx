@@ -12,39 +12,39 @@ import {
 
 const data = [
   {
-    name: "Jan",
-    Returning: 275,
-    New: 41,
+    name: "Week 1",
+    Deposits: 2750,
+    Withdrawals: 1250,
   },
   {
-    name: "Feb",
-    Returning: 620,
-    New: 96,
+    name: "Week 2",
+    Deposits: 3620,
+    Withdrawals: 2096,
   },
   {
-    name: "Mar",
-    Returning: 202,
-    New: 192,
+    name: "Week 3",
+    Deposits: 2900,
+    Withdrawals: 3192,
   },
   {
-    name: "Apr",
-    Returning: 500,
-    New: 50,
+    name: "Week 4",
+    Deposits: 4500,
+    Withdrawals: 2550,
   },
   {
-    name: "May",
-    Returning: 355,
-    New: 400,
+    name: "Week 5",
+    Deposits: 5050,
+    Withdrawals: 4200,
   },
   {
-    name: "Jun",
-    Returning: 875,
-    New: 200,
+    name: "Week 6",
+    Deposits: 6875,
+    Withdrawals: 3200,
   },
   {
-    name: "Jul",
-    Returning: 700,
-    New: 205,
+    name: "Week 7",
+    Deposits: 5700,
+    Withdrawals: 4205,
   },
 ];
 
@@ -53,7 +53,7 @@ export const ActivityGraph = () => {
     <div className="col-span-8 overflow-hidden rounded border border-stone-300">
       <div className="p-4">
         <h3 className="flex items-center gap-1.5 font-medium">
-          <FiUser /> Activity
+          <FiUser /> Banking Activity
         </h3>
       </div>
 
@@ -89,13 +89,13 @@ export const ActivityGraph = () => {
             />
             <Line
               type="monotone"
-              dataKey="New"
+              dataKey="Deposits"
               stroke="#18181b"
               fill="#18181b"
             />
             <Line
               type="monotone"
-              dataKey="Returning"
+              dataKey="Withdrawals"
               stroke="#5b21b6"
               fill="#5b21b6"
             />

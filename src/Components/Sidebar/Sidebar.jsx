@@ -17,7 +17,7 @@ const Sidebar = () => {
             
         </div>
         {/*Plan Toggle */}
-        <Plan/>
+          {/*<Plan/>*/}
     </div>
   )
 }

@@ -5,18 +5,18 @@ export const StatCards = () => {
   return (
     <>
       <Card
-        title="Balance"
-        value="$120,054.24"
-        pillText="2.75%"
+        title="Your Balance"
+        value="$12,054.24"
+        //pillText="2.75%"
         trend="up"
-        period="From Jan 1st - Jul 31st"
+        //period="From Jan 1st - Jul 31st"
       />
       <Card
-        title="Avg Order"
-        value="$27.97"
-        pillText="1.01%"
+        title="Spendings (This Month)"
+        value="$217.97"
+        //pillText="1.01%"
         trend="down"
-        period="From Jan 1st - Jul 31st"
+        //period="From Jan 1st - Jul 31st"
       />
     
     </>
@@ -41,7 +41,7 @@ const Card = ({
       <div className="flex mb-8 items-start justify-between">
         <div>
           <h3 className="text-stone-500 mb-2 text-sm">{title}</h3>
-          <p className="text-3xl font-semibold">{value}</p>
+          <p className="text-3xl pt-6 font-semibold">{value}</p>
         </div>
 
         <span
