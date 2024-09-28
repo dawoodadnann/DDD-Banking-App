@@ -5,6 +5,7 @@ import Login from './components/Login';
 import Signup from './components/SignUp';
 import Billing from './components/billing';
 import Dashboard from './pages/DashboardPage'; 
+import ManagerDashboard from './pages/ManagerDashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/billing" element={<Billing />} />
         <Route path="/dashboard" element={<Dashboard />} /> 
+        <Route path="/manager-dashboard" element={<ManagerDashboard />} /> 
       </Routes>
     </Router>
   );
