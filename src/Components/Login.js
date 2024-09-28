@@ -21,6 +21,7 @@ const Login = () => {
       // Sending a POST request to the backend
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
+        credentials: 'include',
         headers: {
           "Content-Type": "application/json",
         },
@@ -57,6 +58,9 @@ const Login = () => {
           </Link>
           <Link to="/Dashboard">
             <button className="signup-btn">Dashboard</button>
+          </Link>
+          <Link to="/manager-dashboard">
+            <button className="signup-btn">Manager Dash</button>
           </Link>
         </div>
       </div>

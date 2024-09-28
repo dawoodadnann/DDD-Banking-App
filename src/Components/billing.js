@@ -15,6 +15,8 @@ import bill_12 from "../assets/bill_img/bill 12 telephone.png";
 // import { Link } from "react-router-dom";
 import "./billing.css";
 
+const token = localStorage.getItem('token');
+
 const Billing = () => {
   // State to control popup visibility and the selected bill type
   const [isPopupVisible, setPopupVisible] = useState(false);
@@ -64,10 +66,11 @@ const Billing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Store the submitted data in state
-    const data = {
+     const data = {
       selectedBill,
       Id,
       Amount,
+      Company,
       Username,
       Month,
       Email,
@@ -85,27 +88,55 @@ const Billing = () => {
     console.log("Month: ", Month);
     console.log(SubmittedData);
 
-    //     try {
-    //       const response = await fetch('http://localhost:5000/Billing', {
-    //           method: 'POST',
-    //           headers: {
-    //               'Content-Type': 'application/json',
-    //           },
-    //           body: JSON.stringify(SubmittedData),
-    //       });
+       
+  };
+  const handlerouter = async (e) => {
+    e.preventDefault(); // Prevent default form submission
+  
+    // Define the data object
+    // const data = {
+    //   selectedBill,
+    //   Id,
+    //   Amount,
+    //   Company,
+    //   Username,
+    //   Month,
+    //   Email,
+    //   Check,
+    //   Address,
+    // };
+  
+    try {
+    //   const response = await fetch('http://localhost:5000/billing', {
+    //     method: 'POST',
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       credentials: "include",
+    //       'Authorization': `Bearer ${token}`
+    //     },
+    //     body: JSON.stringify(SubmittedData), // Send data object
+    //   });
+      const response = await fetch("http://localhost:5000/billing", {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          }, body: JSON.stringify(SubmittedData),
+        });
+  
+      const result = await response.json(); // Handle response
+  
+      if (response.ok) {
+        console.log('Payment successful');
+        alert(result.message); // Show success message
+      } else {
+        console.log(result.message); // Log error message
+      }
+    } catch (error) {
+      console.error('Error during payment:', error);
+      console.log('An error occurred. Please try again.');
+    }
 
-    //       const data = await response.json();
-
-    //       if (response.ok) {
-    //           setError('');
-    //           alert('Login successful!');
-    //       } else {
-    //           setError(data.message);
-    //       }
-    //   } catch (error) {
-    //       console.error('Error logging in:', error);
-    //       setError('An error occurred. Please try again.');
-    //   }
   };
 
   // Bill options based on selected bill type
@@ -303,9 +334,10 @@ const Billing = () => {
               {Check ? "Agreed" : "Not Agreed"}
             </p>
             <button onClick={closePopup2}>Close</button>
-            <button type="submit" onClick={() => alert("Proceed to payment")}>
+            <button type="submit" onClick={ handlerouter }>
               Pay Now
             </button>
+
           </div>
         </div>
       )}

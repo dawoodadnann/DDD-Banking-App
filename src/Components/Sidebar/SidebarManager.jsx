@@ -3,6 +3,8 @@ import AccountToggle from './AccountToggle'
 import Search from './Search'
 import RouteSelect from './RouteSelect'
 import Plan from './Plan'
+import RouteSelectManager from './RouteSelectManager'
+import ToggleMan from './ToggleMan'
 
 
 
@@ -11,9 +13,9 @@ const SidebarManager = () => {
     <div>
         <div className='bg-white overflow-y-scroll sticky  top-4 h-[100vh]'>
             {/*Main SideBar Content */}
-            <AccountToggle/>
+            <ToggleMan/>
             <Search/>
-            <RouteSelect/>
+           <RouteSelectManager/>
             
         </div>
         {/*Plan Toggle */}

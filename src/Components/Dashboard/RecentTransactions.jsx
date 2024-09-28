@@ -84,13 +84,14 @@ const TableRow = ({
   date,
   amount,
   order,
-}: {
-  transactionId: string;
-  description: string;
-  date: string;
-  amount: string;
-  order: number;
-}) => {
+})=> {
+// }: {
+//   transactionId: string;
+//   description: string;
+//   date: string;
+//   amount: string;
+//   order: number;
+// }) => {
   return (
     <tr className={order % 2 ? "bg-stone-100 text-sm" : "text-sm"}>
       <td className="p-1.5">

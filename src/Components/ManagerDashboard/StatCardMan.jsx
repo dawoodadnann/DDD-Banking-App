@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 
-export const StatCards = () => {
+export const StatCardMan = () => {
   const [balance, setBalance] = useState(null);
 
   useEffect(() => {
@@ -36,14 +36,14 @@ export const StatCards = () => {
   return (
     <>
       <Card
-        title="Your Balance"
+        title="Total Balance"
         value={balance !== null ? `$${balance}` : "Loading..."}
         trend="up"
       />
       <Card
-        title="Spendings (This Month)"
-        value="$217.97"
-        trend="down"
+        title="Total Users"
+        value="4500"
+        trend="up"
       />
     </>
   );

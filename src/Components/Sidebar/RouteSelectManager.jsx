@@ -16,11 +16,10 @@ export const RouteSelectManager = () => {
   return (
     <div className="space-y-1">
       <Route Icon={FiHome} selected={true} title="Home" linkTo="/" />
-      <Route Icon={FiDollarSign} selected={false} title="Transfer Money" linkTo="/transfer" />
-      <Route Icon={FiCalendar} selected={false} title="Pay Bills" linkTo="/billing" />
-      <Route Icon={FiCreditCard} selected={false} title="Card Management" linkTo="/cards" />
-      <Route Icon={FiHeadphones} selected={false} title="Customer Support" linkTo="/integrations" />
-      <Route Icon={FiHelpCircle} selected={false} title="Help" linkTo="/finance" />
+      <Route Icon={FiDollarSign} selected={false} title="Manager Users" linkTo="/transfer" />
+      <Route Icon={FiDollarSign} selected={false} title="Approve Requests" linkTo="/transfer" />
+
+      
     </div>
   );
 };
