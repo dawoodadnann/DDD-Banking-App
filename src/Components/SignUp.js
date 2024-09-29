@@ -1,102 +1,100 @@
 import React, { useState } from "react";
-import "./Signup.css";
+import { Box, Button, Input, Typography } from "@mui/joy";
 import logo from "../assets/logo2.png";
-import { Link } from "react-router-dom"; // Assuming you are using React Router for navigation
+import { Link } from "react-router-dom";
 
 const Signup = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [formData, setFormData] = useState({
+    fname: "",
+    lname: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    nationality: "",
+    gender: "",
+    balance: ""
+  });
   const [error, setError] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (password !== confirmPassword) {
+    if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match");
-    } else if (email !== "test@example.com") {
-      setError("");
+      return;
+    }
+    setError("");
+    try {
+      const response = await fetch("YOUR_BACKEND_ENDPOINT/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
 
-      alert("Signup successful!");
-    } else {
-      setError("Email already in use");
+      if (response.ok) {
+        alert("Signup successful!");
+      } else {
+        const result = await response.json();
+        setError(result.message || "Signup failed");
+      }
+    } catch (error) {
+      setError("An error occurred during signup");
     }
   };
 
   return (
-    <div className="signup-container">
-      <div className="navbar">
-        <img src={logo} alt="E-bank" className="logo" />
-        <div className="nav-buttons">
+    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", bgcolor: "background.level1" }}>
+      <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", p: 2, bgcolor: "background.surface" }}>
+        <img src={logo} alt="E-bank" style={{ height: "40px" }} />
+        <Box sx={{ display: "flex", gap: 1 }}>
           <Link to="/login">
-            <button className="login-btn">Log in</button>
+            <Button variant="solid">Log in</Button>
           </Link>
           <Link to="/signup">
-            <button className="signup-btn">Sign up</button>
+            <Button variant="outlined">Sign up</Button>
           </Link>
-        </div>
-      </div>
-      <div className="signup-box">
-        <img src={logo} alt="E-bank" className="logo-box" />
-        <h2>D-Pay</h2>
-        <h3>Create an Account</h3>
+        </Box>
+      </Box>
+      <Box sx={{ width: "90%", maxWidth: "500px", mt: 4, p: 3, borderRadius: "md", boxShadow: "md", bgcolor: "background.surface" }}>
+        <img src={logo} alt="E-bank" style={{ height: "50px", marginBottom: "16px" }} />
+        <Typography level="h2" component="h2" sx={{ mb: 1 }}>D-Pay</Typography>
+        <Typography level="h3" component="h3" sx={{ mb: 3 }}>Create an Account</Typography>
         <form onSubmit={handleSubmit}>
-          <div class="form">
-            <input
-              class="textbox"
-              type="text"
-              placeholder=" "
-              value={fullName}
-              onChange={(e) => setFullName(e.target.value)}
+          {[
+            { label: "First Name", name: "fname", type: "text" },
+            { label: "Last Name", name: "lname", type: "text" },
+            { label: "E-mail", name: "email", type: "email" },
+            { label: "Password", name: "password", type: "password" },
+            { label: "Confirm Password", name: "confirmPassword", type: "password" },
+            { label: "Nationality", name: "nationality", type: "text" },
+            { label: "Gender", name: "gender", type: "text" },
+            { label: "Balance", name: "balance", type: "number" },
+          ].map((field, index) => (
+            <Input
+              key={index}
+              type={field.type}
+              name={field.name}
+              placeholder={field.label}
+              value={formData[field.name]}
+              onChange={handleChange}
               required
+              sx={{ mb: 2 }}
             />
-            <label class="ilabel">Full Name *</label>
-          </div>
+          ))}
 
-          <div class="form">
-            <input
-              class="textbox"
-              type="email"
-              placeholder=" "
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label class="ilabel">E-mail *</label>
-          </div>
-
-          <div class="form">
-            <input
-              class="textbox"
-              type="password"
-              placeholder=" "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <label class="ilabel">Password *</label>
-          </div>
-
-          <div class="form">
-            <input
-              class="textbox"
-              type="password"
-              placeholder=" "
-              value={confirmPassword}
-              onChange={(e) => setConfirmPassword(e.target.value)}
-              required
-            />
-            <label class="ilabel">Confirm Password *</label>
-          </div>
-
-          <button type="submit" className="submit-btn">
+          <Button type="submit" variant="solid" color="primary" fullWidth sx={{ mt: 2 }}>
             Sign up
-          </button>
+          </Button>
         </form>
-        {error && <div className="error-message">{error}</div>}
-      </div>
-    </div>
+        {error && <Typography level="body2" color="danger" sx={{ mt: 2 }}>{error}</Typography>}
+      </Box>
+    </Box>
   );
 };
 
