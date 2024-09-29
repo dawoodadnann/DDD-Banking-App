@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Box, Button, Input, Typography } from "@mui/joy";
 import logo from "../assets/logo2.png";
 import { Link } from "react-router-dom";
 
@@ -12,7 +11,10 @@ const Signup = () => {
     confirmPassword: "",
     nationality: "",
     gender: "",
-    balance: ""
+    balance: "",
+    dob: "",
+    cnic: "",
+    info: ""
   });
   const [error, setError] = useState("");
 
@@ -49,52 +51,56 @@ const Signup = () => {
   };
 
   return (
-    <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", minHeight: "100vh", bgcolor: "background.level1" }}>
-      <Box sx={{ width: "100%", display: "flex", justifyContent: "space-between", p: 2, bgcolor: "background.surface" }}>
-        <img src={logo} alt="E-bank" style={{ height: "40px" }} />
-        <Box sx={{ display: "flex", gap: 1 }}>
+    <div className="min-h-screen flex flex-col items-center bg-gray-900">
+      <div className="w-full flex justify-between p-4 bg-gray-800">
+        <img src={logo} alt="E-bank" className="h-10" />
+        <div className="flex gap-4">
           <Link to="/login">
-            <Button variant="solid">Log in</Button>
+            <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Log in</button>
           </Link>
           <Link to="/signup">
-            <Button variant="outlined">Sign up</Button>
+            <button className="border border-blue-600 text-blue-600 px-4 py-2 rounded hover:bg-blue-600 hover:text-white">Sign up</button>
           </Link>
-        </Box>
-      </Box>
-      <Box sx={{ width: "90%", maxWidth: "500px", mt: 4, p: 3, borderRadius: "md", boxShadow: "md", bgcolor: "background.surface" }}>
-        <img src={logo} alt="E-bank" style={{ height: "50px", marginBottom: "16px" }} />
-        <Typography level="h2" component="h2" sx={{ mb: 1 }}>D-Pay</Typography>
-        <Typography level="h3" component="h3" sx={{ mb: 3 }}>Create an Account</Typography>
+        </div>
+      </div>
+      <div className="w-full max-w-md mt-8 p-8 bg-gray-800 rounded-lg shadow-lg">
+        <img src={logo} alt="E-bank" className="h-12 mx-auto mb-4" />
+        <h2 className="text-2xl font-semibold text-center text-white mb-2">D-Pay</h2>
+        <h3 className="text-lg font-medium text-center text-gray-400 mb-6">Create an Account</h3>
         <form onSubmit={handleSubmit}>
           {[
             { label: "First Name", name: "fname", type: "text" },
             { label: "Last Name", name: "lname", type: "text" },
+            { label: "Date of Birth", name: "dob", type: "date" },
+            { label: "CNIC", name: "cnic", type: "text" },
+            { label: "Additional Information", name: "info", type: "text" },
+            { label: "Nationality", name: "nationality", type: "text" },
+            { label: "Gender", name: "gender", type: "text" },
             { label: "E-mail", name: "email", type: "email" },
             { label: "Password", name: "password", type: "password" },
             { label: "Confirm Password", name: "confirmPassword", type: "password" },
-            { label: "Nationality", name: "nationality", type: "text" },
-            { label: "Gender", name: "gender", type: "text" },
             { label: "Balance", name: "balance", type: "number" },
           ].map((field, index) => (
-            <Input
-              key={index}
-              type={field.type}
-              name={field.name}
-              placeholder={field.label}
-              value={formData[field.name]}
-              onChange={handleChange}
-              required
-              sx={{ mb: 2 }}
-            />
+            <div key={index} className="mb-4">
+              <input
+                type={field.type}
+                name={field.name}
+                placeholder={field.label}
+                value={formData[field.name]}
+                onChange={handleChange}
+                required
+                className="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
           ))}
 
-          <Button type="submit" variant="solid" color="primary" fullWidth sx={{ mt: 2 }}>
+          <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded mt-4 hover:bg-blue-700">
             Sign up
-          </Button>
+          </button>
         </form>
-        {error && <Typography level="body2" color="danger" sx={{ mt: 2 }}>{error}</Typography>}
-      </Box>
-    </Box>
+        {error && <div className="text-red-500 text-center mt-4">{error}</div>}
+      </div>
+    </div>
   );
 };
 
