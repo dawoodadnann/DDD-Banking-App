@@ -1,7 +1,37 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { FiArrowUpRight, FiDollarSign, FiMoreHorizontal } from "react-icons/fi";
 
 export const RecentTransactions = () => {
+  const [bills, setBills] = useState([]);  // Initialize state to hold bills
+
+  useEffect(() => {
+    const fetchBills = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/showbill", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.bills) {
+            setBills(data.bills); // Set the bills data in state
+            console.log("Data retrieved successfully!", data.bills);
+          }
+        } else {
+          console.log("Failed to retrieve bills. Status:", response.status);
+        }
+      } catch (error) {
+        console.error("Error retrieving bills:", error);
+      }
+    };
+
+    fetchBills();
+  }, []);
+
   return (
     <div className="col-span-12 p-4 rounded border border-stone-300">
       <div className="mb-4 flex items-center justify-between">
@@ -16,48 +46,24 @@ export const RecentTransactions = () => {
         <TableHead />
 
         <tbody>
-          <TableRow
-            transactionId="#TXN48149"
-            description="ATM Withdrawal"
-            date="Sept 5th"
-            amount="$300"
-            order={1}
-          />
-          <TableRow
-            transactionId="#TXN1942s"
-            description="Direct Deposit"
-            date="Sept 4th"
-            amount="$1500"
-            order={2}
-          />
-          <TableRow
-            transactionId="#TXN4192"
-            description="Utility Bill Payment"
-            date="Sept 3rd"
-            amount="$120"
-            order={3}
-          />
-          <TableRow
-            transactionId="#TXN99481"
-            description="Grocery Purchase"
-            date="Sept 2nd"
-            amount="$94.75"
-            order={4}
-          />
-          <TableRow
-            transactionId="#TXN1304"
-            description="Money Transfer"
-            date="Sept 1st"
-            amount="$500"
-            order={5}
-          />
-          <TableRow
-            transactionId="#TXN1305"
-            description="ATM Deposit"
-            date="Aug 31st"
-            amount="$700"
-            order={6}
-          />
+          {bills.length > 0 ? (
+            bills.map((bill, index) => (
+              <TableRow
+                key={bill.bill_id}  // Key for unique identification
+                transactionId={bill.bill_id}
+                description={`${bill.selected_company} - ${bill.select_type}`}
+                date={new Date(bill.paid_at).toLocaleDateString()} // Format date
+                amount={`$${parseFloat(bill.amount).toFixed(2)}`} // Format amount
+                order={index + 1}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="p-4 text-center">
+                No transactions found.
+              </td>
+            </tr>
+          )}
         </tbody>
       </table>
     </div>
@@ -78,27 +84,11 @@ const TableHead = () => {
   );
 };
 
-const TableRow = ({
-  transactionId,
-  description,
-  date,
-  amount,
-  order,
-})=> {
-// }: {
-//   transactionId: string;
-//   description: string;
-//   date: string;
-//   amount: string;
-//   order: number;
-// }) => {
+const TableRow = ({ transactionId, description, date, amount, order }) => {
   return (
     <tr className={order % 2 ? "bg-stone-100 text-sm" : "text-sm"}>
       <td className="p-1.5">
-        <a
-          href="#"
-          className="text-violet-600 underline flex items-center gap-1"
-        >
+        <a href="#" className="text-violet-600 underline flex items-center gap-1">
           {transactionId} <FiArrowUpRight />
         </a>
       </td>

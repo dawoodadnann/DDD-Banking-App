@@ -12,7 +12,11 @@ const Signup = () => {
     confirmPassword: "",
     nationality: "",
     gender: "",
-    balance: ""
+    info: "",
+  //  adding new
+    cnic:"",
+    dob:""
+
   });
   const [error, setError] = useState("");
 
@@ -29,7 +33,7 @@ const Signup = () => {
     }
     setError("");
     try {
-      const response = await fetch("YOUR_BACKEND_ENDPOINT/register", {
+      const response = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +78,9 @@ const Signup = () => {
             { label: "Confirm Password", name: "confirmPassword", type: "password" },
             { label: "Nationality", name: "nationality", type: "text" },
             { label: "Gender", name: "gender", type: "text" },
-            { label: "Balance", name: "balance", type: "number" },
+            { label: "info", name: "info", type: "text" },
+            { label: "cnic", name: "cnic", type: "text" },
+            { label: "dob", name: "dob", type: "date" }
           ].map((field, index) => (
             <Input
               key={index}

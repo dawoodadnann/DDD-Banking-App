@@ -22,7 +22,7 @@ const Billing = () => {
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [isPopup2Visible, setPopup2Visible] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
-  const [Id, setId] = useState("");
+  const [accnum, setaccnum] = useState("");
   const [Amount, setAmount] = useState("");
   const [Company, setCompany] = useState("");
   const [SubmittedData, setSubmittedData] = useState("");
@@ -66,23 +66,24 @@ const Billing = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Store the submitted data in state
+     
      const data = {
       selectedBill,
-      Id,
-      Amount,
-      Company,
-      Username,
-      Month,
-      Email,
-      Check,
-      Address,
+      accnum,
+      amount:Amount,
+      company:Company,
+      username:Username,
+      check:Check,
+      month:Month,
+      email:Email,
+      address:Address,
     };
     setSubmittedData(data);
     setPopup2Visible(true);
     // Log the submitted data to the console
     console.log("Selected Bill: ", selectedBill);
     console.log("Selected Company: ", Company);
-    console.log("Account/Customer ID: ", Id);
+    console.log("Account/Customer ID: ", accnum);
     console.log("Amount: ", Amount);
     console.log("Username: ", Username);
     console.log("Month: ", Month);
@@ -107,15 +108,7 @@ const Billing = () => {
     // };
   
     try {
-    //   const response = await fetch('http://localhost:5000/billing', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json',
-    //       credentials: "include",
-    //       'Authorization': `Bearer ${token}`
-    //     },
-    //     body: JSON.stringify(SubmittedData), // Send data object
-    //   });
+
       const response = await fetch("http://localhost:5000/billing", {
           method: "POST",
           credentials: "include",
@@ -220,8 +213,8 @@ const Billing = () => {
                   class="textbox"
                   type="text"
                   placeholder=" "
-                  value={Id}
-                  onChange={(e) => setId(e.target.value)}
+                  value={accnum}
+                  onChange={(e) => setaccnum(e.target.value)}
                   required
                 />
                 <label class="ilabel">ACCOUNT NUM / CUSTOMER NUM</label>
@@ -315,7 +308,7 @@ const Billing = () => {
               <strong>Username:</strong> {SubmittedData.Username}
             </p>
             <p>
-              <strong>Account/Customer ID:</strong> {SubmittedData.Id}
+              <strong>Account/Customer ID:</strong> {SubmittedData.accnum}
             </p>
             <p>
               <strong>Amount:</strong> {SubmittedData.Amount}
