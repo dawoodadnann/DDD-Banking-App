@@ -3,9 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.13.3",
+    "@emotion/styled": "^11.13.0",
     "@fontsource/open-sans": "^4.5.0",
     "@fontsource/raleway": "^4.5.0",
     "@fontsource/roboto": "^4.5.0",
+    "@mui/joy": "^5.0.0-beta.48",
     "@react-icons/all-files": "^4.1.0",
     "@types/react": "^17.0.80",
     "@types/react-dom": "^18.3.0",

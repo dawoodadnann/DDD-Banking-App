@@ -6,6 +6,7 @@ import Signup from './components/SignUp';
 import Billing from './components/billing';
 import Dashboard from './pages/DashboardPage'; 
 import ManagerDashboard from './pages/ManagerDashboard';
+import { MoneyTransfer } from './components/MoneyTransfer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         <Route path="/billing" element={<Billing />} />
         <Route path="/dashboard" element={<Dashboard />} /> 
         <Route path="/manager-dashboard" element={<ManagerDashboard />} /> 
+        <Route path="/money-transfer" element={<MoneyTransfer/>} /> 
       </Routes>
     </Router>
   );
