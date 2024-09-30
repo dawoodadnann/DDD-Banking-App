@@ -4,11 +4,11 @@ import React from "react";
 export const TopBar = () => {
    const [email,setEmail]=useState(null);
 
-  useEffect(() => {
+   useEffect(() => {
     const fetchemail = async () => {
       try {
-        // Sending a POST request to the backend
-        const response = await fetch("http://localhost:5000/getemail", {
+        // Sending a GET request to the backend
+        const response = await fetch("http://localhost:5000/getuseremail", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -16,16 +16,20 @@ export const TopBar = () => {
           },
         });
 
-        const data = await response.json();
-
-      if (data.email) {
-          setEmail(data.email);
-      }else {
-          console.log(data.message);
+        // Check if the response is OK
+        if (response.ok) {
+          const data = await response.json();
+          if (data.email) {
+            console.log("Email retrieved successfully!");
+            setEmail(data.email);  // Set the email from the response
+          } else {
+            console.log(data.message || "Email not found.");
+          }
+        } else {
+          console.log("Failed to retrieve email. Status:", response.status);
         }
       } catch (error) {
-        console.error("Error retrieving balance:", error);
-        console.log("An error occurred. Please try again.");
+        console.error("Error retrieving email:", error);
       }
     };
 

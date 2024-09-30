@@ -1,17 +1,18 @@
 import React, { useState } from "react";
 import "./Login.css";
 import logo from "../assets/logo2.png";
-import { Link } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+import { Link, redirect } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-
+  const navigate = useNavigate();
   // Function to  send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    
     const payload = {
       email,
       password,
@@ -33,6 +34,7 @@ const Login = () => {
       if (response.ok) {
         setError("");
         alert("Login successful!");
+        navigate(`/dashboard`);
       } else {
         setError(data.message);
       }

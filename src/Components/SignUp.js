@@ -11,10 +11,7 @@ const Signup = () => {
     confirmPassword: "",
     nationality: "",
     gender: "",
-    balance: "",
-    dob: "",
-    cnic: "",
-    info: ""
+
   });
   const [error, setError] = useState("");
 
@@ -31,7 +28,7 @@ const Signup = () => {
     }
     setError("");
     try {
-      const response = await fetch("YOUR_BACKEND_ENDPOINT/register", {
+      const response = await fetch("http://localhost:5000/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -79,7 +76,7 @@ const Signup = () => {
             { label: "E-mail", name: "email", type: "email" },
             { label: "Password", name: "password", type: "password" },
             { label: "Confirm Password", name: "confirmPassword", type: "password" },
-            { label: "Balance", name: "balance", type: "number" },
+
           ].map((field, index) => (
             <div key={index} className="mb-4">
               <input

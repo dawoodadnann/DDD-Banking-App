@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "Working Project AFTER ADDING BACKEND LOGIC OF BILLING AND MAKING DASHBOARD DYNAMIC"
+git commit -m "Working Project AFTER ADDING BACKEND LOGIC OF register AND MAKING DASHBOARD DYNAMIC"
 git status
 git push -u origin main
 
