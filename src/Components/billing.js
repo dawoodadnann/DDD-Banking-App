@@ -305,22 +305,22 @@ const Billing = () => {
               <strong>Bill Type:</strong> {SubmittedData.selectedBill}
             </p>
             <p>
-              <strong>Username:</strong> {SubmittedData.Username}
+              <strong>Username:</strong> {SubmittedData.username}
             </p>
             <p>
               <strong>Account/Customer ID:</strong> {SubmittedData.accnum}
             </p>
             <p>
-              <strong>Amount:</strong> {SubmittedData.Amount}
+              <strong>Amount:</strong> {SubmittedData.amount}
             </p>
             <p>
-              <strong>Month:</strong> {SubmittedData.Month}
+              <strong>Month:</strong> {SubmittedData.month}
             </p>
             <p>
-              <strong>Email:</strong> {SubmittedData.Email}
+              <strong>Email:</strong> {SubmittedData.email}
             </p>
             <p>
-              <strong>Address:</strong> {SubmittedData.Address}
+              <strong>Address:</strong> {SubmittedData.address}
             </p>
             <p>
               <strong>Policy Agreement:</strong>{" "}
