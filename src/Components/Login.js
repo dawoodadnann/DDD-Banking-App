@@ -61,6 +61,9 @@ const Login = () => {
           <Link to="/Dashboard">
             <button className="signup-btn">Dashboard</button>
           </Link>
+          <Link to="/money-transfer">
+            <button className="signup-btn">MONEY TRANSFER</button>
+          </Link>
           <Link to="/manager-dashboard">
             <button className="signup-btn">Manager Dash</button>
           </Link>

@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "JUST CORRECTED BILLING .JS LAG"
+git commit -m "CONNECTED THE INTER BANK TRANSFER FROM BACKEND"
 git status
 git push -u origin main
 

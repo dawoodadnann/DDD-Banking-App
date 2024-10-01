@@ -1,14 +1,42 @@
 import { useState,useEffect } from "react";
 import React from "react";
 
+const getFormattedDate = () => {
+  const date = new Date();
+  
+  const options = {
+    weekday: 'long', // Tuesday
+    month: 'short',  // Aug
+    day: 'numeric',  // 8
+    year: 'numeric'  // 2023
+  };
+
+  const day = date.getDate();
+  const suffix = getDaySuffix(day);
+  const formattedDate = date.toLocaleDateString('en-US', options);
+
+  // Insert the suffix in the appropriate position
+  return formattedDate.replace(/\d+/, day + suffix);
+};
+
+const getDaySuffix = (day) => {
+  if (day > 3 && day < 21) return 'th';
+  switch (day % 10) {
+    case 1: return 'st';
+    case 2: return 'nd';
+    case 3: return 'rd';
+    default: return 'th';
+  }
+};
+
 export const TopBar = () => {
    const [email,setEmail]=useState(null);
-
+   const [date,setdate]=useState(null);
    useEffect(() => {
+    setdate(getFormattedDate());
     const fetchemail = async () => {
       try {
-        // Sending a GET request to the backend
-        const response = await fetch("http://localhost:5000/getuseremail", {
+        const response = await fetch("http://localhost:5000/getuserfullname", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -16,20 +44,17 @@ export const TopBar = () => {
           },
         });
 
-        // Check if the response is OK
         if (response.ok) {
           const data = await response.json();
-          if (data.email) {
-            console.log("Email retrieved successfully!");
-            setEmail(data.email);  // Set the email from the response
-          } else {
-            console.log(data.message || "Email not found.");
+          if (data.fullname) {
+            console.log("Data retrieved successfully!", data.fullname);
+            setEmail(data.fullname);
           }
         } else {
-          console.log("Failed to retrieve email. Status:", response.status);
+          console.log("Failed to retrieve bills. Status:", response.status);
         }
       } catch (error) {
-        console.error("Error retrieving email:", error);
+        console.error("Error retrieving bills:", error);
       }
     };
 
@@ -41,7 +66,7 @@ export const TopBar = () => {
         <div>
           <span className="text-sm font-bold block">🚀 Good morning, {email}</span>
           <span className="text-xs block text-stone-500">
-            Tuesday, Aug 8th 2023
+            {date}
           </span>
         </div>
 

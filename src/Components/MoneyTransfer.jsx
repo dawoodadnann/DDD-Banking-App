@@ -34,17 +34,16 @@ export const MoneyTransfer = () => {
 
     try {
       // Sending a POST request to the backend to initiate the transfer
-      const response = await fetch("http://localhost:5000/transfer", {
+      const response = await fetch("http://localhost:5000/interbanktransaction", {
         method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount,
-          accountNumber,
-          paymentMethod,
-          selectedBank,
+          Amount:amount,
+          accnum:accountNumber,
+          check:true
         }),
       });
 
