@@ -18,9 +18,10 @@ export const RouteSelect = () => {
       <Route Icon={FiHome} selected={true} title="Home" linkTo="/" />
       <Route Icon={FiDollarSign} selected={false} title="Transfer Money" linkTo="/transfer" />
       <Route Icon={FiCalendar} selected={false} title="Pay Bills" linkTo="/billing" />
+      <Route Icon={FiCalendar} selected={false} title="Loan Application" linkTo="/loan" />
       <Route Icon={FiCreditCard} selected={false} title="Card Management" linkTo="/cards" />
       <Route Icon={FiHeadphones} selected={false} title="Customer Support" linkTo="/integrations" />
-      <Route Icon={FiHelpCircle} selected={false} title="Help" linkTo="/finance" />
+      <Route Icon={FiHelpCircle} selected={false} title="Help" linkTo="/help" />
     </div>
   );
 };

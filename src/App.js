@@ -7,6 +7,8 @@ import Billing from './components/billing';
 import Dashboard from './pages/DashboardPage'; 
 import ManagerDashboard from './pages/ManagerDashboard';
 import { MoneyTransfer } from './components/MoneyTransfer';
+import LoanPage from './pages/LoanPage';
+import HelpPage from './pages/HelpPage';
 
 function App() {
   return (
@@ -16,7 +18,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/billing" element={<Billing />} />
-        <Route path="/dashboard" element={<Dashboard />} /> 
+        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/loan" element={<LoanPage />} />
+        <Route path="/help" element={<HelpPage />} />
         <Route path="/manager-dashboard" element={<ManagerDashboard />} /> 
         <Route path="/money-transfer" element={<MoneyTransfer/>} /> 
       </Routes>
