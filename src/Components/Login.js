@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "./Login.css";
 import logo from "../assets/logo2.png";
-import { useNavigate } from 'react-router-dom';
-import { Link, redirect } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
+  const [otp, setOtp] = useState("");
   const navigate = useNavigate();
-  // Function to  send data to the backend
+
+  // Function to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
+    // Open OTP modal regardless of server response
+    setIsOtpModalOpen(true);
+
     const payload = {
       email,
       password,
@@ -22,7 +27,7 @@ const Login = () => {
       // Sending a POST request to the backend
       const response = await fetch("http://localhost:5000/login", {
         method: "POST",
-        credentials: 'include',
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
@@ -33,14 +38,24 @@ const Login = () => {
 
       if (response.ok) {
         setError("");
-        alert("Login successful!");
-        navigate(`/dashboard`);
       } else {
         setError(data.message);
       }
     } catch (error) {
       console.error("Error logging in:", error);
       setError("An error occurred. Please try again.");
+    }
+  };
+
+  // Function to verify OTP
+  const handleOtpVerification = () => {
+    if (otp === "1234") {
+      // For demo purposes, replace with backend verification later
+      alert("Login successful!");
+      setIsOtpModalOpen(false);
+      navigate(`/dashboard`);
+    } else {
+      setError("Invalid OTP. Please try again.");
     }
   };
 
@@ -74,28 +89,28 @@ const Login = () => {
         <h2>D-Pay</h2>
         <h3>Sign In To Continue</h3>
         <form onSubmit={handleSubmit}>
-          <div class="form">
+          <div className="form">
             <input
-              class="textbox"
+              className="textbox"
               type="email"
               placeholder=" "
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-            <label class="ilabel">E-mail *</label>
+            <label className="ilabel">E-mail *</label>
           </div>
 
-          <div class="form">
+          <div className="form">
             <input
-              class="textbox"
+              className="textbox"
               type="password"
               placeholder=" "
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
             />
-            <label class="ilabel">Password *</label>
+            <label className="ilabel">Password *</label>
           </div>
 
           <button type="submit" className="submit-btn">
@@ -104,6 +119,30 @@ const Login = () => {
         </form>
         {error && <div className="error-message">{error}</div>}
       </div>
+
+      {/* OTP Modal */}
+      {isOtpModalOpen && (
+        <div className="otp-modal">
+          <div className="otp-modal-content">
+            <h3>Enter OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+            />
+            <button onClick={handleOtpVerification} className="verify-btn">
+              Verify OTP
+            </button>
+            <button
+              onClick={() => setIsOtpModalOpen(false)}
+              className="close-btn"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

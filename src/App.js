@@ -9,10 +9,16 @@ import ManagerDashboard from './pages/ManagerDashboard';
 import { MoneyTransfer } from './components/MoneyTransfer';
 import LoanPage from './pages/LoanPage';
 import HelpPage from './pages/HelpPage';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Navigation from './components/Navigation';
+
+
+
 
 function App() {
   return (
     <Router>
+      <Navigation/>
       <Routes>
         <Route path="/" element={<Navigate to="/login" />} />
         <Route path="/login" element={<Login />} />
