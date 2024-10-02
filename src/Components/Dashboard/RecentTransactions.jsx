@@ -3,11 +3,11 @@ import { FiArrowUpRight, FiDollarSign, FiMoreHorizontal } from "react-icons/fi";
 
 export const RecentTransactions = () => {
   const [bills, setBills] = useState([]);  // Initialize state to hold bills
-
+  const [trans, setTrans] = useState([]);
   useEffect(() => {
     const fetchBills = async () => {
       try {
-        const response = await fetch("http://localhost:5000/showbill", {
+        const response = await fetch("http://localhost:5000/getbillhistory", {
           method: "GET",
           credentials: "include",
           headers: {
@@ -32,6 +32,34 @@ export const RecentTransactions = () => {
     fetchBills();
   }, []);
 
+  useEffect(() => {
+    const fetchTrans = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/gettranshistory", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          if (data.bills) {
+            setTrans(data.bills); // Set the bills data in state
+            console.log("Data retrieved successfully!", data.bills);
+          }
+        } else {
+          console.log("Failed to retrieve bills. Status:", response.status);
+        }
+      } catch (error) {
+        console.error("Error retrieving bills:", error);
+      }
+    };
+
+    fetchTrans();
+  }, []);
+
   return (
     <div className="col-span-12 p-4 rounded border border-stone-300">
       <div className="mb-4 flex items-center justify-between">
@@ -54,6 +82,24 @@ export const RecentTransactions = () => {
                 description={`${bill.selected_company} - ${bill.select_type}`}
                 date={new Date(bill.paid_at).toLocaleDateString()} // Format date
                 amount={`$${parseFloat(bill.amount).toFixed(2)}`} // Format amount
+                order={index + 1}
+              />
+            ))
+          ) : (
+            <tr>
+              <td colSpan="5" className="p-4 text-center">
+                No Bills found.
+              </td>
+            </tr>
+          )}
+          {trans.length > 0 ? (
+            trans.map((trans, index) => (
+              <TableRow
+              key={trans.trans_id}  // Correct key for unique identification
+              transactionId={trans.trans_id}  // Use trans_id from JSON
+              description={`${trans.receiver_email} - ${trans.receiver_user_id}`}  // Correct field names
+                date={new Date(trans.paid_at).toLocaleDateString()} // Format date
+                amount={`$${parseFloat(trans.amount).toFixed(2)}`} // Format amount
                 order={index + 1}
               />
             ))
