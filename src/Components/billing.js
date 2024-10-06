@@ -12,27 +12,22 @@ import bill_10 from "../assets/bill_img/bill 10 invoice.png";
 import bill_11 from "../assets/bill_img/bill 11 payment.png";
 import bill_12 from "../assets/bill_img/bill 12 telephone.png";
 
-// import { Link } from "react-router-dom";
 import "./billing.css";
 
-const token = localStorage.getItem('token');
-
 const Billing = () => {
-  // State to control popup visibility and the selected bill type
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [isPopup2Visible, setPopup2Visible] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
   const [accnum, setaccnum] = useState("");
   const [Amount, setAmount] = useState("");
   const [Company, setCompany] = useState("");
-  const [SubmittedData, setSubmittedData] = useState("");
+  const [SubmittedData, setSubmittedData] = useState(null);
   const [Username, setUsername] = useState("");
   const [Month, setMonth] = useState("");
   const [Email, setEmail] = useState("");
-  const [Check, setCheck] = useState("false");
+  const [Check, setCheck] = useState(false);
   const [Address, setAddress] = useState("");
 
-  // Bill companies for different bills
   const billCompanies = {
     Electricity: ["K-Electric", "WAPDA", "Reliance"],
     Water: ["AquaFina", "Nestle", "Dasani"],
@@ -42,164 +37,108 @@ const Billing = () => {
     Education: ["FAST NUCES", "The Educators", "Bahria University"],
     Government: ["Dam Donation Fund", "Palestine Refugees Fund"],
     CreditCard: ["MasterCard", "Visa", "Meezan Bank"],
-    Clubs: ["Creek CLub", "Dreamworld Golf CLub", "Pavilion End CLub"],
+    Clubs: ["Creek Club", "Dreamworld Golf Club", "Pavilion End Club"],
     E_Challan: ["M-TAG"],
     Nadra: [
       "Family Registration Form Fee",
       "Missing CNIC Application Fee",
-      "Birth Certificate Issuance Fee",
+      "Birth Certificate Issuance Fee",
     ],
   };
 
   const handleBoxClick = (billType) => {
-    setSelectedBill(billType); // Set the selected bill type
-    setPopupVisible(true); // Show the popup
+    setSelectedBill(billType);
+    setPopupVisible(true);
   };
 
-  // Handle closing the popup
   const closePopup = () => {
     setPopupVisible(false);
   };
   const closePopup2 = () => {
     setPopup2Visible(false);
   };
-  const handleSubmit = async (e) => {
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // Store the submitted data in state
-     
-     const data = {
+
+    const data = {
       selectedBill,
       accnum,
-      amount:Amount,
-      company:Company,
-      username:Username,
-      check:Check,
-      month:Month,
-      email:Email,
-      address:Address,
+      amount: Amount,
+      company: Company,
+      username: Username,
+      check: Check,
+      month: Month,
+      email: Email,
+      address: Address,
     };
+
     setSubmittedData(data);
+    setPopupVisible(false);
     setPopup2Visible(true);
-    // Log the submitted data to the console
-    console.log("Selected Bill: ", selectedBill);
-    console.log("Selected Company: ", Company);
-    console.log("Account/Customer ID: ", accnum);
-    console.log("Amount: ", Amount);
-    console.log("Username: ", Username);
-    console.log("Month: ", Month);
-    console.log(SubmittedData);
-
-       
   };
-  const handlerouter = async (e) => {
-    e.preventDefault(); // Prevent default form submission
-  
-    // Define the data object
-    // const data = {
-    //   selectedBill,
-    //   Id,
-    //   Amount,
-    //   Company,
-    //   Username,
-    //   Month,
-    //   Email,
-    //   Check,
-    //   Address,
-    // };
-  
-    try {
 
+  const handlerouter = async (e) => {
+    e.preventDefault();
+
+    try {
       const response = await fetch("http://localhost:5000/billing", {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-          }, body: JSON.stringify(SubmittedData),
-        });
-  
-      const result = await response.json(); // Handle response
-  
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(SubmittedData),
+      });
+
+      const result = await response.json();
+
       if (response.ok) {
-        console.log('Payment successful');
-        alert(result.message); // Show success message
+        alert("Payment successful: " + result.message);
+        setPopup2Visible(false);
       } else {
-        console.log(result.message); // Log error message
+        alert("Payment failed: " + result.message);
       }
     } catch (error) {
-      console.error('Error during payment:', error);
-      console.log('An error occurred. Please try again.');
+      console.error("Error during payment:", error);
+      alert("An error occurred. Please try again.");
     }
-
   };
 
-  // Bill options based on selected bill type
   const billOptions = billCompanies[selectedBill] || [];
 
   return (
-    <div>
-      <body>
-        <div className="billing_page">
-          <div className="box" onClick={() => handleBoxClick("Electricity")}>
-            <h1>Electricity Bill</h1>
-            <img src={bill_7} className="logo" alt="Electricity Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Gas")}>
-            <h1>Gas Bill</h1>
-            <img src={bill_3} className="logo" alt="Gas Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Water")}>
-            <h1>Water Bill</h1>
-            <img src={bill_8} className="logo" alt="Water Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Internet")}>
-            <h1>Internet Bill</h1>
-            <img src={bill_2} className="logo" alt="Internet Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Telephone")}>
-            <h1>Telephone Bill</h1>
-            <img src={bill_12} className="logo" alt="Telephone Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Tax")}>
-            <h1>Tax Payment</h1>
-            <img src={bill_9} className="logo" alt="Tax Payment" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Education")}>
-            <h1>Education</h1>
-            <img src={bill_6} className="logo" alt="Education" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Government")}>
-            <h1>Government Fees</h1>
-            <img src={bill_4} className="logo" alt="Government Fees" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("CreditCard")}>
-            <h1>CreditCard Bill</h1>
-            <img src={bill_1} className="logo" alt="CreditCard Bill" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Clubs")}>
-            <h1>Clubs Membership</h1>
-            <img src={bill_5} className="logo" alt="Clubs Membership" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("E_Challan")}>
-            <h1>E Challan</h1>
-            <img src={bill_10} className="logo" alt="E Challan" />
-          </div>
-          <div className="box" onClick={() => handleBoxClick("Nadra")}>
-            <h1>Nadra Fees</h1>
-            <img src={bill_11} className="logo" alt="Nadra Fees" />
-          </div>
+    <div className="bg-zinc-800 pt-16 h-screen">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6">
+        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Electricity")}>
+          <h1 className="text-xl font-semibold text-center text-black">Electricity Bill</h1>
+          <img src={bill_7} className="logo mx-auto mt-4" alt="Electricity Bill" />
         </div>
-      </body>
+        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Gas")}>
+          <h1 className="text-xl font-semibold text-center text-black">Gas Bill</h1>
+          <img src={bill_3} className="logo mx-auto mt-4" alt="Gas Bill" />
+        </div>
+        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Water")}>
+          <h1 className="text-xl font-semibold text-center text-black">Water Bill</h1>
+          <img src={bill_8} className="logo mx-auto mt-4" alt="Water Bill" />
+        </div>
+        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Internet")}>
+          <h1 className="text-xl font-semibold text-center text-black">Internet Bill</h1>
+          <img src={bill_2} className="logo mx-auto mt-4" alt="Internet Bill" />
+        </div>
+        {/* Other bill types go here */}
+      </div>
 
-      {/* Popup Modal */}
       {isPopupVisible && (
-        <div className="popup">
-          <div className="popup-inner">
-            <h2>Select Your {selectedBill} Company</h2>
-            <form onSubmit={handleSubmit}>
+        <div className="popup fixed inset-0 bg-zinc-800 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="popup-inner bg-zinc-800 p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4 text-black">Select Your {selectedBill} Company</h2>
+            <form onSubmit={handleSubmit} className="space-y-4">
               <select
                 value={Company}
-                onChange={(e) => setCompany(e.target.value)} // Update the Company when a bill type is selected
+                onChange={(e) => setCompany(e.target.value)}
                 required
+                className="block w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 text-black"
               >
                 <option value="">Select Company</option>
                 {billOptions.map((company, index) => (
@@ -208,129 +147,115 @@ const Billing = () => {
                   </option>
                 ))}
               </select>
-              <div class="form">
+
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
-                  type="text"
-                  placeholder=" "
+                  className="textbox w-full p-2 border rounded-lg text-black"
+                  type="text" 
                   value={accnum}
                   onChange={(e) => setaccnum(e.target.value)}
                   required
+                  placeholder="ACCOUNT NUM / CUSTOMER NUM"
                 />
-                <label class="ilabel">ACCOUNT NUM / CUSTOMER NUM</label>
               </div>
 
-              <div class="form">
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
+                  className="textbox w-full p-2 border rounded-lg text-black"
                   type="text"
-                  placeholder=" "
                   value={Username}
                   onChange={(e) => setUsername(e.target.value)}
                   required
+                  placeholder="USERNAME"
                 />
-                <label class="ilabel">USERNAME</label>
               </div>
 
-              <div class="form">
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
+                  className="textbox w-full p-2 border rounded-lg text-black"
                   type="number"
-                  placeholder=" "
                   value={Amount}
                   onChange={(e) => setAmount(e.target.value)}
+                  placeholder="Bill Amount"
                 />
-                <label class="ilabel">Bill Amount</label>
               </div>
 
-              <div class="form">
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
+                  className="textbox w-full p-2 border rounded-lg text-black"
                   type="text"
-                  placeholder=" "
                   value={Month}
                   onChange={(e) => setMonth(e.target.value)}
+                  placeholder="Billing Month"
                 />
-                <label class="ilabel">Billing Month</label>
               </div>
 
-              <div class="form">
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
+                  className="textbox w-full p-2 border rounded-lg text-black"
                   type="text"
-                  placeholder=" "
                   value={Email}
                   onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Email (optional)"
                 />
-                <label class="ilabel">Email (optional)</label>
               </div>
 
-              <div class="form">
+              <div className="form space-y-2">
                 <input
-                  class="textbox"
+                  className="textbox w-full p-2 border rounded-lg text-black"
                   type="text"
-                  placeholder=" "
                   value={Address}
                   onChange={(e) => setAddress(e.target.value)}
                   required
+                  placeholder="Address"
                 />
-                <label class="ilabel">Address</label>
               </div>
 
-              <div id="c1">
+              <div className="flex items-center space-x-2">
                 <input
                   type="checkbox"
                   checked={Check}
                   onChange={(e) => setCheck(e.target.checked)}
+                  className="h-4 w-4"
                 />
-                <label>
-                  I agree to the company policy, and I understand that any
-                  vulnerabilities will not be considered as it is a test
-                  version.
+                <label className="text-sm">
+                  I agree to the company policy, and I understand that any vulnerabilities will not be considered as it is a test version.
                 </label>
               </div>
-              <button onClick={closePopup}>Close</button>
-              <button type="submit" onClick={() => alert("Proceed to payment")}>
-                Preview
-              </button>
+
+              <div className="flex justify-end space-x-4 mt-4">
+                <button onClick={closePopup} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                  Close
+                </button>
+                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+                  Preview
+                </button>
+              </div>
             </form>
           </div>
         </div>
       )}
-      {isPopup2Visible && (
-        <div className="popup">
-          <div className="popup-inner">
-            <h2>Preview Your Bill Payment Details</h2>
-            <p>
-              <strong>Bill Type:</strong> {SubmittedData.selectedBill}
-            </p>
-            <p>
-              <strong>Username:</strong> {SubmittedData.username}
-            </p>
-            <p>
-              <strong>Account/Customer ID:</strong> {SubmittedData.accnum}
-            </p>
-            <p>
-              <strong>Amount:</strong> {SubmittedData.amount}
-            </p>
-            <p>
-              <strong>Month:</strong> {SubmittedData.month}
-            </p>
-            <p>
-              <strong>Email:</strong> {SubmittedData.email}
-            </p>
-            <p>
-              <strong>Address:</strong> {SubmittedData.address}
-            </p>
-            <p>
-              <strong>Policy Agreement:</strong>{" "}
-              {Check ? "Agreed" : "Not Agreed"}
-            </p>
-            <button onClick={closePopup2}>Close</button>
-            <button type="submit" onClick={ handlerouter }>
-              Pay Now
-            </button>
 
+      {isPopup2Visible && SubmittedData && (
+        <div className="popup fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
+          <div className="popup-inner bg-white p-6 rounded-lg shadow-lg">
+            <h2 className="text-2xl font-semibold mb-4">Payment Preview</h2>
+            <p>Bill Type: {SubmittedData.selectedBill}</p>
+            <p>Account Number: {SubmittedData.accnum}</p>
+            <p>Username: {SubmittedData.username}</p>
+            <p>Company: {SubmittedData.company}</p>
+            <p>Amount: {SubmittedData.amount}</p>
+            <p>Billing Month: {SubmittedData.month}</p>
+            <p>Email: {SubmittedData.email}</p>
+            <p>Address: {SubmittedData.address}</p>
+            <div className="flex justify-end space-x-4 mt-4">
+              <button onClick={closePopup2} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+                Close
+              </button>
+              <button onClick={handlerouter} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
+                Pay Now
+              </button>
+            </div>
           </div>
         </div>
       )}

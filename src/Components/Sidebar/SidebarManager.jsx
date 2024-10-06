@@ -11,7 +11,7 @@ import ToggleMan from './ToggleMan'
 const SidebarManager = () => {
   return (
     <div>
-        <div className='bg-white overflow-y-scroll sticky  top-4 h-[100vh]'>
+        <div className='bg-zinc-800 text-white overflow-y-scroll sticky  top-4 h-[100vh]'>
             {/*Main SideBar Content */}
             <ToggleMan/>
             <Search/>

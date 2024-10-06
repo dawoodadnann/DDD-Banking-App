@@ -1,4 +1,3 @@
-
 * {
     margin: 0;
     padding: 0;
@@ -11,18 +10,14 @@ body, html {
     width: 100%;
 }
 
-
 .login-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-color: #27272a; 
+    /* Darker background color */
 }
-
 
 .navbar {
     width: 100%;
@@ -33,13 +28,10 @@ body, html {
     position: fixed;
     top: 0;
     left: 0;
-    background-color: transparent; /* Transparent background */
-    background: none; /* Ensure no background color is inherited */
-    z-index: 1000; /* Ensure it stays above other elements */
-    border: none; /* Remove any border that might show up */
+    background-color: transparent;
+    z-index: 1000;
+    border: none;
 }
-
-
 
 .logo {
     height: 50px;
@@ -62,15 +54,14 @@ body, html {
     background-color: rgb(20, 11, 11); 
 }
 
-
 .login-box {
-    background-color: rgba(255, 255, 255, 0.7); 
+    
     padding: 2rem;
     border-radius: 8px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
     width: 350px;
     text-align: center;
-    margin-top: 50px; 
+    margin-top: 50px;
 }
 
 .logo-box {
@@ -78,32 +69,44 @@ body, html {
     margin-bottom: 20px;
 }
 
-h2 {
-    color: #333;
-    margin-bottom: 1rem;
+h2, h3 {
+    color: #27272a;
 }
 
-h3 {
-    color: #333;
-    margin-bottom: 1.5rem;
-}
-
-
-/* form input {
+.textbox {
     width: 100%;
     padding: 0.75rem;
     margin: 0.5rem 0;
     border-radius: 25px; 
-    border: 1px solid #cccccc;
-    font-size: 1rem;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
-} */
+    border: 1px solid #27272a; /* Dark border color */
+    font-size: 16px;
+    background-color: #e6e6e6; /* Light input background color */
+    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1);
+}
 
-/* form input:focus {
+.textbox:focus {
     outline: none;
     border-color: #007bff;
-} */
+}
 
+.ilabel {
+    position: absolute;
+    top: 1rem; 
+    left: 1.4rem;
+    cursor: text;
+    font-size: 16px;
+    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;    
+    padding: 0 5px;
+    color: #27272a; /* Darker label color */
+}
+
+.textbox:focus + .ilabel,
+.textbox:not(:placeholder-shown) + .ilabel {
+    top: 0.2rem; 
+    left: 0.8rem; 
+    font-size: 12px;  
+    background-color: rgba(255, 255, 255, 0.9);  
+}
 
 .submit-btn {
     width: 100%;
@@ -123,51 +126,13 @@ h3 {
     background-color: rgb(20, 11, 11); 
 }
 
-
 .error-message {
     margin-top: 1rem;
     color: red;
     font-size: 0.875rem;
 }
- /* DYNAMIC INPUT TRANSITION */
-.textbox {
-    width: 100%;
-    padding: 0.75rem;
-    margin: 0.5rem 0;
-    border-radius: 25px; 
-    border: 1px solid #cccccc;
-    font-size: 16px;
-    box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.1); 
 
-    
-  
-  }
-  
-  .ilabel {
-    position: absolute;
-    top: 1rem; 
-    left: 1.4rem;
-    cursor: text;
-    font-size: 16px; 
-    transition: top 200ms ease-in, left 200ms ease-in, font-size 200ms ease-in;    
-    padding: 0 5px;
-  }
-  
-  .textbox:focus {
-    outline: none;
-    border-color: #007bff;
-  }
-  
-  .textbox:focus + .ilabel,
-  .textbox:not(:placeholder-shown) + .ilabel {
-    top: 0.2rem; 
-    left: 0.8rem; 
-    font-size: 12px;  
-    background-color: rgba(255, 255, 255, 0.7);  
-   
-  }
-
-  .otp-modal {
+.otp-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -178,25 +143,34 @@ h3 {
     justify-content: center;
     align-items: center;
     z-index: 1000;
-  }
-  
-  .otp-modal-content {
+}
+
+.otp-modal-content {
     background-color: white;
     padding: 20px;
     border-radius: 8px;
     text-align: center;
-  }
-  
-  .otp-modal input {
+}
+
+.otp-modal input {
     padding: 10px;
     margin: 10px 0;
     width: 80%;
-  }
-  
-  .verify-btn,
-  .close-btn {
+}
+
+.verify-btn,
+.close-btn {
     padding: 10px 15px;
     margin: 10px;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-  }
-  
+    background-color: #007bff;
+    color: white;
+    font-weight: bold;
+}
+
+.verify-btn:hover,
+.close-btn:hover {
+    background-color: #0056b3;
+}

@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
+import DynamicInput from "./DynamicInput"; // Adjust the import based on your file structure
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -60,7 +61,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
+    <div className="login-container bg-zinc-900">
       <div className="navbar">
         <img src={logo} alt="E-bank" className="logo" />
         <div className="nav-buttons">
@@ -84,34 +85,26 @@ const Login = () => {
           </Link>
         </div>
       </div>
-      <div className="login-box">
+      <div className="login-box bg-zinc-800 text-white">
         <img src={logo} alt="E-bank" className="logo-box" />
         <h2>D-Pay</h2>
         <h3>Sign In To Continue</h3>
         <form onSubmit={handleSubmit}>
-          <div className="form">
-            <input
-              className="textbox"
-              type="email"
-              placeholder=" "
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-            <label className="ilabel">E-mail *</label>
-          </div>
+          <DynamicInput
+            label="E-mail *"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
 
-          <div className="form">
-            <input
-              className="textbox"
-              type="password"
-              placeholder=" "
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-            <label className="ilabel">Password *</label>
-          </div>
+          <DynamicInput
+            label="Password *"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
 
           <button type="submit" className="submit-btn">
             Log in

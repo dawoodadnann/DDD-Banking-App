@@ -41,9 +41,9 @@ export const MoneyTransfer = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          Amount:amount,
-          accnum:accountNumber,
-          check:true
+          Amount: amount,
+          accnum: accountNumber,
+          check: true,
         }),
       });
 
@@ -64,7 +64,7 @@ export const MoneyTransfer = () => {
     <CssVarsProvider>
       <div
         style={{
-          backgroundColor: "#5F9EA0",
+          backgroundColor: "#27272A", // Changed to zinc-800
           minHeight: "100vh",
           display: "flex",
           justifyContent: "center",
@@ -75,7 +75,7 @@ export const MoneyTransfer = () => {
           variant="outlined"
           sx={{
             p: 4,
-            backgroundColor: "#008080",
+            backgroundColor: "#27272A", // Changed to zinc-800
             borderRadius: "sm",
             boxShadow: "md",
             width: "100%",
@@ -87,7 +87,7 @@ export const MoneyTransfer = () => {
             fontSize="xl"
             sx={{
               mb: 2,
-              color: "#ffffff",
+              color: "#ffffff", // White text color
               fontWeight: "bold",
               textAlign: "center",
             }}
@@ -96,62 +96,97 @@ export const MoneyTransfer = () => {
           </Typography>
 
           <FormControl sx={{ mb: 3 }}>
-            <FormLabel>Payment Method</FormLabel>
+            <FormLabel sx={{ color: "#ffffff" }}>Payment Method</FormLabel>
             <RadioGroup
               value={paymentMethod}
               onChange={(e) => setPaymentMethod(e.target.value)}
             >
-              <Radio value="dPay" label="Pay with D-Pay" />
-              <Radio value="crossPlatform" label="Pay Cross Platform" />
+              <Radio
+                value="dPay"
+                label="Pay with D-Pay"
+                sx={{ color: "#ffffff", "&.Mui-checked": { color: "#ffffff" } }} // Set text color to white
+              />
+              <Radio
+                value="crossPlatform"
+                label="Pay Cross Platform"
+                sx={{ color: "#ffffff", "&.Mui-checked": { color: "#ffffff" } }} // Set text color to white
+              />
             </RadioGroup>
           </FormControl>
 
-          <div className="mb-4">
-            <Typography level="body2" sx={{ mb: 1 }}>
+          {/* Amount Input */}
+          <FormControl sx={{ mb: 3 }}>
+            <FormLabel
+              sx={{
+                color: "#ffffff",
+                transition: "0.2s ease all",
+                transform: amount ? "translateY(-20px)" : "translateY(0)",
+                fontSize: amount ? "0.75rem" : "1rem",
+              }}
+            >
               Amount
-            </Typography>
+            </FormLabel>
             <Input
               type="number"
               value={amount}
               onChange={(e) => setAmount(e.target.value)}
-              placeholder="Enter amount"
+              onFocus={() => setAmount(amount)} // To trigger the label movement
+              placeholder=" "
               fullWidth
+              sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
             />
-          </div>
+          </FormControl>
 
+          {/* Conditional Bank/Payment App Selection */}
           {paymentMethod === "crossPlatform" && (
-            <div className="mb-4">
-              <Typography level="body2" sx={{ mb: 1 }}>
+            <FormControl sx={{ mb: 3 }}>
+              <FormLabel
+                sx={{
+                  color: "#ffffff",
+                  transition: "0.2s ease all",
+                  transform: selectedBank ? "translateY(-20px)" : "translateY(0)",
+                  fontSize: selectedBank ? "0.75rem" : "1rem",
+                }}
+              >
                 Select Bank/Payments App
-              </Typography>
+              </FormLabel>
               <Select
                 value={selectedBank}
                 onChange={(e, newValue) => setSelectedBank(newValue)}
-                placeholder="Select a bank/payment app"
+                placeholder=" "
                 fullWidth
+                sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
               >
                 <Option value="BankA">Bank A</Option>
                 <Option value="BankB">Bank B</Option>
                 <Option value="PaymentAppA">Payment App A</Option>
                 <Option value="PaymentAppB">Payment App B</Option>
               </Select>
-            </div>
+            </FormControl>
           )}
 
-          <div className="mb-4">
-            <Typography level="body2" sx={{ mb: 1 }}>
+          {/* Account Number Input */}
+          <FormControl sx={{ mb: 3 }}>
+            <FormLabel
+              sx={{
+                color: "#ffffff",
+                transition: "0.2s ease all",
+                transform: accountNumber ? "translateY(-20px)" : "translateY(0)",
+                fontSize: accountNumber ? "0.75rem" : "1rem",
+              }}
+            >
               Account Number
-            </Typography>
+            </FormLabel>
             <Input
               type="text"
               value={accountNumber}
               onChange={(e) => setAccountNumber(e.target.value)}
-              placeholder="Enter account number"
+              onFocus={() => setAccountNumber(accountNumber)} // To trigger the label movement
+              placeholder=" "
               fullWidth
+              sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
             />
-          </div>
-
-
+          </FormControl>
 
           <Button
             onClick={handleTransfer}
@@ -164,7 +199,7 @@ export const MoneyTransfer = () => {
           </Button>
 
           {statusMessage && (
-            <Typography level="body2" sx={{ mt: 2 }}>
+            <Typography level="body2" sx={{ mt: 2, color: "#ffffff" }}>
               {statusMessage}
             </Typography>
           )}

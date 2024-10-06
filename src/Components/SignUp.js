@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import logo from "../assets/logo2.png";
 import { Link } from "react-router-dom";
+import DynamicInput from './DynamicInput'; // Import the DynamicInput component
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -11,7 +12,6 @@ const Signup = () => {
     confirmPassword: "",
     nationality: "",
     gender: "",
-
   });
   const [error, setError] = useState("");
 
@@ -48,8 +48,8 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-900">
-      <div className="w-full flex justify-between p-4 bg-gray-800">
+    <div className="min-h-screen flex flex-col items-center bg-zinc-900">
+      <div className="w-full flex justify-between p-4 bg-zinc-800">
         <img src={logo} alt="E-bank" className="h-10" />
         <div className="flex gap-4">
           <Link to="/login">
@@ -60,12 +60,12 @@ const Signup = () => {
           </Link>
         </div>
       </div>
-      <div className="w-full max-w-md mt-8 p-8 bg-gray-800 rounded-lg shadow-lg">
+      <div className="w-full max-w-md mt-8 p-8 bg-zinc-800 rounded-lg shadow-lg">
         <img src={logo} alt="E-bank" className="h-12 mx-auto mb-4" />
         <h2 className="text-2xl font-semibold text-center text-white mb-2">D-Pay</h2>
         <h3 className="text-lg font-medium text-center text-gray-400 mb-6">Create an Account</h3>
         <form onSubmit={handleSubmit}>
-          {[
+          {[  // Map through fields
             { label: "First Name", name: "fname", type: "text" },
             { label: "Last Name", name: "lname", type: "text" },
             { label: "Date of Birth", name: "dob", type: "date" },
@@ -76,21 +76,20 @@ const Signup = () => {
             { label: "E-mail", name: "email", type: "email" },
             { label: "Password", name: "password", type: "password" },
             { label: "Confirm Password", name: "confirmPassword", type: "password" },
-
           ].map((field, index) => (
             <div key={index} className="mb-4">
-              <input
-                type={field.type}
+              <DynamicInput  // Use DynamicInput instead of input
+                label={field.label}
                 name={field.name}
+                type={field.type}
                 placeholder={field.label}
                 value={formData[field.name]}
                 onChange={handleChange}
                 required
-                className="w-full p-3 rounded bg-gray-700 text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
             </div>
           ))}
-
+          
           <button type="submit" className="w-full bg-blue-600 text-white py-3 rounded mt-4 hover:bg-blue-700">
             Sign up
           </button>
