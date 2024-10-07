@@ -4,7 +4,7 @@ import Dashboard from '../components/Dashboard/Dashboard';
 
 const DashboardPage = () => {
   return (
-    <div className=" bg-zinc-800 p-4">
+    <div className=" p-4">
       <main className="grid gap-4 grid-cols-[250px_1fr]">
         <Sidebar />
         <Dashboard />

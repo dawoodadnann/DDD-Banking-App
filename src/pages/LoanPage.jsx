@@ -1,6 +1,7 @@
 // src/LoanPage.js
 import React, { useState } from 'react';
 import './LoanPage.css'; // Optionally, for styling
+import DynamicInput from '../components/DynamicInput'; // Import the DynamicInput component
 
 const LoanPage = () => {
   const [formData, setFormData] = useState({
@@ -32,8 +33,8 @@ const LoanPage = () => {
       {!submitted ? (
         <form onSubmit={handleSubmit} className="loan-form">
           <div className="form-group">
-            <label>Full Name:</label>
-            <input
+            <DynamicInput
+              label="Full Name"
               type="text"
               name="fullName"
               value={formData.fullName}
@@ -42,8 +43,8 @@ const LoanPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Email:</label>
-            <input
+            <DynamicInput
+              label="Email"
               type="email"
               name="email"
               value={formData.email}
@@ -52,8 +53,8 @@ const LoanPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Loan Amount:</label>
-            <input
+            <DynamicInput
+              label="Loan Amount"
               type="number"
               name="loanAmount"
               value={formData.loanAmount}
@@ -62,8 +63,8 @@ const LoanPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Loan Term (in years):</label>
-            <input
+            <DynamicInput
+              label="Loan Term (in years)"
               type="number"
               name="loanTerm"
               value={formData.loanTerm}
@@ -72,8 +73,8 @@ const LoanPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Annual Income:</label>
-            <input
+            <DynamicInput
+              label="Annual Income"
               type="number"
               name="income"
               value={formData.income}

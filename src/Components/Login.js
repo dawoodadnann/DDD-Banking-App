@@ -3,7 +3,7 @@ import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
 import DynamicInput from "./DynamicInput"; // Adjust the import based on your file structure
-
+import '../App.css'
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -61,7 +61,8 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container bg-zinc-900">
+    <div className="login-container ">
+      {/*bg-zinc-900*/}
       <div className="navbar">
         <img src={logo} alt="E-bank" className="logo" />
         <div className="nav-buttons">

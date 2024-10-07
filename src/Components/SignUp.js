@@ -48,7 +48,7 @@ const Signup = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-zinc-900">
+    <div className="min-h-screen flex flex-col items-center ">{/*bg-zinc-900 */}
       <div className="w-full flex justify-between p-4 bg-zinc-800">
         <img src={logo} alt="E-bank" className="h-10" />
         <div className="flex gap-4">

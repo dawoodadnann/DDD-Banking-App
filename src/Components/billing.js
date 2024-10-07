@@ -108,7 +108,7 @@ const Billing = () => {
   const billOptions = billCompanies[selectedBill] || [];
 
   return (
-    <div className="bg-zinc-800 pt-16 h-screen">
+    <div className=" pt-16 h-screen">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6">
         <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Electricity")}>
           <h1 className="text-xl font-semibold text-center text-black">Electricity Bill</h1>

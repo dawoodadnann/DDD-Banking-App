@@ -1,17 +1,6 @@
 import React, { useState } from "react";
-import {
-  CssVarsProvider,
-  Sheet,
-  Typography,
-  Input,
-  Button,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  Radio,
-  Select,
-  Option,
-} from "@mui/joy";
+// Assuming DynamicInput is imported correctly from your project components
+import DynamicInput from "./DynamicInput";
 
 export const MoneyTransfer = () => {
   const [amount, setAmount] = useState("");
@@ -21,7 +10,6 @@ export const MoneyTransfer = () => {
   const [selectedBank, setSelectedBank] = useState("");
 
   const handleTransfer = async () => {
-    // Input validation
     if (!amount || !accountNumber) {
       setStatusMessage("Please enter both account number and amount.");
       return;
@@ -33,7 +21,6 @@ export const MoneyTransfer = () => {
     }
 
     try {
-      // Sending a POST request to the backend to initiate the transfer
       const response = await fetch("http://localhost:5000/interbanktransaction", {
         method: "POST",
         credentials: "include",
@@ -61,150 +48,89 @@ export const MoneyTransfer = () => {
   };
 
   return (
-    <CssVarsProvider>
-      <div
-        style={{
-          backgroundColor: "#27272A", // Changed to zinc-800
-          minHeight: "100vh",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Sheet
-          variant="outlined"
-          sx={{
-            p: 4,
-            backgroundColor: "#27272A", // Changed to zinc-800
-            borderRadius: "sm",
-            boxShadow: "md",
-            width: "100%",
-            maxWidth: 400,
-          }}
+    <div className=" min-h-screen flex items-center justify-center">
+      <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+        <h2 className="text-xl font-bold text-white text-center mb-4">
+          Transfer Money With Just A Tap
+        </h2>
+
+        {/* Tabs for Payment Method Selection */}
+        <div className="mb-4">
+          <div className="flex space-x-4 border-b border-gray-600 bg-zinc-600">
+            <button
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
+                paymentMethod === "dPay" ? "bg-blue-600 text-white" : "text-gray-400"
+              }`}
+              onClick={() => setPaymentMethod("dPay")}
+            >
+              Pay with D-Pay
+            </button>
+            <button
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
+                paymentMethod === "crossPlatform" ? "bg-blue-600 text-white" : "text-gray-400"
+              }`}
+              onClick={() => setPaymentMethod("crossPlatform")}
+            >
+              Pay Cross Platform
+            </button>
+          </div>
+        </div>
+
+        {/* Amount Input */}
+        <div className="mb-4">
+          <label className="block text-white mb-1"></label>
+          <DynamicInput
+            label="Amount"
+            type="number"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            placeholder="Enter amount"
+            className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+          />
+        </div>
+
+        {/* Conditional Bank/Payment App Selection */}
+        {paymentMethod === "crossPlatform" && (
+          <div className="mb-4">
+            <label className="block text-white mb-1">Select Bank/Payments App</label>
+            <select
+              value={selectedBank}
+              onChange={(e) => setSelectedBank(e.target.value)}
+              className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+            >
+              <option value="" disabled>Select a bank/payment app</option>
+              <option value="BankA">Bank A</option>
+              <option value="BankB">Bank B</option>
+              <option value="PaymentAppA">Payment App A</option>
+              <option value="PaymentAppB">Payment App B</option>
+            </select>
+          </div>
+        )}
+
+        {/* Account Number Input */}
+        <div className="mb-4">
+          <label className="block text-white mb-1"></label>
+          <DynamicInput
+            label="Account Number"
+            type="text"
+            value={accountNumber}
+            onChange={(e) => setAccountNumber(e.target.value)}
+            placeholder="Enter account number"
+            className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+          />
+        </div>
+
+        <button
+          onClick={handleTransfer}
+          className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500"
         >
-          <Typography
-            level="h2"
-            fontSize="xl"
-            sx={{
-              mb: 2,
-              color: "#ffffff", // White text color
-              fontWeight: "bold",
-              textAlign: "center",
-            }}
-          >
-            Transfer Money With Just A Tap
-          </Typography>
+          Send
+        </button>
 
-          <FormControl sx={{ mb: 3 }}>
-            <FormLabel sx={{ color: "#ffffff" }}>Payment Method</FormLabel>
-            <RadioGroup
-              value={paymentMethod}
-              onChange={(e) => setPaymentMethod(e.target.value)}
-            >
-              <Radio
-                value="dPay"
-                label="Pay with D-Pay"
-                sx={{ color: "#ffffff", "&.Mui-checked": { color: "#ffffff" } }} // Set text color to white
-              />
-              <Radio
-                value="crossPlatform"
-                label="Pay Cross Platform"
-                sx={{ color: "#ffffff", "&.Mui-checked": { color: "#ffffff" } }} // Set text color to white
-              />
-            </RadioGroup>
-          </FormControl>
-
-          {/* Amount Input */}
-          <FormControl sx={{ mb: 3 }}>
-            <FormLabel
-              sx={{
-                color: "#ffffff",
-                transition: "0.2s ease all",
-                transform: amount ? "translateY(-20px)" : "translateY(0)",
-                fontSize: amount ? "0.75rem" : "1rem",
-              }}
-            >
-              Amount
-            </FormLabel>
-            <Input
-              type="number"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              onFocus={() => setAmount(amount)} // To trigger the label movement
-              placeholder=" "
-              fullWidth
-              sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
-            />
-          </FormControl>
-
-          {/* Conditional Bank/Payment App Selection */}
-          {paymentMethod === "crossPlatform" && (
-            <FormControl sx={{ mb: 3 }}>
-              <FormLabel
-                sx={{
-                  color: "#ffffff",
-                  transition: "0.2s ease all",
-                  transform: selectedBank ? "translateY(-20px)" : "translateY(0)",
-                  fontSize: selectedBank ? "0.75rem" : "1rem",
-                }}
-              >
-                Select Bank/Payments App
-              </FormLabel>
-              <Select
-                value={selectedBank}
-                onChange={(e, newValue) => setSelectedBank(newValue)}
-                placeholder=" "
-                fullWidth
-                sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
-              >
-                <Option value="BankA">Bank A</Option>
-                <Option value="BankB">Bank B</Option>
-                <Option value="PaymentAppA">Payment App A</Option>
-                <Option value="PaymentAppB">Payment App B</Option>
-              </Select>
-            </FormControl>
-          )}
-
-          {/* Account Number Input */}
-          <FormControl sx={{ mb: 3 }}>
-            <FormLabel
-              sx={{
-                color: "#ffffff",
-                transition: "0.2s ease all",
-                transform: accountNumber ? "translateY(-20px)" : "translateY(0)",
-                fontSize: accountNumber ? "0.75rem" : "1rem",
-              }}
-            >
-              Account Number
-            </FormLabel>
-            <Input
-              type="text"
-              value={accountNumber}
-              onChange={(e) => setAccountNumber(e.target.value)}
-              onFocus={() => setAccountNumber(accountNumber)} // To trigger the label movement
-              placeholder=" "
-              fullWidth
-              sx={{ backgroundColor: "#3a3a3c", color: "#ffffff" }} // Dark input background with white text
-            />
-          </FormControl>
-
-          <Button
-            onClick={handleTransfer}
-            variant="solid"
-            color="primary"
-            fullWidth
-            sx={{ mt: 2 }}
-          >
-            Send
-          </Button>
-
-          {statusMessage && (
-            <Typography level="body2" sx={{ mt: 2, color: "#ffffff" }}>
-              {statusMessage}
-            </Typography>
-          )}
-        </Sheet>
+        {statusMessage && (
+          <p className="text-white mt-2">{statusMessage}</p>
+        )}
       </div>
-    </CssVarsProvider>
+    </div>
   );
 };

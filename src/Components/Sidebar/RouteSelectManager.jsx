@@ -14,7 +14,7 @@ import {
 
 export const RouteSelectManager = () => {
   return (
-    <div className="space-y-1">
+    <div className="space-y-1 bg-zinc-800">
       <Route Icon={FiHome} selected={true} title="Home" linkTo="/" />
       <Route Icon={FiDollarSign} selected={false} title="Manager Users" linkTo="/transfer" />
       <Route Icon={FiDollarSign} selected={false} title="Approve Requests" linkTo="/transfer" />

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import DynamicInput from '../components/DynamicInput'; // Adjust this import path based on your project structure
 import './HelpPage.css';
 
 const HelpPage = () => {
@@ -25,15 +26,15 @@ const HelpPage = () => {
   };
 
   return (
-    <div className="help-page">
+    <div className="help-page ">
       <h1>Help & Support</h1>
       
       {!submitted ? (
         <form onSubmit={handleSubmit} className="help-form">
           <h2>Submit a Question</h2>
           <div className="form-group">
-            <label>Your Name:</label>
-            <input
+            <DynamicInput
+              label="Your Name"
               type="text"
               name="name"
               value={formData.name}
@@ -42,8 +43,8 @@ const HelpPage = () => {
             />
           </div>
           <div className="form-group">
-            <label>Your Email:</label>
-            <input
+            <DynamicInput
+              label="Your Email"
               type="email"
               name="email"
               value={formData.email}
