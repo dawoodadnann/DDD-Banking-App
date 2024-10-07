@@ -11,8 +11,7 @@ import LoanPage from './pages/LoanPage';
 import HelpPage from './pages/HelpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
-
-
+import PortfolioPage from './pages/PortfolioPage';
 
 
 
@@ -22,7 +21,8 @@ function App() {
     <Router>
       <Navigation/>
       <Routes>
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Navigate to="/portfolio" />} />
+        <Route path="/portfolio" element={<PortfolioPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/billing" element={<Billing />} />
