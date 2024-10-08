@@ -10,6 +10,8 @@ const HelpPage = () => {
   });
 
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false); // For loading state
+  const [error, setError] = useState(null); // For handling error messages
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,19 +21,47 @@ const HelpPage = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
-    console.log('Help Request Submitted:', formData);
+    setLoading(true); // Set loading to true when request is in progress
+    setError(null); // Reset error before submission
+
+    try {
+      const response = await fetch("http://localhost:5000/askques", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        alert(`Thank you, ${formData.name}! Your help request has been submitted.`);
+        setSubmitted(true);
+        setFormData({ name: '', email: '', question: '' }); // Reset form data
+      } else {
+        const result = await response.json();
+        setError(result.message || "Help request submission failed");
+      }
+    } catch (error) {
+      setError("An error occurred while submitting your help request");
+    } finally {
+      setLoading(false); // Stop loading after the request finishes
+    }
   };
 
   return (
     <div className="help-page ">
       <h1>Help & Support</h1>
-      
+
       {!submitted ? (
         <form onSubmit={handleSubmit} className="help-form">
           <h2>Submit a Question</h2>
+
+          {/* Show error message if exists */}
+          {error && <p className="error-message">{error}</p>}
+
           <div className="form-group">
             <DynamicInput
               label="Your Name"
@@ -61,7 +91,10 @@ const HelpPage = () => {
               required
             ></textarea>
           </div>
-          <button type="submit" className="submit-btn">Submit</button>
+
+          <button type="submit" className="submit-btn" disabled={loading}>
+            {loading ? 'Submitting...' : 'Submit'}
+          </button>
         </form>
       ) : (
         <div className="confirmation-message">
