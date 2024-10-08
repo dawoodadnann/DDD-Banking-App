@@ -1,7 +1,36 @@
-import React from "react";
+import React, {useState} from "react";
 import "./PortfolioPage.css";
 
 const PortfolioPage = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const reviews = [
+    {
+      text: "D-Pay Bank made my business transactions so much easier! Highly recommend their services.",
+      author: "Sarah A."
+    },
+    {
+      text: "Their online banking portal is secure and user-friendly, making bill payments a breeze.",
+      author: "Ali K."
+    },
+    {
+      text: "Excellent customer service and reliable interbank transfers!",
+      author: "John D."
+    },
+    {
+      text: "I trust D-Pay Bank for all my financial needs. Truly innovative solutions!",
+      author: "Maria L."
+    }
+  ];
+
+  const prevSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === 0 ? reviews.length - 1 : prevIndex - 1));
+  };
+
+  const nextSlide = () => {
+    setCurrentIndex((prevIndex) => (prevIndex === reviews.length - 1 ? 0 : prevIndex + 1));
+  };
+
   return (
     <div className="portfolio-page">
       {/* Hero Section */}
@@ -85,6 +114,24 @@ const PortfolioPage = () => {
               convenient online banking portal.
             </p>
           </div>
+        </div>
+      </section>
+
+      {/* User Reviews Section */}
+      {/* User Reviews Section */}
+      <section id="reviews" className="reviews-section">
+        <h2>User Reviews</h2>
+        <div className="review-carousel">
+          <div className="carousel-wrapper" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
+            {reviews.map((review, index) => (
+              <div key={index} className="review-item">
+                <p>"{review.text}"</p>
+                <span>- {review.author}</span>
+              </div>
+            ))}
+          </div>
+          <button className="carousel-button left-arrow" onClick={prevSlide}>←</button>
+          <button className="carousel-button right-arrow" onClick={nextSlide}>→</button>
         </div>
       </section>
 

@@ -5,6 +5,7 @@ body {
   background-color: #f4f4f4;
 }
 
+/* Hero Section */
 .hero-section {
   height: 100vh;
   display: flex;
@@ -60,62 +61,63 @@ body {
   background-color: #0056b3;
 }
 
+/* About us Section */
 .about-section {
-  padding: 100px 20px; /* Increased padding for more space */
-  background: linear-gradient(135deg, #e0f7fa, #ffffff); /* Subtle gradient background */
+  padding: 100px 20px;
+  background: linear-gradient(135deg, #e0f7fa, #ffffff);
   text-align: center;
-  border-radius: 10px; /* Adds smooth edges */
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+  border-radius: 10px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
 }
 
 .about-section h2 {
-  font-size: 36px; /* Increase font size */
-  margin-bottom: 30px; /* More space below the heading */
-  color: #007bff; /* Adds brand color */
-  text-transform: uppercase; /* Uppercase letters for modern look */
-  letter-spacing: 2px; /* Adds spacing between letters */
-  font-weight: bold; /* Bolder heading */
+  font-size: 36px;
+  margin-bottom: 30px;
+  color: #007bff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: bold;
 }
 
 .about-section p {
-  font-size: 18px; /* Increased font size for readability */
-  color: #555; /* Darker text color for contrast */
-  line-height: 1.8; /* More line spacing */
+  font-size: 18px;
+  color: #555;
+  line-height: 1.8;
   max-width: 800px;
   margin: 0 auto;
-  animation: fadeIn 1.5s ease-in-out; /* Adds subtle animation */
+  animation: fadeIn 1.5s ease-in-out;
 }
 
-/* Keyframes for fade-in effect */
 @keyframes fadeIn {
   0% {
     opacity: 0;
-    transform: translateY(20px); /* Start slightly below */
+    transform: translateY(20px);
   }
   100% {
     opacity: 1;
-    transform: translateY(0); /* Ends in original position */
+    transform: translateY(0);
   }
 }
 
+/* Services Section */
 .services-section {
   padding: 80px 20px;
-  background: linear-gradient(135deg, #f9f9f9, #e0f7fa); /* Subtle gradient background */
+  background: linear-gradient(135deg, #f9f9f9, #e0f7fa);
   text-align: center;
 }
 
 .services-section h2 {
-  font-size: 36px; /* Slightly larger font size */
+  font-size: 36px;
   margin-bottom: 50px;
-  color: #007bff; /* Adding color to the heading */
-  text-transform: uppercase; /* Makes heading text all caps */
-  letter-spacing: 2px; /* Adds spacing between letters for a modern look */
+  color: #007bff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 30px; /* Increase gap for breathing space */
+  gap: 30px;
 }
 
 .service-item {
@@ -150,6 +152,7 @@ body {
   margin-bottom: 20px;
 }
 
+/* Contact us Section */
 .contact-section {
   padding: 100px;
   background: linear-gradient(135deg, #f0f8ff, #ffffff);
@@ -232,4 +235,94 @@ body {
     transform: translateY(0);
   }
 }
+
+/* User Reviews Section */
+.reviews-section {
+  padding: 80px 20px;
+  background: linear-gradient(135deg, #f9f9f9, #e0f7fa);
+  text-align: center;
+}
+
+.reviews-section h2 {
+  font-size: 36px;
+  margin-bottom: 50px;
+  color: #007bff;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.review-carousel {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.carousel-wrapper {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+  width: 100%;
+}
+
+.review-item {
+  min-width: 100%;
+  padding: 25px;
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+}
+
+.review-item:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.review-item p {
+  font-size: 18px;
+  font-style: italic;
+  color: #555;
+}
+
+.review-item span {
+  display: block;
+  margin-top: 10px;
+  font-size: 16px;
+  color: #007bff;
+  font-weight: bold;
+}
+
+.carousel-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.left-arrow {
+  left: 10px;
+}
+
+.right-arrow {
+  right: 10px;
+}
+
+.carousel-button:hover {
+  background-color: #0056b3;
+}
+
+
+
+
+
 
