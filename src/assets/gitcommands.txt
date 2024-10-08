@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDED MANAGER LOGIN AND SIGNUP AT /managerlogin and /managersignup"
+git commit -m "ADDED activity graph showing month usage also connect the otp with the backend"
 git status
 git push -u origin main
 

@@ -3,11 +3,11 @@ import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
 
 export const StatCards = () => {
   const [balance, setBalance] = useState(null);
+  const [usage, setUsage] = useState(null);
 
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        // Sending a POST request to the backend
         const response = await fetch("http://localhost:5000/getbalance", {
           method: "GET",
           credentials: "include",
@@ -24,6 +24,23 @@ export const StatCards = () => {
         } else {
           console.log(data.message);
         }
+
+        const response2 = await fetch("http://localhost:5000/getmonthexpense", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data2 = await response2.json(); // Correct response2.json
+
+        if (data2.monthlyusage[0].total_monthly_expenditure) {
+          console.log("Monthly expenditure retrieved successfully!");
+          setUsage(data2.monthlyusage[0].total_monthly_expenditure);
+        } else {
+          console.log(data2.monthlyusage[0].total_monthly_expenditure);
+        }
       } catch (error) {
         console.error("Error retrieving balance:", error);
         console.log("An error occurred. Please try again.");
@@ -31,7 +48,7 @@ export const StatCards = () => {
     };
 
     fetchBalance();
-  }, []); // Empty dependency array means this effect runs once when the component mounts
+  }, []); 
 
   return (
     <>
@@ -42,7 +59,7 @@ export const StatCards = () => {
       />
       <Card
         title="Spendings (This Month)"
-        value="$217.97"
+        value={usage !== null ? `$${usage}` : "Loading..."}
         trend="down"
       />
     </>
@@ -68,5 +85,4 @@ const Card = ({ title, value, trend }) => {
       </div>
     </div>
   );
-
 };

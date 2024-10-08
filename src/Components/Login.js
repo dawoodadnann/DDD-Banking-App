@@ -17,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     // Open OTP modal regardless of server response
-    setIsOtpModalOpen(true);
+    
 
     const payload = {
       email,
@@ -38,6 +38,16 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
+
+        setIsOtpModalOpen(true);
+        const response2 = await fetch("http://localhost:5000/sendemail", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+
         setError("");
       } else {
         setError(data.message);
@@ -49,8 +59,21 @@ const Login = () => {
   };
 
   // Function to verify OTP
-  const handleOtpVerification = () => {
-    if (otp === "1234") {
+  const handleOtpVerification =async () => {
+    const payload2 = {
+      otp
+    };
+    const response3 = await fetch("http://localhost:5000/checkotp", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload2),
+    });
+
+    const data = await response3.json();
+    if (otp === "1234"|| response3.ok) {
       // For demo purposes, replace with backend verification later
       alert("Login successful!");
       setIsOtpModalOpen(false);

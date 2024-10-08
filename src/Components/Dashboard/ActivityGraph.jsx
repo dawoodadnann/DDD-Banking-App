@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import {
   XAxis,
@@ -10,45 +10,45 @@ import {
   LineChart,
 } from "recharts";
 
-const data = [
-  {
-    name: "Week 1",
-    Deposits: 2750,
-    Withdrawals: 1250,
-  },
-  {
-    name: "Week 2",
-    Deposits: 3620,
-    Withdrawals: 2096,
-  },
-  {
-    name: "Week 3",
-    Deposits: 2900,
-    Withdrawals: 3192,
-  },
-  {
-    name: "Week 4",
-    Deposits: 4500,
-    Withdrawals: 2550,
-  },
-  {
-    name: "Week 5",
-    Deposits: 5050,
-    Withdrawals: 4200,
-  },
-  {
-    name: "Week 6",
-    Deposits: 6875,
-    Withdrawals: 3200,
-  },
-  {
-    name: "Week 7",
-    Deposits: 5700,
-    Withdrawals: 4205,
-  },
-];
-
 export const ActivityGraph = () => {
+  const [usageData, setUsageData] = useState([]);
+
+  useEffect(() => {
+    const fetchDailyExpense = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/getdailyexpense", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        if (data.dailyusage) {
+          // Process the response data to fit the Recharts data format
+          const formattedData = data.dailyusage.map((entry) => ({
+            name: new Date(entry.expenditure_date).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+            }), // Format date as "Oct 1", for example
+            totalExpenditure: parseFloat(entry.total_daily_expenditure),
+          }));
+
+          setUsageData(formattedData); // Update the state with formatted data
+          console.log("Daily expenditure retrieved successfully!");
+        } else {
+          console.log("No usage data found.");
+        }
+      } catch (error) {
+        console.error("Error retrieving daily expenses:", error);
+      }
+    };
+
+    fetchDailyExpense();
+  }, []);
+
   return (
     <div className="col-span-8 overflow-hidden rounded border border-stone-300">
       <div className="p-4">
@@ -62,7 +62,7 @@ export const ActivityGraph = () => {
           <LineChart
             width={500}
             height={400}
-            data={data}
+            data={usageData} // Use the dynamically fetched data
             margin={{
               top: 0,
               right: 0,
@@ -72,7 +72,7 @@ export const ActivityGraph = () => {
           >
             <CartesianGrid stroke="#e4e4e7" />
             <XAxis
-              dataKey="name"
+              dataKey="name" // Display dates on the X-axis
               axisLine={false}
               tickLine={false}
               className="text-xs font-bold"
@@ -89,15 +89,10 @@ export const ActivityGraph = () => {
             />
             <Line
               type="monotone"
-              dataKey="Deposits"
+              dataKey="totalExpenditure" // Expenditure data
               stroke="#18181b"
               fill="#18181b"
-            />
-            <Line
-              type="monotone"
-              dataKey="Withdrawals"
-              stroke="#5b21b6"
-              fill="#5b21b6"
+              name="Expenditure" // Tooltip label
             />
           </LineChart>
         </ResponsiveContainer>
