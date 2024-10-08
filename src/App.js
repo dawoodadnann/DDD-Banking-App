@@ -12,8 +12,8 @@ import HelpPage from './pages/HelpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './components/Navigation';
 import PortfolioPage from './pages/PortfolioPage';
-
-
+import ManagerLogin from './components/ManagerLogin'
+import ManagerSignup from './components/ManagerSignUp'
 
 
 function App() {
@@ -31,6 +31,9 @@ function App() {
         <Route path="/help" element={<HelpPage />} />
         <Route path="/manager-dashboard" element={<ManagerDashboard />} /> 
         <Route path="/money-transfer" element={<MoneyTransfer/>} /> 
+        <Route path="/managerlogin" element={<ManagerLogin/>} /> 
+        <Route path="/managersignup" element={<ManagerSignup/>} /> 
+
       </Routes>
     </Router>
   );

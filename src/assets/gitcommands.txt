@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "CONNECTED THE INTER BANK TRANSFER FROM BACKEND"
+git commit -m "ADDED MANAGER LOGIN AND SIGNUP AT /managerlogin and /managersignup"
 git status
 git push -u origin main
 
