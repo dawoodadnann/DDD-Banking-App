@@ -14,6 +14,7 @@ import Navigation from './components/Navigation';
 import PortfolioPage from './pages/PortfolioPage';
 import ManagerLogin from './components/ManagerLogin'
 import ManagerSignup from './components/ManagerSignUp'
+import CardManagementPage from './pages/CardManagementPage';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/loan" element={<LoanPage />} />
         <Route path="/help" element={<HelpPage />} />
+        <Route path="/cards" element={<CardManagementPage/>} />
         <Route path="/manager-dashboard" element={<ManagerDashboard />} /> 
         <Route path="/money-transfer" element={<MoneyTransfer/>} /> 
         <Route path="/managerlogin" element={<ManagerLogin/>} /> 
