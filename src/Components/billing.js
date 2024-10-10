@@ -11,10 +11,15 @@ import bill_9 from "../assets/bill_img/bill 9 invoice (1).png";
 import bill_10 from "../assets/bill_img/bill 10 invoice.png";
 import bill_11 from "../assets/bill_img/bill 11 payment.png";
 import bill_12 from "../assets/bill_img/bill 12 telephone.png";
+import { useNavigate, Link } from "react-router-dom";
 
 import "./billing.css";
 
+
+
+
 const Billing = () => {
+  const navigate = useNavigate();
   const [isPopupVisible, setPopupVisible] = useState(false);
   const [isPopup2Visible, setPopup2Visible] = useState(false);
   const [selectedBill, setSelectedBill] = useState(null);
@@ -96,6 +101,7 @@ const Billing = () => {
       if (response.ok) {
         alert("Payment successful: " + result.message);
         setPopup2Visible(false);
+        navigate('/dashboard');
       } else {
         alert("Payment failed: " + result.message);
       }
@@ -110,22 +116,55 @@ const Billing = () => {
   return (
     <div className=" pt-16 h-screen">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6">
-        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Electricity")}>
-          <h1 className="text-xl font-semibold text-center text-black">Electricity Bill</h1>
-          <img src={bill_7} className="logo mx-auto mt-4" alt="Electricity Bill" />
-        </div>
-        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Gas")}>
-          <h1 className="text-xl font-semibold text-center text-black">Gas Bill</h1>
-          <img src={bill_3} className="logo mx-auto mt-4" alt="Gas Bill" />
-        </div>
-        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Water")}>
-          <h1 className="text-xl font-semibold text-center text-black">Water Bill</h1>
-          <img src={bill_8} className="logo mx-auto mt-4" alt="Water Bill" />
-        </div>
-        <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Internet")}>
-          <h1 className="text-xl font-semibold text-center text-black">Internet Bill</h1>
-          <img src={bill_2} className="logo mx-auto mt-4" alt="Internet Bill" />
-        </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Electricity")}>
+    <h1 className="text-xl font-semibold text-center text-black">Electricity Bill</h1>
+    <img src={bill_7} className="logo mx-auto mt-4" alt="Electricity Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Gas")}>
+    <h1 className="text-xl font-semibold text-center text-black">Gas Bill</h1>
+    <img src={bill_3} className="logo mx-auto mt-4" alt="Gas Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Water")}>
+    <h1 className="text-xl font-semibold text-center text-black">Water Bill</h1>
+    <img src={bill_8} className="logo mx-auto mt-4" alt="Water Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Internet")}>
+    <h1 className="text-xl font-semibold text-center text-black">Internet Bill</h1>
+    <img src={bill_2} className="logo mx-auto mt-4" alt="Internet Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Telephone")}>
+    <h1 className="text-xl font-semibold text-center text-black">Telephone Bill</h1>
+    <img src={bill_12} className="logo mx-auto mt-4" alt="Telephone Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Tax")}>
+    <h1 className="text-xl font-semibold text-center text-black">Tax Bill</h1>
+    <img src={bill_9} className="logo mx-auto mt-4" alt="Tax Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Education")}>
+    <h1 className="text-xl font-semibold text-center text-black">Education Bill</h1>
+    <img src={bill_4} className="logo mx-auto mt-4" alt="Education Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Government")}>
+    <h1 className="text-xl font-semibold text-center text-black">Government Bill</h1>
+    <img src={bill_5} className="logo mx-auto mt-4" alt="Government Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("CreditCard")}>
+    <h1 className="text-xl font-semibold text-center text-black">Credit Card Bill</h1>
+    <img src={bill_6} className="logo mx-auto mt-4" alt="Credit Card Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Clubs")}>
+    <h1 className="text-xl font-semibold text-center text-black">Clubs Bill</h1>
+    <img src={bill_1} className="logo mx-auto mt-4" alt="Clubs Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("E_Challan")}>
+    <h1 className="text-xl font-semibold text-center text-black">E-Challan Bill</h1>
+    <img src={bill_10} className="logo mx-auto mt-4" alt="E-Challan Bill" />
+  </div>
+  <div className="box bg-white rounded-lg shadow-lg hover:shadow-2xl transition-all duration-200 p-4 cursor-pointer" onClick={() => handleBoxClick("Nadra")}>
+    <h1 className="text-xl font-semibold text-center text-black">Nadra Bill</h1>
+    <img src={bill_11} className="logo mx-auto mt-4" alt="Nadra Bill" />
+  </div>
+
         {/* Other bill types go here */}
       </div>
 

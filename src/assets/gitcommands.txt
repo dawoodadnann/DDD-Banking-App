@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDED HELP PAGE with the backend"
+git commit -m "OTP ADDED BILLING PAGE FIXED"
 git status
 git push -u origin main
 

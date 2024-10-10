@@ -38,14 +38,17 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-
+        const payloadt={
+          email : null,fname: '',lname:''
+        };
         setIsOtpModalOpen(true);
         const response2 = await fetch("http://localhost:5000/sendemail", {
-        method: "GET",
+        method: "POST",
         credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify(payloadt),
       });
 
         setError("");
@@ -59,6 +62,7 @@ const Login = () => {
   };
 
   // Function to verify OTP
+  
   const handleOtpVerification =async () => {
     const payload2 = {
       otp
