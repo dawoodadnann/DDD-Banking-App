@@ -3,4 +3,9 @@
 body {
     background-color: #1f2937 !important;
     font-family: 'Inter', sans-serif;
+    font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  /* background-color: #f4f4f4 !important; */
+  color: black !important; /* Change the text color to white */
 }
