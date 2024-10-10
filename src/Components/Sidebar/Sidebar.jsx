@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div className="relative">
       {/* Sidebar */}
       <div
-        className={`bg-zinc-800 fixed top-0 left-0 h-[100vh] text-white transition-transform duration-300 ${
+        className={` fixed top-0 left-0 h-[100vh] text-white transition-transform duration-300 ${
           isOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
         } z-40`} // Sidebar slides
       >

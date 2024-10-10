@@ -36,13 +36,13 @@ const AccountToggle = () => {
   }, []);
 
   return (
-    <div className='bg-zinc-800 border-b mb-4 mt-2 pb-4 border-stone-300 text-white'>
-        <button className="bg-zinc-800 text-white flex p-0.5 hover:bg-zinc-800 rounded transition-colors relative gap-2 w-full items-center">
+    <div className=' border-b mb-4 mt-2 pb-4  text-white'>
+        <button className=" text-white flex p-0.5 rounded transition-colors relative gap-2 w-full items-center">
 
         <img
           src="https://api.dicebear.com/9.x/dylan/svg?seed=Cookie"
           alt="avatar"
-          className="size-8 rounded shrink-0 bg-violet-500 shadow"
+          className="size-8 rounded shrink-0 500 shadow"
         />
 
         <div className="text-start flex-grow">

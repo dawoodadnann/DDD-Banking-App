@@ -5,7 +5,7 @@ import GridMan from './GridMan'
 
 const ManDash = () => {
   return (
-    <div className='bg-white rounded-lg pb-4 shadow h-[150vh]'>
+    <div className='text-white rounded-lg pb-4 shadow h-[150vh]'>
         <TopBar/>
         <GridMan/>
     </div>

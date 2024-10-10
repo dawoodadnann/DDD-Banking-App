@@ -14,6 +14,7 @@ import Navigation from './components/Navigation';
 import PortfolioPage from './pages/PortfolioPage';
 import ManagerLogin from './components/ManagerLogin'
 import ManagerSignup from './components/ManagerSignUp'
+import ManagerApproval from './components/ManagerApproval';
 
 
 function App() {
@@ -33,6 +34,8 @@ function App() {
         <Route path="/money-transfer" element={<MoneyTransfer/>} /> 
         <Route path="/managerlogin" element={<ManagerLogin/>} /> 
         <Route path="/managersignup" element={<ManagerSignup/>} /> 
+        <Route path="/managerapproval" element={<ManagerApproval/>} />
+
 
       </Routes>
     </Router>
