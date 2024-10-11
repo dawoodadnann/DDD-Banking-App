@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./CardManagementPage.css";
 import logo from "../assets/logo3.png";
 import mastercard from "../assets/mastercard.png";
@@ -10,18 +10,65 @@ const CardManagementPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [enteredPin, setEnteredPin] = useState("");
   const [pinError, setPinError] = useState("");
+  const [cardDetails, setCardDetails] = useState(null);
+  const [formData, setFormData] = useState({ name: "", phone: "", address: "", pin: "" });
   const defaultPin = "1234";
 
+  useEffect(() => {
+    const checkIsCard = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/checkcardstatus", {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        setHasCard(data.exists);
+
+        if (data.exists) {
+          await fetchCardDetails();
+        }
+      } catch (error) {
+        console.error("Error checking card status:", error);
+      }
+    };
+
+    const fetchCardDetails = async () => {
+      try {
+        const response = await fetch("http://localhost:5000/carddetail", {
+          method: "GET",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+        });
+
+        const data = await response.json();
+        if (response.ok) {
+          setCardDetails(data);
+        } else {
+          console.error(data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching card details:", error);
+      }
+    };
+
+    checkIsCard();
+  }, []);
+
   const toggleCardDetails = () => {
+    setShowCardDetails((prev) => !prev);
     if (!showCardDetails) {
-      setShowModal(true);
+      setShowModal(true); // Show modal only when card details are hidden
     } else {
-      setShowCardDetails(false);
       setEnteredPin("");
+      setPinError("");
     }
   };
 
   const handlePinSubmit = () => {
+
+    
     if (enteredPin === defaultPin) {
       setShowCardDetails(true);
       setShowModal(false);
@@ -29,6 +76,38 @@ const CardManagementPage = () => {
       setPinError("");
     } else {
       setPinError("Incorrect PIN! Please try again.");
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch("http://localhost:5000/addcard", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "Debit",
+          name: formData.name,
+          pin: formData.pin,
+          phone: formData.phone,
+        }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        alert(data.message);
+        setHasCard(true);
+      } else {
+        alert(data.message);
+      }
+    } catch (error) {
+      console.error("Error adding card:", error);
     }
   };
 
@@ -43,19 +122,15 @@ const CardManagementPage = () => {
             <div className="chip">
               <img src={chip} alt="Debit Card Chip" />
             </div>
-            {showCardDetails && (
+            {showCardDetails && cardDetails && (
               <div className="card-details">
-                <p className="card-number">5412 7512 3412 3456</p>
-                <p className="valid-thru">Valid Thru: 12/25</p>
-                <p className="cardholder-name">John Doe</p>
+                <p className="card-number">{cardDetails.data.card_num || "**** **** **** ****"}</p>
+                <p className="cardholder-name">{cardDetails.data.card_name || "John Doe"}</p>
+                <p className="card-id">Card ID: {cardDetails.data.card_id || "XXXX-XXXX-XXXX"}</p>
               </div>
             )}
             <div className="card-logo-bottom">
-              <img
-                src={mastercard}
-                alt="MasterCard Logo"
-                className="mastercard-logo"
-              />
+              <img src={mastercard} alt="MasterCard Logo" className="mastercard-logo" />
             </div>
           </div>
 
@@ -66,28 +141,25 @@ const CardManagementPage = () => {
       ) : (
         <div className="apply-card">
           <h2>Apply for a D-Pay Debit Card</h2>
-          <p>
-            You currently do not have a D-Pay debit card. To apply, follow the
-            steps below:
-          </p>
+          <p>You currently do not have a D-Pay debit card. To apply, follow the steps below:</p>
           <section className="debit-card-application">
             <h2>Debit Card Application Form</h2>
-            <form className="application-form">
+            <form className="application-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Full Name:</label>
-                <input type="text" id="name" name="name" required />
-              </div>
-              <div className="form-group">
-                <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" required />
+                <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} />
               </div>
               <div className="form-group">
                 <label htmlFor="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required />
+                <input type="tel" id="phone" name="phone" required value={formData.phone} onChange={handleChange} />
               </div>
               <div className="form-group">
                 <label htmlFor="address">Address:</label>
-                <textarea id="address" name="address" required></textarea>
+                <textarea id="address" name="address" required value={formData.address} onChange={handleChange}></textarea>
+              </div>
+              <div className="form-group">
+                <label htmlFor="pin">PIN:</label>
+                <input type="password" id="pin" name="pin" required value={formData.pin} onChange={handleChange} />
               </div>
               <button type="submit" className="submit-button">
                 Submit Application
@@ -110,13 +182,11 @@ const CardManagementPage = () => {
             {pinError && <p className="error-message">{pinError}</p>}
             <div className="modal-buttons">
               <button onClick={handlePinSubmit}>Submit</button>
-              <button
-                onClick={() => {
-                  setShowModal(false);
-                  setEnteredPin("");
-                  setPinError("");
-                }}
-              >
+              <button onClick={() => {
+                setShowModal(false);
+                setEnteredPin("");
+                setPinError("");
+              }}>
                 Cancel
               </button>
             </div>

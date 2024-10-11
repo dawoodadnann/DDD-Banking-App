@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "OTP ADDED BILLING PAGE FIXED"
+git commit -m "ADDED THE CARD MANAGEMENT WITH BACKEND"
 git status
 git push -u origin main
 
@@ -9,3 +9,5 @@ git push -u origin main
 git remote set-url origin 
 
 git pull origin main
+  git config --global user.email "daniyal236fahim@gmail.com"
+  git config --global user.name "Daniyal Fahim"
