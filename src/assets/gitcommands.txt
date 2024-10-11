@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADDED THE CARD MANAGEMENT WITH BACKEND AND PIN CODE LOGIC"
+git commit -m "CORRECTED ADDED THE CARD MANAGEMENT WITH BACKEND AND PIN CODE LOGIC"
 git status
 git push -u origin main
 

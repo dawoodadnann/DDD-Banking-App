@@ -10,6 +10,8 @@ const CardManagementPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [enteredPin, setEnteredPin] = useState("");
   const [pinError, setPinError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [addingCard, setAddingCard] = useState(false); // New loading state for adding card
   const [cardDetails, setCardDetails] = useState(null);
   const [formData, setFormData] = useState({ name: "", phone: "", address: "", pin: "" });
 
@@ -33,27 +35,30 @@ const CardManagementPage = () => {
       }
     };
 
-    const fetchCardDetails = async () => {
-      try {
-        const response = await fetch("http://localhost:5000/carddetail", {
-          method: "GET",
-          credentials: "include",
-          headers: { "Content-Type": "application/json" },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          setCardDetails(data);
-        } else {
-          console.error("Failed to fetch card details:", response.statusText);
-        }
-      } catch (error) {
-        console.error("Error fetching card details:", error);
-      }
-    };
 
     checkIsCard();
   }, []);
+
+
+  
+  const fetchCardDetails = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/carddetail", {
+        method: "GET",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setCardDetails(data);
+      } else {
+        console.error("Failed to fetch card details:", response.statusText);
+      }
+    } catch (error) {
+      console.error("Error fetching card details:", error);
+    }
+  };
 
   const toggleCardDetails = () => {
     setShowCardDetails((prev) => !prev);
@@ -65,6 +70,8 @@ const CardManagementPage = () => {
   };
 
   const handlePinSubmit = async () => {
+    setLoading(true); // Start loading
+
     try {
       const response = await fetch("http://localhost:5000/checkpin", {
         method: "POST",
@@ -82,6 +89,9 @@ const CardManagementPage = () => {
       }
     } catch (error) {
       console.error("Error submitting PIN:", error);
+      setPinError("An error occurred. Please try again later.");
+    } finally {
+      setLoading(false); // Stop loading
     }
   };
 
@@ -97,6 +107,8 @@ const CardManagementPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setAddingCard(true); // Start loading for adding card
+
     try {
       const response = await fetch("http://localhost:5000/addcard", {
         method: "POST",
@@ -114,9 +126,12 @@ const CardManagementPage = () => {
       alert(data.message);
       if (response.ok) {
         setHasCard(true);
+        fetchCardDetails(); // Fetch card details after successfully adding the card
       }
     } catch (error) {
       console.error("Error adding card:", error);
+    } finally {
+      setAddingCard(false); // Stop loading for adding card
     }
   };
 
@@ -170,7 +185,9 @@ const CardManagementPage = () => {
                 <label htmlFor="pin">PIN:</label>
                 <input type="password" id="pin" name="pin" required value={formData.pin} onChange={handleChange} />
               </div>
-              <button type="submit" className="submit-button">Submit Application</button>
+              <button type="submit" className="submit-button" disabled={addingCard}> {/* Disable while loading */}
+                {addingCard ? "Submitting..." : "Submit Application"}
+              </button>
             </form>
           </section>
         </div>
@@ -187,8 +204,9 @@ const CardManagementPage = () => {
               placeholder="Enter PIN"
             />
             {pinError && <p className="error-message">{pinError}</p>}
+            {loading && <p className="loading-message">Checking PIN...</p>}
             <div className="modal-buttons">
-              <button onClick={handlePinSubmit}>Submit</button>
+              <button onClick={handlePinSubmit} disabled={loading}>Submit</button>
               <button onClick={() => {
                 setShowModal(false);
                 resetPinInput();
