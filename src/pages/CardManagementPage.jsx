@@ -5,11 +5,31 @@ import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
 
 const CardManagementPage = () => {
-  const [hasCard, setHasCard] = useState(true); // Simulating whether a user has a debit card or not
-  const [showCardDetails, setShowCardDetails] = useState(false); // State to manage card details visibility
+  const [hasCard, setHasCard] = useState(true);
+  const [showCardDetails, setShowCardDetails] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [enteredPin, setEnteredPin] = useState("");
+  const [pinError, setPinError] = useState("");
+  const defaultPin = "1234";
 
   const toggleCardDetails = () => {
-    setShowCardDetails(!showCardDetails);
+    if (!showCardDetails) {
+      setShowModal(true);
+    } else {
+      setShowCardDetails(false);
+      setEnteredPin("");
+    }
+  };
+
+  const handlePinSubmit = () => {
+    if (enteredPin === defaultPin) {
+      setShowCardDetails(true);
+      setShowModal(false);
+      setEnteredPin("");
+      setPinError("");
+    } else {
+      setPinError("Incorrect PIN! Please try again.");
+    }
   };
 
   return (
@@ -39,7 +59,6 @@ const CardManagementPage = () => {
             </div>
           </div>
 
-          {/* Button placed next to the card */}
           <button onClick={toggleCardDetails} className="toggle-button">
             {showCardDetails ? "Hide Card Details" : "Show Card Details"}
           </button>
@@ -51,7 +70,6 @@ const CardManagementPage = () => {
             You currently do not have a D-Pay debit card. To apply, follow the
             steps below:
           </p>
-          {/* Debit Card Application Form */}
           <section className="debit-card-application">
             <h2>Debit Card Application Form</h2>
             <form className="application-form">
@@ -71,9 +89,38 @@ const CardManagementPage = () => {
                 <label htmlFor="address">Address:</label>
                 <textarea id="address" name="address" required></textarea>
               </div>
-              <button type="submit" className="submit-button">Submit Application</button>
+              <button type="submit" className="submit-button">
+                Submit Application
+              </button>
             </form>
           </section>
+        </div>
+      )}
+
+      {showModal && (
+        <div className="modal-overlay">
+          <div className="modal-content">
+            <h2>Enter Your PIN</h2>
+            <input
+              type="password"
+              value={enteredPin}
+              onChange={(e) => setEnteredPin(e.target.value)}
+              placeholder="Enter PIN"
+            />
+            {pinError && <p className="error-message">{pinError}</p>}
+            <div className="modal-buttons">
+              <button onClick={handlePinSubmit}>Submit</button>
+              <button
+                onClick={() => {
+                  setShowModal(false);
+                  setEnteredPin("");
+                  setPinError("");
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
     </div>

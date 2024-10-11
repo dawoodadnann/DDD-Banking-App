@@ -39,7 +39,7 @@
     position: relative;
     width: 350px;
     height: 200px;
-    background: linear-gradient(135deg, #add8e6, #e0f7fa, #add8e6); /* Light royal blue with a shine effect */
+    background: linear-gradient(135deg, #add8e6, #e0f7fa, #add8e6);
     border-radius: 20px;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
     padding: 20px;
     color: #000;
     font-family: 'Courier Prime', monospace;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Optional: shadow for a more 3D effect */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   }
   
   
@@ -56,20 +56,20 @@
     position: absolute;
     top: 20px;
     left: 20px;
-    z-index: 2;  /* Ensures logo stays on top */
+    z-index: 2;
   }
   
   .card-details {
     display: flex;
     flex-direction: column;
-    margin-top: 20px; /* Adds space below the logo */
+    margin-top: 20px;
     font-family: 'Courier Prime';
   }
   
   .card-number {
     font-size: 1.5rem;
     font-weight: bold;
-    margin-top: 20px; /* Adds space between the logo and the card number */
+    margin-top: 20px;
     z-index: 1;
     font-family: 'Courier Prime';
     color: gray;
@@ -87,10 +87,9 @@
     position: absolute;
     bottom: 20px;
     right: 20px;
-    z-index: 2;  /* Ensures logo stays on top */
+    z-index: 2;
   }
   
-  /* Styling for the apply section */
   .apply-card {
     background-color: #1e1e1e;
     border-radius: 10px;
@@ -130,12 +129,12 @@
     border-radius: 10px;
     padding: 20px;
     max-width: 600px;
-    margin-top: 30px; /* Adds space above the form section */
-    color: #ffffff; /* Text color */
+    margin-top: 30px;
+    color: #ffffff;
 }
 
 .debit-card-application h2 {
-    color: #007bff; /* Title color */
+    color: #007bff;
 }
 
 .application-form {
@@ -175,7 +174,7 @@ textarea {
 }
 
 .submit-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
 .toggle-button {
@@ -186,12 +185,55 @@ textarea {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-    margin-bottom: 20px; /* Space below the button */
 }
 
 .toggle-button:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #0056b3;
 }
 
-  
-  
+/* Modal overlay */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background: #1f2937;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  width: 300px;
+}
+
+/* Modal buttons */
+.modal-buttons {
+  margin-top: 20px;
+}
+
+.modal-buttons button {
+  margin: 0 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-buttons button:hover {
+  background-color: #0056b3;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
