@@ -5,14 +5,13 @@ import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
 
 const CardManagementPage = () => {
-  const [hasCard, setHasCard] = useState(true);
+  const [hasCard, setHasCard] = useState(false);
   const [showCardDetails, setShowCardDetails] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [enteredPin, setEnteredPin] = useState("");
   const [pinError, setPinError] = useState("");
   const [cardDetails, setCardDetails] = useState(null);
   const [formData, setFormData] = useState({ name: "", phone: "", address: "", pin: "" });
-  const defaultPin = "1234";
 
   useEffect(() => {
     const checkIsCard = async () => {
@@ -27,7 +26,7 @@ const CardManagementPage = () => {
         setHasCard(data.exists);
 
         if (data.exists) {
-          await fetchCardDetails();
+          fetchCardDetails();
         }
       } catch (error) {
         console.error("Error checking card status:", error);
@@ -42,11 +41,11 @@ const CardManagementPage = () => {
           headers: { "Content-Type": "application/json" },
         });
 
-        const data = await response.json();
         if (response.ok) {
+          const data = await response.json();
           setCardDetails(data);
         } else {
-          console.error(data.message);
+          console.error("Failed to fetch card details:", response.statusText);
         }
       } catch (error) {
         console.error("Error fetching card details:", error);
@@ -59,24 +58,36 @@ const CardManagementPage = () => {
   const toggleCardDetails = () => {
     setShowCardDetails((prev) => !prev);
     if (!showCardDetails) {
-      setShowModal(true); // Show modal only when card details are hidden
+      setShowModal(true);
     } else {
-      setEnteredPin("");
-      setPinError("");
+      resetPinInput();
     }
   };
 
-  const handlePinSubmit = () => {
+  const handlePinSubmit = async () => {
+    try {
+      const response = await fetch("http://localhost:5000/checkpin", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pin: enteredPin }),
+      });
 
-    
-    if (enteredPin === defaultPin) {
-      setShowCardDetails(true);
-      setShowModal(false);
-      setEnteredPin("");
-      setPinError("");
-    } else {
-      setPinError("Incorrect PIN! Please try again.");
+      if (response.ok) {
+        setShowCardDetails(true);
+        setShowModal(false);
+        resetPinInput();
+      } else {
+        setPinError("Incorrect PIN! Please try again.");
+      }
+    } catch (error) {
+      console.error("Error submitting PIN:", error);
     }
+  };
+
+  const resetPinInput = () => {
+    setEnteredPin("");
+    setPinError("");
   };
 
   const handleChange = (e) => {
@@ -100,11 +111,9 @@ const CardManagementPage = () => {
       });
 
       const data = await response.json();
+      alert(data.message);
       if (response.ok) {
-        alert(data.message);
         setHasCard(true);
-      } else {
-        alert(data.message);
       }
     } catch (error) {
       console.error("Error adding card:", error);
@@ -161,9 +170,7 @@ const CardManagementPage = () => {
                 <label htmlFor="pin">PIN:</label>
                 <input type="password" id="pin" name="pin" required value={formData.pin} onChange={handleChange} />
               </div>
-              <button type="submit" className="submit-button">
-                Submit Application
-              </button>
+              <button type="submit" className="submit-button">Submit Application</button>
             </form>
           </section>
         </div>
@@ -184,8 +191,7 @@ const CardManagementPage = () => {
               <button onClick={handlePinSubmit}>Submit</button>
               <button onClick={() => {
                 setShowModal(false);
-                setEnteredPin("");
-                setPinError("");
+                resetPinInput();
               }}>
                 Cancel
               </button>
