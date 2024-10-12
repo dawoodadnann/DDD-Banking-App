@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./CardManagementPage.css";
+import DynamicInput from "../components/DynamicInput"; // Assuming DynamicInput is in the same folder or adjust path accordingly
 import logo from "../assets/logo3.png";
 import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
@@ -11,7 +11,7 @@ const CardManagementPage = () => {
   const [enteredPin, setEnteredPin] = useState("");
   const [pinError, setPinError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [addingCard, setAddingCard] = useState(false); // New loading state for adding card
+  const [addingCard, setAddingCard] = useState(false);
   const [cardDetails, setCardDetails] = useState(null);
   const [formData, setFormData] = useState({ name: "", phone: "", address: "", pin: "" });
 
@@ -35,12 +35,9 @@ const CardManagementPage = () => {
       }
     };
 
-
     checkIsCard();
   }, []);
 
-
-  
   const fetchCardDetails = async () => {
     try {
       const response = await fetch("http://localhost:5000/carddetail", {
@@ -70,8 +67,7 @@ const CardManagementPage = () => {
   };
 
   const handlePinSubmit = async () => {
-    setLoading(true); // Start loading
-
+    setLoading(true);
     try {
       const response = await fetch("http://localhost:5000/checkpin", {
         method: "POST",
@@ -91,7 +87,7 @@ const CardManagementPage = () => {
       console.error("Error submitting PIN:", error);
       setPinError("An error occurred. Please try again later.");
     } finally {
-      setLoading(false); // Stop loading
+      setLoading(false);
     }
   };
 
@@ -107,7 +103,7 @@ const CardManagementPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setAddingCard(true); // Start loading for adding card
+    setAddingCard(true);
 
     try {
       const response = await fetch("http://localhost:5000/addcard", {
@@ -126,94 +122,129 @@ const CardManagementPage = () => {
       alert(data.message);
       if (response.ok) {
         setHasCard(true);
-        fetchCardDetails(); // Fetch card details after successfully adding the card
+        fetchCardDetails();
       }
     } catch (error) {
       console.error("Error adding card:", error);
     } finally {
-      setAddingCard(false); // Stop loading for adding card
+      setAddingCard(false);
     }
   };
 
   return (
-    <div className="card-management-page">
-      {hasCard ? (
-        <div className="debit-card-container">
-          <div className="debit-card">
-            <div className="card-logo">
-              <img src={logo} alt="D-Pay Logo" className="dpay-logo" />
-            </div>
-            <div className="chip">
-              <img src={chip} alt="Debit Card Chip" />
-            </div>
-            {showCardDetails && cardDetails && (
-              <div className="card-details">
-                <p className="card-number">{cardDetails.data.card_num || "**** **** **** ****"}</p>
-                <p className="cardholder-name">{cardDetails.data.card_name || "John Doe"}</p>
-                <p className="card-id">Card ID: {cardDetails.data.card_id || "XXXX-XXXX-XXXX"}</p>
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+        {hasCard ? (
+          <div className="debit-card-container">
+            <div className="debit-card">
+              <div className="card-logo">
+                <img src={logo} alt="D-Pay Logo" className="dpay-logo" />
               </div>
-            )}
-            <div className="card-logo-bottom">
-              <img src={mastercard} alt="MasterCard Logo" className="mastercard-logo" />
+              <div className="chip">
+                <img src={chip} alt="Debit Card Chip" />
+              </div>
+              {showCardDetails && cardDetails && (
+                <div className="card-details">
+                  <p className="card-number">{cardDetails.data.card_num || "**** **** **** ****"}</p>
+                  <p className="cardholder-name">{cardDetails.data.card_name || "John Doe"}</p>
+                  <p className="card-id">Card ID: {cardDetails.data.card_id || "XXXX-XXXX-XXXX"}</p>
+                </div>
+              )}
+              <div className="card-logo-bottom">
+                <img src={mastercard} alt="MasterCard Logo" className="mastercard-logo" />
+              </div>
             </div>
-          </div>
 
-          <button onClick={toggleCardDetails} className="toggle-button">
-            {showCardDetails ? "Hide Card Details" : "Show Card Details"}
-          </button>
-        </div>
-      ) : (
-        <div className="apply-card">
-          <h2>Apply for a D-Pay Debit Card</h2>
-          <p>You currently do not have a D-Pay debit card. To apply, follow the steps below:</p>
-          <section className="debit-card-application">
-            <h2>Debit Card Application Form</h2>
+            <button onClick={toggleCardDetails} className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500">
+              {showCardDetails ? "Hide Card Details" : "Show Card Details"}
+            </button>
+          </div>
+        ) : (
+          <div className="apply-card">
+            <h2 className="text-xl font-bold text-white text-center mb-4">Apply for a D-Pay Debit Card</h2>
             <form className="application-form" onSubmit={handleSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Full Name:</label>
-                <input type="text" id="name" name="name" required value={formData.name} onChange={handleChange} />
+              <div className="mb-4">
+                <DynamicInput
+                  label="Full Name"
+                  type="text"
+                  value={formData.name}
+                  onChange={handleChange}
+                  name="name"
+                  placeholder="Enter your full name"
+                  className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+                />
               </div>
-              <div className="form-group">
-                <label htmlFor="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required value={formData.phone} onChange={handleChange} />
+
+              <div className="mb-4">
+                <DynamicInput
+                  label="Phone Number"
+                  type="tel"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  name="phone"
+                  placeholder="Enter your phone number"
+                  className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+                />
               </div>
-              <div className="form-group">
-                <label htmlFor="address">Address:</label>
-                <textarea id="address" name="address" required value={formData.address} onChange={handleChange}></textarea>
+
+              <div className="mb-4">
+  <DynamicInput
+    label="Address"
+    type="text"
+    value={formData.address}
+    onChange={handleChange}
+    name="address"
+    placeholder="Enter your address"
+    className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+  />
+</div>
+
+
+              <div className="mb-4">
+                <DynamicInput
+                  label="PIN"
+                  type="password"
+                  value={formData.pin}
+                  onChange={handleChange}
+                  name="pin"
+                  placeholder="Enter a PIN"
+                  className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+                />
               </div>
-              <div className="form-group">
-                <label htmlFor="pin">PIN:</label>
-                <input type="password" id="pin" name="pin" required value={formData.pin} onChange={handleChange} />
-              </div>
-              <button type="submit" className="submit-button" disabled={addingCard}> {/* Disable while loading */}
+
+              <button
+                type="submit"
+                className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500"
+                disabled={addingCard}
+              >
                 {addingCard ? "Submitting..." : "Submit Application"}
               </button>
             </form>
-          </section>
-        </div>
-      )}
+          </div>
+        )}
+      </div>
 
       {showModal && (
         <div className="modal-overlay">
           <div className="modal-content">
-            <h2>Enter Your PIN</h2>
-            <input
+            <h2 className="text-white text-center mb-4">Enter Your PIN</h2>
+            <DynamicInput
+              label="PIN"
               type="password"
               value={enteredPin}
               onChange={(e) => setEnteredPin(e.target.value)}
-              placeholder="Enter PIN"
+              placeholder="Enter your PIN"
+              className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
             />
-            {pinError && <p className="error-message">{pinError}</p>}
-            {loading && <p className="loading-message">Checking PIN...</p>}
-            <div className="modal-buttons">
-              <button onClick={handlePinSubmit} disabled={loading}>Submit</button>
-              <button onClick={() => {
-                setShowModal(false);
-                resetPinInput();
-              }}>
-                Cancel
-              </button>
-            </div>
+            <button
+              onClick={handlePinSubmit}
+              className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500 mt-4"
+              disabled={loading}
+            >
+              {loading ? "Verifying..." : "Verify PIN"}
+            </button>
+
+            {pinError && <p className="text-red-500 mt-2">{pinError}</p>}
           </div>
         </div>
       )}

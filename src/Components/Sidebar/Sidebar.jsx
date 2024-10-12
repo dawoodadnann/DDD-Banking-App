@@ -5,10 +5,8 @@ import RouteSelect from './RouteSelect';
 import Plan from './Plan';
 
 const Sidebar = () => {
-  // State to track whether the sidebar is open or closed
   const [isOpen, setIsOpen] = useState(false);
 
-  // Function to toggle sidebar visibility
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
@@ -17,10 +15,9 @@ const Sidebar = () => {
     <div className="relative">
       {/* Sidebar */}
       <div
-        className={` fixed top-0 left-0 h-[100vh] text-white transition-transform duration-300 ${
+        className={`fixed top-0 left-0 h-[100vh] text-white transition-transform duration-300 ${
           isOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
-        } z-40`} // Sidebar slides
-      >
+        } z-40 pt-16`} >
         {/* Main Sidebar Content */}
         <AccountToggle />
         <Search />
@@ -32,10 +29,9 @@ const Sidebar = () => {
         onClick={toggleSidebar}
         className={`absolute top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-3 py-2 z-50 rounded-l-full transition-transform duration-300 ${
           isOpen ? 'left-[16rem]' : 'left-[4rem]'
-        }`} // Button is attached to the right edge of the sidebar
+        }`}
       >
-        {/* Arrow Icon */}
-        {isOpen ? '←' : '→'} {/* Arrow changes direction */}
+        {isOpen ? '←' : '→'}
       </button>
 
       {/* Main Content */}
@@ -44,8 +40,7 @@ const Sidebar = () => {
           isOpen ? 'ml-64' : 'ml-0'
         }`}
       >
-        {/* Your main components go here */}
-        <h1 className="text-center text-2xl">Main Content</h1>
+        <h1 className="text-center text-2xl"></h1>
       </div>
     </div>
   );

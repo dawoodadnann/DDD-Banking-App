@@ -50,9 +50,9 @@ export const ActivityGraph = () => {
   }, []);
 
   return (
-    <div className="col-span-8 overflow-hidden rounded border border-stone-300">
+    <div className="col-span-8 overflow-hidden rounded border border-black bg-lime-200 text-black">
       <div className="p-4">
-        <h3 className="flex items-center gap-1.5 font-medium">
+        <h3 className="flex items-center gap-1.5 font-medium text-black">
           <FiUser /> Banking Activity
         </h3>
       </div>
@@ -70,28 +70,35 @@ export const ActivityGraph = () => {
               bottom: 0,
             }}
           >
-            <CartesianGrid stroke="#e4e4e7" />
+            {/* Update the grid stroke to black */}
+            <CartesianGrid stroke="#000000" />
+
+            {/* Set XAxis labels to black */}
             <XAxis
               dataKey="name" // Display dates on the X-axis
               axisLine={false}
               tickLine={false}
-              className="text-xs font-bold"
+              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
               padding={{ right: 4 }}
             />
+            {/* Set YAxis labels to black */}
             <YAxis
-              className="text-xs font-bold"
               axisLine={false}
               tickLine={false}
+              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
             />
             <Tooltip
               wrapperClassName="text-sm rounded"
-              labelClassName="text-xs text-stone-500"
+              labelClassName="text-xs text-black" // Tooltip label set to black
+              contentStyle={{ color: "#000000" }} // Tooltip content text set to black
             />
+            
+            {/* Update the line stroke to black */}
             <Line
               type="monotone"
               dataKey="totalExpenditure" // Expenditure data
-              stroke="#18181b"
-              fill="#18181b"
+              stroke="#000000" // Change line color to black
+              fill="#000000"
               name="Expenditure" // Tooltip label
             />
           </LineChart>
