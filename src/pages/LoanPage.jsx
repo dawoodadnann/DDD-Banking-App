@@ -4,16 +4,13 @@ import DynamicInput from '../components/DynamicInput'; // Import the DynamicInpu
 
 const LoanPage = () => {
   const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    loanAmount: '',
-    loanTerm: '',
+    LOAN_AMOUNT: '',
     income: '',
-    loanType: '',           // New field for LOAN_TYPE
-    tenure: '',             // New field for TENURE
-    collateral: '',          // New field for COLLATERAL
-    guarantorName: '',      // New field for GUARANTOR_NAME
-    guarantorCnic: '',      // New field for GUARANTOR_CNIC
+    LOAN_TYPE: '',           // New field for LOAN_TYPE
+    TENURE: '',             // New field for TENURE
+    COLLATERAL: '',          // New field for COLLATERAL
+    GUARANTOR_NAME: '',      // New field for GUARANTOR_NAME
+    GUARANTOR_CNIC: '',      // New field for GUARANTOR_CNIC
   });
   const [submitted, setSubmitted] = useState(false);
 
@@ -34,8 +31,9 @@ const LoanPage = () => {
 
     // Send form data to backend (replace <backend_url> with your actual backend endpoint)
     try {
-      const response = await fetch('<backend_url>/newloan', {
+      const response = await fetch("http://localhost:5000/newloan", {
         method: 'POST',
+        credentials: "include",
         headers: {
           'Content-Type': 'application/json',
         },
@@ -53,42 +51,13 @@ const LoanPage = () => {
       <h1>Loan Application</h1>
       {!submitted ? (
         <form onSubmit={handleSubmit} className="loan-form">
-          <div className="form-group">
-            <DynamicInput
-              label="Full Name"
-              type="text"
-              name="fullName"
-              value={formData.fullName}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <DynamicInput
-              label="Email"
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-            />
-          </div>
+          
           <div className="form-group">
             <DynamicInput
               label="Loan Amount"
               type="number"
-              name="loanAmount"
-              value={formData.loanAmount}
-              onChange={handleChange}
-              required
-            />
-          </div>
-          <div className="form-group">
-            <DynamicInput
-              label="Loan Term (in years)"
-              type="number"
-              name="loanTerm"
-              value={formData.loanTerm}
+              name="LOAN_AMOUNT"
+              value={formData.LOAN_AMOUNT}
               onChange={handleChange}
               required
             />
@@ -109,28 +78,28 @@ const LoanPage = () => {
             <DynamicInput
               label="Loan Type"
               type="text"
-              name="loanType"
-              value={formData.loanType}
+              name="LOAN_TYPE"
+              value={formData.LOAN_TYPE}
               onChange={handleChange}
               required
             />
           </div>
           <div className="form-group">
             <DynamicInput
-              label="Tenure (in years)"
+              label="TENURE (in years)"
               type="number"
-              name="tenure"
-              value={formData.tenure}
+              name="TENURE"
+              value={formData.TENURE}
               onChange={handleChange}
               required
             />
           </div>
           <div className="form-group">
             <DynamicInput
-              label="Collateral"
+              label="COLLATERAL"
               type="text"
-              name="collateral"
-              value={formData.collateral}
+              name="COLLATERAL"
+              value={formData.COLLATERAL}
               onChange={handleChange}
             />
           </div>
@@ -138,8 +107,8 @@ const LoanPage = () => {
             <DynamicInput
               label="Guarantor Name"
               type="text"
-              name="guarantorName"
-              value={formData.guarantorName}
+              name="GUARANTOR_NAME"
+              value={formData.GUARANTOR_NAME}
               onChange={handleChange}
               required
             />
@@ -148,8 +117,8 @@ const LoanPage = () => {
             <DynamicInput
               label="Guarantor CNIC"
               type="text"
-              name="guarantorCnic"
-              value={formData.guarantorCnic}
+              name="GUARANTOR_CNIC"
+              value={formData.GUARANTOR_CNIC}
               onChange={handleChange}
               required
             />
@@ -164,14 +133,14 @@ const LoanPage = () => {
           <h2>Thank you, {formData.fullName}!</h2>
           <p>Your loan application has been submitted. We will review your request and contact you via {formData.email}.</p>
           <h3>Loan Details</h3>
-          <p>Requested Amount: ${formData.loanAmount}</p>
+          <p>Requested Amount: ${formData.LOAN_AMOUNT}</p>
           <p>Loan Term: {formData.loanTerm} years</p>
           <p>Annual Income: ${formData.income}</p>
-          <p>Loan Type: {formData.loanType}</p>
-          <p>Tenure: {formData.tenure} years</p>
-          <p>Collateral: {formData.collateral}</p>
-          <p>Guarantor Name: {formData.guarantorName}</p>
-          <p>Guarantor CNIC: {formData.guarantorCnic}</p>
+          <p>Loan Type: {formData.LOAN_TYPE}</p>
+          <p>TENURE: {formData.TENURE} years</p>
+          <p>COLLATERAL: {formData.COLLATERAL}</p>
+          <p>Guarantor Name: {formData.GUARANTOR_NAME}</p>
+          <p>Guarantor CNIC: {formData.GUARANTOR_CNIC}</p>
         </div>
       )}
     </div>

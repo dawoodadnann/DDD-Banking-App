@@ -17,7 +17,7 @@ const Login = () => {
     e.preventDefault();
 
     // Open OTP modal regardless of server response
-    setIsOtpModalOpen(true);
+    
 
     const payload = {
       email,
@@ -38,6 +38,19 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
+        const payloadt={
+          email : null,fname: '',lname:''
+        };
+        setIsOtpModalOpen(true);
+        const response2 = await fetch("http://localhost:5000/sendemail", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payloadt),
+      });
+
         setError("");
       } else {
         setError(data.message);
@@ -49,8 +62,22 @@ const Login = () => {
   };
 
   // Function to verify OTP
-  const handleOtpVerification = () => {
-    if (otp === "1234") {
+  
+  const handleOtpVerification =async () => {
+    const payload2 = {
+      otp
+    };
+    const response3 = await fetch("http://localhost:5000/checkotp", {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload2),
+    });
+
+    const data = await response3.json();
+    if (otp === "1234"|| response3.ok) {
       // For demo purposes, replace with backend verification later
       alert("Login successful!");
       setIsOtpModalOpen(false);
@@ -66,30 +93,17 @@ const Login = () => {
       <div className="navbar">
         <img src={logo} alt="E-bank" className="logo" />
         <div className="nav-buttons">
-          <Link to="/login">
-            <button className="login-btn">Log in</button>
+          <Link to="/managerlogin">
+            <button className="login-btn">M Log in</button>
           </Link>
-          <Link to="/signup">
-            <button className="signup-btn">Sign up</button>
-          </Link>
-          <Link to="/billing">
-            <button className="signup-btn">Pay Bills</button>
-          </Link>
-          <Link to="/Dashboard">
-            <button className="signup-btn">Dashboard</button>
-          </Link>
-          <Link to="/money-transfer">
-            <button className="signup-btn">MONEY TRANSFER</button>
-          </Link>
-          <Link to="/manager-dashboard">
-            <button className="signup-btn">Manager Dash</button>
+          <Link to="/managersignup">
+            <button className="login-btn">M Log in</button>
           </Link>
         </div>
       </div>
       <div className="login-box bg-zinc-800 text-white">
         <img src={logo} alt="E-bank" className="logo-box" />
         <h2>D-Pay</h2>
-        <h2>Admin Login</h2>
         <h3>Sign In To Continue</h3>
         <form onSubmit={handleSubmit}>
           <DynamicInput

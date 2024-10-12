@@ -33,7 +33,7 @@ const Signup = () => {
     try {
 
       const payloadt = {
-        email: formData.email,
+        email1: formData.email,
         fname: formData.fname,
         lname: formData.lname,
       };
