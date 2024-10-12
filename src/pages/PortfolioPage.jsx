@@ -1,5 +1,6 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import "./PortfolioPage.css";
+import { Link } from "react-router-dom"; // Import Link to handle routing
 
 const PortfolioPage = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -44,34 +45,84 @@ const PortfolioPage = () => {
         </div>
       </section>
 
+      {/* Button Section */}
+      <section className="button-section py-8">
+        <div className="container mx-auto flex flex-wrap justify-center gap-4">
+          <Link to="/portfolio" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Portfolio
+            </button>
+          </Link>
+          <Link to="/login" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Login
+            </button>
+          </Link>
+          <Link to="/signup" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Signup
+            </button>
+          </Link>
+          <Link to="/billing" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Billing
+            </button>
+          </Link>
+          <Link to="/dashboard" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Dashboard
+            </button>
+          </Link>
+          <Link to="/loan" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Loan
+            </button>
+          </Link>
+          <Link to="/help" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Help
+            </button>
+          </Link>
+          <Link to="/cards" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Cards
+            </button>
+          </Link>
+          <Link to="/manager-dashboard" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Manager Dashboard
+            </button>
+          </Link>
+          <Link to="/money-transfer" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Money Transfer
+            </button>
+          </Link>
+          <Link to="/managerlogin" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Manager Login
+            </button>
+          </Link>
+          <Link to="/managersignup" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Manager Signup
+            </button>
+          </Link>
+          <Link to="/managerapproval" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Manager Approval
+            </button>
+          </Link>
+        </div>
+      </section>
+
       {/* About Section */}
       <section id="about" className="about-section">
         <h2>About D-Pay Bank</h2>
         <p>
-          {/* D-Pay Bank is a modern financial institution based in Karachi,
-          providing cutting-edge solutions for individuals and businesses alike.
-          Our vision is to lead innovation in the financial sector. */}
-          D-Pay Bank, headquartered in the bustling city of Karachi, is a
-          leading financial institution in Pakistan, providing innovative
-          banking solutions to both individuals and businesses. Established with
-          a vision to bridge the gap between traditional banking and modern
-          financial technologies, D-Pay Bank offers a range of services,
-          including loans, interbank transactions, bill payments, secure
-          payments, and online banking. Our commitment to trust, security, and
-          convenience sets us apart. Leveraging cutting-edge technology, we
-          ensure that all transactions are encrypted and secure, providing peace
-          of mind to our customers. D-Pay Bank strives to empower its users with
-          seamless access to banking services, ensuring financial inclusion for
-          everyone, from entrepreneurs to everyday consumers. With a strong
-          focus on customer service, our Karachi-based operations are backed by
-          a dedicated team that ensures all queries and issues are resolved
-          promptly. As a customer-centric bank, we are continuously evolving our
-          offerings, from online banking tools to mobile banking solutions, to
-          keep up with the fast-paced financial landscape of Pakistan. At D-Pay
-          Bank, our mission is to be the driving force behind financial growth,
-          innovation, and security. We aim to be your trusted partner in
-          managing your finances effectively and efficiently, offering products
-          and services that meet the diverse needs of our growing customer base.
+          D-Pay Bank, headquartered in Karachi, provides cutting-edge solutions
+          for individuals and businesses alike. Our vision is to lead innovation
+          in the financial sector.
         </p>
       </section>
 
@@ -93,31 +144,11 @@ const PortfolioPage = () => {
           </div>
           <div className="service-item">
             <h3>Secure Payments</h3>
-            <p>
-              Ensure the highest level of security for all your payments with
-              encryption and fraud detection.
-            </p>
-          </div>
-
-          <div className="service-item">
-            <h3>Interbank Transactions</h3>
-            <p>
-              Transfer funds seamlessly between different banks with our fast
-              and reliable service.
-            </p>
-          </div>
-
-          <div className="service-item">
-            <h3>Online Banking</h3>
-            <p>
-              Manage your accounts and transactions from anywhere with our
-              convenient online banking portal.
-            </p>
+            <p>Ensure the highest level of security for all your payments.</p>
           </div>
         </div>
       </section>
 
-      {/* User Reviews Section */}
       {/* User Reviews Section */}
       <section id="reviews" className="reviews-section">
         <h2>User Reviews</h2>
@@ -138,38 +169,10 @@ const PortfolioPage = () => {
       {/* Contact Section */}
       <section id="contact" className="contact-section">
         <h2>Contact Us</h2>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-          }}
-        >
-          <iframe
-            title="Location map"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.2034785261494!2d67.26210887515188!3d24.85689907793159!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb3316c5276e35b%3A0x823a6a0100195ffd!2sFAST%20National%20University%20Karachi%20Campus!5e0!3m2!1sen!2s!4v1728223436085!5m2!1sen!2s"
-            width="600"
-            height="450"
-            style={{ border: 0 }}
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
-        </div>
-
-        {/* <form className="contact-form">
-          <input type="email" placeholder="Email" />
-          <textarea placeholder="Message"></textarea>
-          <button type="submit">Send Message</button>
-        </form> */}
         <div className="contact-details">
           <p>Email: support@dpaybank.com</p>
           <p>Phone: +92 21 111 222 333</p>
-          <p>
-            Address: D-Pay Bank, FAST NUCES Main Campus, Shah Latif Town,
-            Karachi, Pakistan
-          </p>
+          <p>Address: D-Pay Bank, FAST NUCES Main Campus, Karachi, Pakistan</p>
         </div>
       </section>
     </div>
