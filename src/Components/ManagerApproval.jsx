@@ -2,21 +2,28 @@ import React, { useState, useEffect } from "react";
 import logo from "../assets/logo2.png";
 
 const ManagerApproval = () => {
-  const [requests, setRequests] = useState([]); // Holds all requests
-  const [currentIndex, setCurrentIndex] = useState(0); // Track current request index
+  const [requests, setRequests] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
-    // Fetch account requests from the server
     const fetchRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getAccountRequests");
+        const response = await fetch("http://localhost:5000/getunapprove", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+        if (!response.ok) throw new Error("Network response was not ok");
         const data = await response.json();
         setRequests(data);
         setLoading(false);
       } catch (error) {
-        setError("Failed to fetch requests.");
+        setError("Failed to fetch requests: " + error.message);
         setLoading(false);
       }
     };
@@ -25,28 +32,38 @@ const ManagerApproval = () => {
 
   const handleApproval = async (isApproved) => {
     const action = isApproved ? "approve" : "reject";
+    
+    // Debugging: log the current request to ensure correct data
+    console.log("Current request data:", requests[currentIndex]);
+  
+    const requestId = requests[currentIndex].user_id ||requests[currentIndex].admin_id; // Ensure 'user_id' is correct
+    if (!requestId) {
+      setMessage("Request ID not found.");
+      return;
+    }
+  
     try {
-      const response = await fetch(`http://localhost:5000/${action}Request`, {
+      const response = await fetch(`http://localhost:5000/updateapproval`, {
         method: "POST",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ requestId: requests[currentIndex].id }), // Assuming each request has an id
+        body: JSON.stringify({ requestId, status: isApproved }),
       });
-
+  
       if (response.ok) {
-        alert(`Request ${action}ed successfully!`);
-        // Remove the approved/rejected request
+        setMessage(`Request ${action}d successfully!`);
         setRequests(requests.filter((_, index) => index !== currentIndex));
-        // Reset currentIndex after action
         setCurrentIndex((prev) => (prev > 0 ? prev - 1 : 0));
       } else {
-        alert("Action failed.");
+        setMessage("Action failed.");
       }
     } catch (error) {
-      alert("An error occurred.");
+      setMessage("An error occurred: " + error.message);
     }
   };
+  
 
   const handleNext = () => {
     if (currentIndex < requests.length - 1) {
@@ -64,8 +81,10 @@ const ManagerApproval = () => {
   if (error) return <div>{error}</div>;
   if (!requests.length) return <div>No account requests available.</div>;
 
+  const { fname, lname, email,user_id,cnic,admin_id,nationality } = requests[currentIndex];
+
   return (
-    <div className="min-h-screen flex flex-col items-center ">
+    <div className="min-h-screen flex flex-col items-center">
       <div className="w-full flex justify-between p-4 bg-zinc-800">
         <img src={logo} alt="E-bank" className="h-10" />
         <h2 className="text-white text-2xl">Manager Approval Panel</h2>
@@ -76,11 +95,15 @@ const ManagerApproval = () => {
           Review Account Request {currentIndex + 1} of {requests.length}
         </h3>
 
-        {/* Display current request information */}
         <div className="text-gray-300 mb-6">
-          <p><strong>Name:</strong> {requests[currentIndex].name}</p>
-          <p><strong>Email:</strong> {requests[currentIndex].email}</p>
+          <p><strong>User Id:</strong> {user_id || admin_id}</p>
+          <p><strong>Name:</strong> {fname} {lname}</p>
+          <p><strong>Email:</strong> {email}</p>
+          <p><strong>CNIC :</strong> {cnic}</p>
+          <p><strong>Nationality:</strong> {nationality}</p>
         </div>
+
+        {message && <div className="text-green-500 mb-4">{message}</div>}
 
         <div className="flex justify-between mt-6">
           <button
