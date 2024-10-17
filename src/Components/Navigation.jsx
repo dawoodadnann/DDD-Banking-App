@@ -25,7 +25,7 @@ function BasicExample() {
             <Nav.Link as={Link} to="/" className="ps-3"> {/* Added left padding */}
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/transfer" className="ps-3"> {/* Added left padding */}
+            <Nav.Link as={Link} to="/money-transfer" className="ps-3"> {/* Added left padding */}
               Transfer Money
             </Nav.Link>
             <Nav.Link as={Link} to="/billing" className="ps-3"> {/* Added left padding */}
@@ -37,9 +37,7 @@ function BasicExample() {
             <Nav.Link as={Link} to="/cards" className="ps-3"> {/* Added left padding */}
               Card Management
             </Nav.Link>
-            <Nav.Link as={Link} to="/integrations" className="ps-3"> {/* Added left padding */}
-              Customer Support
-            </Nav.Link>
+           
             <Nav.Link as={Link} to="/help" className="ps-3"> {/* Added left padding */}
               Help
             </Nav.Link>

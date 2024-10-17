@@ -113,6 +113,11 @@ const PortfolioPage = () => {
               Manager Approval
             </button>
           </Link>
+          <Link to="/managerupdate" className="btn btn-primary">
+            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
+              Manager Update
+            </button>
+          </Link>
         </div>
       </section>
 
