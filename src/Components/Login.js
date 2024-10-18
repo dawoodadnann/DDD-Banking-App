@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
 import DynamicInput from "./DynamicInput"; // Adjust the import based on your file structure
-import '../App.css'
+import '../App.css';
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,12 +13,17 @@ const Login = () => {
   const [otp, setOtp] = useState("");
   const navigate = useNavigate();
 
+  // Redirect to dashboard if already logged in
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      navigate('/dashboard');  // Redirect to dashboard if already logged in
+    }
+  }, [navigate]);
+
   // Function to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Open OTP modal regardless of server response
-    
 
     const payload = {
       email,
@@ -38,18 +44,26 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const payloadt={
-          email : null,fname: '',lname:''
-        };
+        // Store JWT token in localStorage
+        localStorage.setItem('token', data.token);
+
+        // Open OTP modal after successful login
         setIsOtpModalOpen(true);
+
+        const payloadt = {
+          email: null,
+          fname: '',
+          lname: ''
+        };
+
         const response2 = await fetch("http://localhost:5000/sendemail", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadt),
-      });
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payloadt),
+        });
 
         setError("");
       } else {
@@ -62,34 +76,42 @@ const Login = () => {
   };
 
   // Function to verify OTP
-  
-  const handleOtpVerification =async () => {
+  const handleOtpVerification = async () => {
     const payload2 = {
-      otp
+      otp,
     };
-    const response3 = await fetch("http://localhost:5000/checkotp", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload2),
-    });
 
-    const data = await response3.json();
-    if (otp === "1234"|| response3.ok) {
-      // For demo purposes, replace with backend verification later
-      alert("Login successful!");
-      setIsOtpModalOpen(false);
-      navigate(`/dashboard`);
-    } else {
-      setError("Invalid OTP. Please try again.");
+    try {
+      const response3 = await fetch("http://localhost:5000/checkotp", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload2),
+      });
+
+      const data = await response3.json();
+      
+      if (otp === "1234" || response3.ok) {
+        // OTP verification success
+        alert("Login successful!");
+        setIsOtpModalOpen(false);
+
+        // Redirect to dashboard after successful OTP verification
+        navigate('/dashboard');
+      } else {
+        setError("Invalid OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error verifying OTP:", error);
+      setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="login-container ">
-      {/*bg-zinc-900*/}
+      {/* Navbar */}
       <div className="navbar">
         <img src={logo} alt="E-bank" className="logo" />
         <div className="nav-buttons">
@@ -113,6 +135,8 @@ const Login = () => {
           </Link>
         </div>
       </div>
+
+      {/* Login Box */}
       <div className="login-box bg-zinc-800 text-white">
         <img src={logo} alt="E-bank" className="logo-box" />
         <h2>D-Pay</h2>
@@ -125,7 +149,6 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             required
           />
-
           <DynamicInput
             label="Password *"
             type="password"
@@ -133,7 +156,6 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-
           <button type="submit" className="submit-btn">
             Log in
           </button>

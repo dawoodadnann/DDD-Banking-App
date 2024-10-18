@@ -30,26 +30,36 @@ const Layout = ({ children }) => {
   );
 };
 
+// ProtectedRoute component to restrict access to routes for non-logged-in users
+const ProtectedRoute = ({ element }) => {
+  const token = localStorage.getItem('token');
+  
+  return token ? element : <Navigate to="/login" />;
+};
+
 const App = () => {
   return (
     <Router>
       <Layout>
         <Routes>
+          {/* Public Routes */}
           <Route path="/" element={<Navigate to="/portfolio" />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
-          <Route path="/billing" element={<Billing />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/loan" element={<LoanPage />} />
-          <Route path="/help" element={<HelpPage />} />
-          <Route path="/cards" element={<CardManagementPage />} />
-          <Route path="/manager-dashboard" element={<ManagerDashboard />} />
-          <Route path="/money-transfer" element={<MoneyTransfer />} />
+
+          {/* Protected Routes */}
+          <Route path="/billing" element={<ProtectedRoute element={<Billing />} />} />
+          <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
+          <Route path="/loan" element={<ProtectedRoute element={<LoanPage />} />} />
+          <Route path="/help" element={<ProtectedRoute element={<HelpPage />} />} />
+          <Route path="/cards" element={<ProtectedRoute element={<CardManagementPage />} />} />
+          <Route path="/manager-dashboard" element={<ProtectedRoute element={<ManagerDashboard />} />} />
+          <Route path="/money-transfer" element={<ProtectedRoute element={<MoneyTransfer />} />} />
           <Route path="/managerlogin" element={<ManagerLogin />} />
           <Route path="/managersignup" element={<ManagerSignup />} />
-          <Route path="/managerapproval" element={<ManagerApproval />} />
-          <Route path="/managerupdate" element={<UpdateCustomer />} />
+          <Route path="/managerapproval" element={<ProtectedRoute element={<ManagerApproval />} />} />
+          <Route path="/managerupdate" element={<ProtectedRoute element={<UpdateCustomer />} />} />
         </Routes>
       </Layout>
     </Router>
