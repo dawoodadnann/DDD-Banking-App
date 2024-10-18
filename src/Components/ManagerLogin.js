@@ -85,7 +85,7 @@ const ManagerLogin = () => {
       if (otp === "1234" || response3.ok) {
         alert("Login successful!");
         setIsOtpModalOpen(false);
-        localStorage.setItem('token', data.token); // Store manager token
+        localStorage.setItem('managerToken', data.token); // Store manager token
         navigate(`/manager-dashboard`);
       } else {
         setError("Invalid OTP. Please try again.");
