@@ -4,7 +4,8 @@ import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
 import DynamicInput from "./DynamicInput"; // Adjust the import based on your file structure
 import '../App.css'
-const Login = () => {
+
+const ManagerLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -16,16 +17,13 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Open OTP modal regardless of server response
-    
-
     const payload = {
       email,
       password,
     };
 
     try {
-      // Sending a POST request to the backend
+      // Sending a POST request to the backend for manager login
       const response = await fetch("http://localhost:5000/loginmanager", {
         method: "POST",
         credentials: "include",
@@ -38,18 +36,22 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        const payloadt={
-          email : null,fname: '',lname:''
+        const payloadt = {
+          email: null, fname: '', lname: ''
         };
+
+        // Open OTP modal after a successful login
         setIsOtpModalOpen(true);
+
+        // Send OTP to the manager's email
         const response2 = await fetch("http://localhost:5000/sendemail", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payloadt),
-      });
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payloadt),
+        });
 
         setError("");
       } else {
@@ -62,34 +64,39 @@ const Login = () => {
   };
 
   // Function to verify OTP
-  
-  const handleOtpVerification =async () => {
+  const handleOtpVerification = async () => {
     const payload2 = {
       otp
     };
-    const response3 = await fetch("http://localhost:5000/checkotp", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload2),
-    });
 
-    const data = await response3.json();
-    if (otp === "1234"|| response3.ok) {
-      // For demo purposes, replace with backend verification later
-      alert("Login successful!");
-      setIsOtpModalOpen(false);
-      navigate(`/dashboard`);
-    } else {
-      setError("Invalid OTP. Please try again.");
+    try {
+      const response3 = await fetch("http://localhost:5000/checkotp", {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload2),
+      });
+
+      const data = await response3.json();
+      
+      // OTP validation and redirection
+      if (otp === "1234" || response3.ok) {
+        alert("Login successful!");
+        setIsOtpModalOpen(false);
+        localStorage.setItem('token', data.token); // Store manager token
+        navigate(`/manager-dashboard`);
+      } else {
+        setError("Invalid OTP. Please try again.");
+      }
+    } catch (error) {
+      setError("An error occurred. Please try again.");
     }
   };
 
   return (
     <div className="login-container ">
-      {/*bg-zinc-900*/}
       <div className="navbar">
         <img src={logo} alt="E-bank" className="logo" />
         <div className="nav-buttons">
@@ -97,14 +104,14 @@ const Login = () => {
             <button className="login-btn">M Log in</button>
           </Link>
           <Link to="/managersignup">
-            <button className="login-btn">M Log in</button>
+            <button className="login-btn">M Sign Up</button>
           </Link>
         </div>
       </div>
       <div className="login-box bg-zinc-800 text-white">
         <img src={logo} alt="E-bank" className="logo-box" />
-        <h2>D-Pay</h2>
-        <h3>Sign In To Continue</h3>
+        <h2>D-Pay Manager</h2>
+        <h3>Manager Sign In To Continue</h3>
         <form onSubmit={handleSubmit}>
           <DynamicInput
             label="E-mail *"
@@ -156,4 +163,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default ManagerLogin;

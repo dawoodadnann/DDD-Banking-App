@@ -37,6 +37,13 @@ const ProtectedRoute = ({ element }) => {
   return token ? element : <Navigate to="/login" />;
 };
 
+// ProtectedRoute for manager login
+const ManagerProtectedRoute = ({ element }) => {
+  const managerToken = localStorage.getItem('managerToken');
+  
+  return managerToken ? element : <Navigate to="/managerlogin" />;
+};
+
 const App = () => {
   return (
     <Router>
@@ -47,6 +54,8 @@ const App = () => {
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/managerlogin" element={<ManagerLogin />} />
+          <Route path="/managersignup" element={<ManagerSignup />} />
 
           {/* Protected Routes */}
           <Route path="/billing" element={<ProtectedRoute element={<Billing />} />} />
@@ -54,12 +63,11 @@ const App = () => {
           <Route path="/loan" element={<ProtectedRoute element={<LoanPage />} />} />
           <Route path="/help" element={<ProtectedRoute element={<HelpPage />} />} />
           <Route path="/cards" element={<ProtectedRoute element={<CardManagementPage />} />} />
-          <Route path="/manager-dashboard" element={<ProtectedRoute element={<ManagerDashboard />} />} />
-          <Route path="/money-transfer" element={<ProtectedRoute element={<MoneyTransfer />} />} />
-          <Route path="/managerlogin" element={<ManagerLogin />} />
-          <Route path="/managersignup" element={<ManagerSignup />} />
-          <Route path="/managerapproval" element={<ProtectedRoute element={<ManagerApproval />} />} />
-          <Route path="/managerupdate" element={<ProtectedRoute element={<UpdateCustomer />} />} />
+
+          {/* Manager Protected Routes */}
+          <Route path="/manager-dashboard" element={<ManagerProtectedRoute element={<ManagerDashboard />} />} />
+          <Route path="/managerapproval" element={<ManagerProtectedRoute element={<ManagerApproval />} />} />
+          <Route path="/managerupdate" element={<ManagerProtectedRoute element={<UpdateCustomer />} />} />
         </Routes>
       </Layout>
     </Router>
