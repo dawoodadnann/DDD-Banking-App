@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADD MANAGER APPROVAL SYSTEM"
+git commit -m "ADD MANAGER UPDATE SYSTEM"
 git status
 git push -u origin main
 
