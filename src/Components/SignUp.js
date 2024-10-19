@@ -42,7 +42,7 @@ const Signup = () => {
       setIsOtpModalOpen(true);
 
       // Send email to initiate OTP (email part)
-      const response2 = await fetch("http://localhost:5000/sendemail", {
+      const response2 = await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -103,7 +103,7 @@ const Signup = () => {
     const payload2 = {
       otp
     };
-    const response3 = await fetch("http://localhost:5000/checkotp", {
+    const response3 = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -117,7 +117,7 @@ const Signup = () => {
       // For demo purposes, replace with backend verification later
       alert("Login successful!");
       alert('otp is valid registering new user');
-        const response = await fetch("http://localhost:5000/register", {
+        const response = await fetch("https://online-banking-system-backend.vercel.app/register", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

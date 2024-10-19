@@ -5,13 +5,16 @@ export const RecentTransactions = () => {
   const [bills, setBills] = useState([]);  // Initialize state to hold bills
   const [trans, setTrans] = useState([]);
   useEffect(() => {
+
     const fetchBills = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getbillhistory", {
+        const token = localStorage.getItem('jwttoken');
+        
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getbillhistory", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -35,11 +38,13 @@ export const RecentTransactions = () => {
   useEffect(() => {
     const fetchTrans = async () => {
       try {
-        const response = await fetch("http://localhost:5000/gettranshistory", {
+        const token = localStorage.getItem('jwttoken');
+        
+        const response = await fetch("https://online-banking-system-backend.vercel.app/gettranshistory", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -85,7 +90,7 @@ export const RecentTransactions = () => {
                 order={index + 1}
               />
             ))
-          ) : (
+          ) : ( 
             <tr>
               <td colSpan="5" className="p-4 text-center">
                 No Bills found.

@@ -72,7 +72,7 @@ const App = () => {
           <Route path="/loan" element={<ProtectedRoute element={<LoanPage />} />} />
           <Route path="/help" element={<ProtectedRoute element={<HelpPage />} />} />
           <Route path="/cards" element={<ProtectedRoute element={<CardManagementPage />} />} />
-          <Route path="/moneytransfer" element={<ProtectedRoute element={<MoneyTransfer />} />} />
+          <Route path="/money-transfer" element={<ProtectedRoute element={<MoneyTransfer />} />} />
 
           {/* Manager Routes */}
           <Route path="/managerlogin" element={<ManagerLogin />} />

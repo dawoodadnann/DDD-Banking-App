@@ -8,11 +8,14 @@ export const StatCardMan = () => {
     const fetchBalance = async () => {
       try {
         // Sending a POST request to the backend
-        const response = await fetch("http://localhost:5000/getbalance", {
+        const token = localStorage.getItem('jwttoken');     
+        
+       
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getbalance", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
           },
         });
 

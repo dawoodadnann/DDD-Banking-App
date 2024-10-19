@@ -21,11 +21,14 @@ export const MoneyTransfer = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/interbanktransaction", {
+      const token = localStorage.getItem('jwttoken');     
+    
+     
+      const response = await fetch("https://online-banking-system-backend.vercel.app/interbanktransaction", {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify({
           Amount: amount,

@@ -87,11 +87,14 @@ const Billing = () => {
     e.preventDefault();
 
     try {
-      const response = await fetch("http://localhost:5000/billing", {
+      const token = localStorage.getItem('jwttoken');     
+      
+     
+      const response = await fetch("https://online-banking-system-backend.vercel.app/billing", {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(SubmittedData),
       });

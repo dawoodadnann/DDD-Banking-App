@@ -16,9 +16,9 @@ const Login = () => {
   // Redirect to dashboard if already logged in
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      navigate('/dashboard');  // Redirect to dashboard if already logged in
-    }
+    // if (token) {
+    //   navigate('/dashboard');  // Redirect to dashboard if already logged in
+    // }
   }, [navigate]);
 
   // Function to send data to the backend
@@ -32,7 +32,7 @@ const Login = () => {
 
     try {
       // Sending a POST request to the backend
-      const response = await fetch("http://localhost:5000/login", {
+      const response = await fetch("https://online-banking-system-backend.vercel.app/login", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -45,8 +45,8 @@ const Login = () => {
 
       if (response.ok) {
         // Store JWT token in localStorage
-        localStorage.setItem('token', data.token);
-
+        localStorage.setItem('jwttoken', data.token); // Store jwt token
+        
         // Open OTP modal after successful login
         setIsOtpModalOpen(true);
 
@@ -56,7 +56,7 @@ const Login = () => {
           lname: ''
         };
 
-        const response2 = await fetch("http://localhost:5000/sendemail", {
+        const response2 = await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -82,7 +82,7 @@ const Login = () => {
     };
 
     try {
-      const response3 = await fetch("http://localhost:5000/checkotp", {
+      const response3 = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -95,6 +95,7 @@ const Login = () => {
       
       if (otp === "1234" || response3.ok) {
         // OTP verification success
+        localStorage.setItem('token', data.token);
         alert("Login successful!");
         setIsOtpModalOpen(false);
 

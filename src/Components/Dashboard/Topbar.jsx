@@ -36,11 +36,13 @@ export const TopBar = () => {
     setdate(getFormattedDate());
     const fetchemail = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getuserfullname", {
+        const token = localStorage.getItem('jwttoken');     
+        
+        const response = await fetch(" https://online-banking-system-backend.vercel.app/getuserfullname", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",'Authorization': `Bearer ${token}`,
           },
         });
 

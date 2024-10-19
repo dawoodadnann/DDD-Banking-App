@@ -24,7 +24,7 @@ const ManagerLogin = () => {
 
     try {
       // Sending a POST request to the backend for manager login
-      const response = await fetch("http://localhost:5000/loginmanager", {
+      const response = await fetch("https://online-banking-system-backend.vercel.app/loginmanager", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -34,6 +34,7 @@ const ManagerLogin = () => {
       });
 
       const data = await response.json();
+      localStorage.setItem('jwttoken', data.token); // Store jwt token
 
       if (response.ok) {
         const payloadt = {
@@ -44,7 +45,7 @@ const ManagerLogin = () => {
         setIsOtpModalOpen(true);
 
         // Send OTP to the manager's email
-        const response2 = await fetch("http://localhost:5000/sendemail", {
+        const response2 = await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -70,7 +71,7 @@ const ManagerLogin = () => {
     };
 
     try {
-      const response3 = await fetch("http://localhost:5000/checkotp", {
+      const response3 = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
         method: "POST",
         credentials: "include",
         headers: {

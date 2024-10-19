@@ -8,11 +8,13 @@ export const StatCards = () => {
   useEffect(() => {
     const fetchBalance = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getbalance", {
+        const token = localStorage.getItem('jwttoken');
+        
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getbalance", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -25,11 +27,12 @@ export const StatCards = () => {
           console.log(data.message);
         }
 
-        const response2 = await fetch("http://localhost:5000/getmonthexpense", {
+        const response2 = await fetch("https://online-banking-system-backend.vercel.app/getmonthexpense", {
           method: "GET",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,
           },
         });
 

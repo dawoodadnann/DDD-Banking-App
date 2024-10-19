@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "ADD MANAGER UPDATE SYSTEM"
+git commit -m "joined the deployed backend to the frontend"
 git status
 git push -u origin main
 

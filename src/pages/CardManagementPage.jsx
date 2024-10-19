@@ -18,10 +18,12 @@ const CardManagementPage = () => {
   useEffect(() => {
     const checkIsCard = async () => {
       try {
-        const response = await fetch("http://localhost:5000/checkcardstatus", {
+        const token = localStorage.getItem('jwttoken');     
+        
+        const response = await fetch("https://online-banking-system-backend.vercel.app/checkcardstatus", {
           method: "GET",
           credentials: "include",
-          headers: { "Content-Type": "application/json" },
+          headers: { "Content-Type": "application/json" ,'Authorization': `Bearer ${token}`,},
         });
 
         const data = await response.json();
@@ -40,10 +42,13 @@ const CardManagementPage = () => {
 
   const fetchCardDetails = async () => {
     try {
-      const response = await fetch("http://localhost:5000/carddetail", {
+      const token = localStorage.getItem('jwttoken');     
+      
+      
+      const response = await fetch("https://online-banking-system-backend.vercel.app/carddetail", {
         method: "GET",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json,'Authorization': `Bearer ${token}`" },
       });
 
       if (response.ok) {
@@ -69,10 +74,13 @@ const CardManagementPage = () => {
   const handlePinSubmit = async () => {
     setLoading(true);
     try {
-      const response = await fetch("http://localhost:5000/checkpin", {
+      const token = localStorage.getItem('jwttoken');     
+      
+     
+      const response = await fetch("https://online-banking-system-backend.vercel.app/checkpin", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({ pin: enteredPin }),
       });
 
@@ -106,10 +114,13 @@ const CardManagementPage = () => {
     setAddingCard(true);
 
     try {
-      const response = await fetch("http://localhost:5000/addcard", {
+      const token = localStorage.getItem('jwttoken');     
+      
+      
+      const response = await fetch("https://online-banking-system-backend.vercel.app/addcard", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
+        headers: { "Content-Type": "application/json" ,'Authorization': `Bearer ${token}`},
         body: JSON.stringify({
           type: "Debit",
           name: formData.name,

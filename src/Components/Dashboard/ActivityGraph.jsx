@@ -12,15 +12,19 @@ import {
 
 export const ActivityGraph = () => {
   const [usageData, setUsageData] = useState([]);
-
+ 
   useEffect(() => {
     const fetchDailyExpense = async () => {
+      const token = localStorage.getItem('jwttoken');        
+      
+      
       try {
-        const response = await fetch("http://localhost:5000/getdailyexpense", {
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getdailyexpense", {
           method: "GET",
           credentials: "include",
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
           },
         });
 
