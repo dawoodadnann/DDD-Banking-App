@@ -11,11 +11,13 @@ const ManagerApproval = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const response = await fetch("http://localhost:5000/getunapprove", {
+        const token = localStorage.getItem('jwttoken');     
+        
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getunapprove", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json",'Authorization': `Bearer ${token}`
           },
         });
         if (!response.ok) throw new Error("Network response was not ok");
@@ -43,11 +45,14 @@ const ManagerApproval = () => {
     }
   
     try {
-      const response = await fetch(`http://localhost:5000/updateapproval`, {
+      const token = localStorage.getItem('jwttoken');     
+      
+      
+      const response = await fetch(`https://online-banking-system-backend.vercel.app/updateapproval`, {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json",'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ requestId, status: isApproved }),
       });
