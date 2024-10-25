@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DynamicInput from '../components/DynamicInput'; // Adjust this import path based on your project structure
+import DynamicInput from '../Compo/DynamicInput'; // Adjust this import path based on your project structure
 import './HelpPage.css';
 
 const HelpPage = () => {

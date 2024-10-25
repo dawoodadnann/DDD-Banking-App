@@ -1,21 +1,21 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
-import Login from './components/Login';
-import Signup from './components/SignUp';
-import Billing from './components/billing';
+import Login from './Compo/Login';
+import Signup from './Compo/SignUp';
+import Billing from './Compo/billing';
 import Dashboard from './pages/DashboardPage'; 
 import LoanPage from './pages/LoanPage';
 import HelpPage from './pages/HelpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Navigation from './components/Navigation';
+import Navigation from './Compo/Navigation';
 import PortfolioPage from './pages/PortfolioPage';
-import ManagerLogin from './components/ManagerLogin';
-import ManagerSignup from './components/ManagerSignUp';
+import ManagerLogin from './Compo/ManagerLogin';
+import ManagerSignup from './Compo/ManagerSignUp';
 import CardManagementPage from './pages/CardManagementPage';
-import { MoneyTransfer } from './components/MoneyTransfer';
+import { MoneyTransfer } from './Compo/MoneyTransfer';
 import ManagerDashboard from './pages/ManagerDashboard';
-import ManagerApproval from './components/ManagerApproval';
-import UpdateCustomer from './components/ManagerUpdate';
+import ManagerApproval from './Compo/ManagerApproval';
+import UpdateCustomer from './Compo/ManagerUpdate';
 
 // Helper component to conditionally render the Navbar
 // const Layout = ({ children }) => {

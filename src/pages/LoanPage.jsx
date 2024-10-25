@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './LoanPage.css'; // Optionally, for styling
-import DynamicInput from '../components/DynamicInput'; // Import the DynamicInput component
+import DynamicInput from '../Compo/DynamicInput'; // Import the DynamicInput component
 
 const LoanPage = () => {
   const [formData, setFormData] = useState({

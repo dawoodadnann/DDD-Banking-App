@@ -1,6 +1,6 @@
 import React from 'react'
-import SidebarManager from '../components/Sidebar/SidebarManager'
-import ManDash from '../components/ManagerDashboard/ManDash'
+import SidebarManager from '../Compo/Sidebar/SidebarManager'
+import ManDash from '../Compo/ManagerDashboard/ManDash'
 
 const ManagerDashboard = () => {
   return (

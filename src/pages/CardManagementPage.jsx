@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DynamicInput from "../components/DynamicInput"; // Assuming DynamicInput is in the same folder or adjust path accordingly
+import DynamicInput from "../Compo/DynamicInput"; // Assuming DynamicInput is in the same folder or adjust path accordingly
 import logo from "../assets/logo3.png";
 import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
