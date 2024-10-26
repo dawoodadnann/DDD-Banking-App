@@ -48,7 +48,7 @@ const CardManagementPage = () => {
       const response = await fetch("https://online-banking-system-backend.vercel.app/carddetail", {
         method: "GET",
         credentials: "include",
-        headers: { "Content-Type": "application/json,'Authorization': `Bearer ${token}`" },
+        headers: { "Content-Type": "application/json",'Authorization': `Bearer ${token}` },
       });
 
       if (response.ok) {
