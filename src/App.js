@@ -16,7 +16,7 @@ import { MoneyTransfer } from './Compo/MoneyTransfer';
 import ManagerDashboard from './pages/ManagerDashboard';
 import ManagerApproval from './Compo/ManagerApproval';
 import UpdateCustomer from './Compo/ManagerUpdate';
-
+import ManagerFAQPage from './Compo/managerFaqAnswer';
 // Helper component to conditionally render the Navbar
 // const Layout = ({ children }) => {
 //   const location = useLocation();
@@ -80,6 +80,9 @@ const App = () => {
           <Route path="/manager-dashboard" element={<ManagerProtectedRoute element={<ManagerDashboard />} />} />
           <Route path="/managerapproval" element={<ManagerProtectedRoute element={<ManagerApproval />} />} />
           <Route path="/managerupdate" element={<ManagerProtectedRoute element={<UpdateCustomer />} />} />
+          <Route path="/managerfaqpage" element={<ManagerProtectedRoute element={<ManagerFAQPage />} />} />
+
+           
         </Routes>
       </Layout>
     </Router>

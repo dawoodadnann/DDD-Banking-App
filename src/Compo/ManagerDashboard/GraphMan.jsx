@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FiUser } from "react-icons/fi";
 import {
   XAxis,
@@ -10,50 +10,55 @@ import {
   LineChart,
 } from "recharts";
 
-const data = [
-  {
-    name: "Week 1",
-    Deposits: 2750,
-    Withdrawals: 1250,
-  },
-  {
-    name: "Week 2",
-    Deposits: 3620,
-    Withdrawals: 2096,
-  },
-  {
-    name: "Week 3",
-    Deposits: 2900,
-    Withdrawals: 3192,
-  },
-  {
-    name: "Week 4",
-    Deposits: 4500,
-    Withdrawals: 2550,
-  },
-  {
-    name: "Week 5",
-    Deposits: 5050,
-    Withdrawals: 4200,
-  },
-  {
-    name: "Week 6",
-    Deposits: 6875,
-    Withdrawals: 3200,
-  },
-  {
-    name: "Week 7",
-    Deposits: 5700,
-    Withdrawals: 4205,
-  },
-];
+export const  GraphMan = () => {
+  const [usageData, setUsageData] = useState([]);
+ 
+  useEffect(() => {
+    const fetchDailyExpense = async () => {
+      const token = localStorage.getItem('jwttoken');        
+      
+      
+      try {
+        const response = await fetch("https://online-banking-system-backend.vercel.app/getbankdailyexpense", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`
+          },
+        });
 
-export const GraphMan = () => {
+        const data = await response.json();
+        console.log(data);
+        if (data.dailyusage) {
+          // Process the response data to fit the Recharts data format
+          const formattedData = data.dailyusage.map((entry) => ({
+            name: new Date(entry.expenditure_date).toLocaleDateString("en-US", {
+              day: "numeric",
+              month: "short",
+            }), // Format date as "Oct 1", for example
+            totalExpenditure: parseFloat(entry.total_daily_spending),
+          
+          }));
+            console.log(formattedData);
+          setUsageData(formattedData); // Update the state with formatted data
+          console.log("Daily expenditure retrieved successfully!");
+        } else {
+          console.log("No usage data found.");
+        }
+      } catch (error) {
+        console.error("Error retrieving daily expenses:", error);
+      }
+    };
+
+    fetchDailyExpense();
+  }, []);
+
   return (
-    <div className="col-span-8 overflow-hidden rounded border border-stone-300">
+    <div className="col-span-8 overflow-hidden rounded border border-black bg-lime-200 text-black">
       <div className="p-4">
-        <h3 className="flex items-center gap-1.5 font-medium">
-           Number of Transactions
+        <h3 className="flex items-center gap-1.5 font-medium text-black">
+          <FiUser /> Banking Activity
         </h3>
       </div>
 
@@ -62,7 +67,7 @@ export const GraphMan = () => {
           <LineChart
             width={500}
             height={400}
-            data={data}
+            data={usageData} // Use the dynamically fetched data
             margin={{
               top: 0,
               right: 0,
@@ -70,34 +75,36 @@ export const GraphMan = () => {
               bottom: 0,
             }}
           >
-            <CartesianGrid stroke="#e4e4e7" />
+            {/* Update the grid stroke to black */}
+            <CartesianGrid stroke="#000000" />
+
+            {/* Set XAxis labels to black */}
             <XAxis
-              dataKey="name"
+              dataKey="name" // Display dates on the X-axis
               axisLine={false}
               tickLine={false}
-              className="text-xs font-bold"
+              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
               padding={{ right: 4 }}
             />
+            {/* Set YAxis labels to black */}
             <YAxis
-              className="text-xs font-bold"
               axisLine={false}
               tickLine={false}
+              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
             />
             <Tooltip
               wrapperClassName="text-sm rounded"
-              labelClassName="text-xs text-stone-500"
+              labelClassName="text-xs text-black" // Tooltip label set to black
+              contentStyle={{ color: "#000000" }} // Tooltip content text set to black
             />
+            
+            {/* Update the line stroke to black */}
             <Line
               type="monotone"
-              dataKey="Deposits"
-              stroke="#18181b"
-              fill="#18181b"
-            />
-            <Line
-              type="monotone"
-              dataKey="Withdrawals"
-              stroke="#5b21b6"
-              fill="#5b21b6"
+              dataKey="totalExpenditure" // Expenditure data
+              stroke="#000000" // Change line color to black
+              fill="#000000"
+              name="Expenditure" // Tooltip label
             />
           </LineChart>
         </ResponsiveContainer>

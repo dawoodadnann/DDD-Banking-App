@@ -16,10 +16,9 @@ export const RouteSelectManager = () => {
   return (
     <div className="space-y-1 bg-zinc-800">
       <Route Icon={FiHome} selected={true} title="Home" linkTo="/" />
-      <Route Icon={FiDollarSign} selected={false} title="Manager Users" linkTo="/transfer" />
-      <Route Icon={FiDollarSign} selected={false} title="Approve Requests" linkTo="/transfer" />
-
-      
+      <Route Icon={FiDollarSign} selected={false} title=" Faqs Page User And Manager" linkTo="/managerfaqpage" />
+      <Route Icon={FiDollarSign} selected={false} title=" Approval User And Manager" linkTo="/managerapproval" />
+      <Route Icon={FiDollarSign} selected={false} title=" Update User And Manager" linkTo="/managerupdate" />
     </div>
   );
 };

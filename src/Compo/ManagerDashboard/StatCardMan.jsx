@@ -1,51 +1,75 @@
 import React, { useState, useEffect } from "react";
 import { FiTrendingDown, FiTrendingUp } from "react-icons/fi";
-
 export const StatCardMan = () => {
-  const [balance, setBalance] = useState(null);
+  const [count, setCount] = useState(null);
+  const [usage, setUsage] = useState(null);
 
   useEffect(() => {
-    const fetchBalance = async () => {
+    const fetchStats = async () => {
       try {
-        // Sending a POST request to the backend
         const token = localStorage.getItem('jwttoken');     
-        
-       
-        const response = await fetch("https://online-banking-system-backend.vercel.app/getbalance", {
+
+        // Fetch user count
+        const response1 = await fetch("https://online-banking-system-backend.vercel.app/getuserCount", {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,
           },
         });
 
-        const data = await response.json();
+        // Fetch current month usage
+        const response2 = await fetch("https://online-banking-system-backend.vercel.app/getbankcurrentmonthusage", {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            'Authorization': `Bearer ${token}`,
+          },
+        });
 
-        if (data.balance) {
-          console.log("Balance retrieved successfully!");
-          setBalance(data.balance);
+        // Parse the responses only once
+        const data1 = await response1.json();
+        const data2 = await response2.json();
+
+        // Set user count
+        if (data1.userCount) {
+          console.log("  userCount retrieved successfully!");
+          setCount(data1.userCount);
         } else {
-          console.log(data.message);
+          console.log(data1.userCount);
         }
+
+        // Set current month usage
+        if (data2.currentMonthUsage) {
+          console.log("currentMonthUsage retrieved successfully!");
+          setUsage(data2.currentMonthUsage);
+        } else {
+          console.log(data2.currentMonthUsage);
+        }
+
       } catch (error) {
-        console.error("Error retrieving balance:", error);
+        console.error("Error retrieving stats:", error);
         console.log("An error occurred. Please try again.");
       }
     };
 
-    fetchBalance();
+    fetchStats();
   }, []); // Empty dependency array means this effect runs once when the component mounts
 
   return (
+    
     <>
+ 
       <Card
-        title="Total Balance"
-        value={balance !== null ? `$${balance}` : "Loading..."}
+        title="Total Users Count"
+        value={count !== null ? `${count}` : "Loading..."}
         trend="up"
       />
       <Card
-        title="Total Users"
-        value="4500"
+        title="This Month Usage"
+        value={usage !== null ? `$${usage}` : "Loading..."}
         trend="up"
       />
     </>
@@ -71,5 +95,4 @@ const Card = ({ title, value, trend }) => {
       </div>
     </div>
   );
-
 };

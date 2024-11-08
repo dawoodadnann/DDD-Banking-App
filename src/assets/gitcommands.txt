@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "Corrected the card fetching"
+git commit -m "ADDED THE FAQ PAGE AND MANAGER DASHBOARD"
 git status
 git push -u origin main
 

@@ -3,6 +3,7 @@ import DynamicInput from "../Compo/DynamicInput"; // Assuming DynamicInput is in
 import logo from "../assets/logo3.png";
 import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
+import "./CardManagementPage.css";
 
 const CardManagementPage = () => {
   const [hasCard, setHasCard] = useState(false);
