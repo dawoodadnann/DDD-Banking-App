@@ -3,6 +3,7 @@ import "./PortfolioPage.css";
 import { Link } from "react-router-dom"; // Import Link to handle routing
 
 const PortfolioPage = () => {
+  localStorage.clear();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const reviews = [
@@ -174,6 +175,16 @@ const PortfolioPage = () => {
       {/* Contact Section */}
       <section id="contact" className="contact-section">
         <h2>Contact Us</h2>
+        <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.2034778801476!2d67.26468379999999!3d24.856899100000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb3316c5276e35b%3A0x823a6a0100195ffd!2sFAST%20National%20University%20Karachi%20Campus!5e0!3m2!1sen!2s!4v1731161463047!5m2!1sen!2s"
+        width="600"
+        height="450"
+        style={{ border: 0 }}
+        allowFullScreen=""
+        loading="lazy"
+        referrerPolicy="no-referrer-when-downgrade"
+        title="Google Map of FAST National University Karachi Campus"
+      ></iframe>
         <div className="contact-details">
           <p>Email: support@dpaybank.com</p>
           <p>Phone: +92 21 111 222 333</p>

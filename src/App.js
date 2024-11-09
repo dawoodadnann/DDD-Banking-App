@@ -8,6 +8,7 @@ import LoanPage from './pages/LoanPage';
 import HelpPage from './pages/HelpPage';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Navigation from './Compo/Navigation';
+import ManagerNavigation from './Compo/ManagerNavigation';
 import PortfolioPage from './pages/PortfolioPage';
 import ManagerLogin from './Compo/ManagerLogin';
 import ManagerSignup from './Compo/ManagerSignUp';
@@ -17,6 +18,7 @@ import ManagerDashboard from './pages/ManagerDashboard';
 import ManagerApproval from './Compo/ManagerApproval';
 import UpdateCustomer from './Compo/ManagerUpdate';
 import ManagerFAQPage from './Compo/managerFaqAnswer';
+import NavigationUnauthor from './Compo/navigationUnauthor';
 // Helper component to conditionally render the Navbar
 // const Layout = ({ children }) => {
 //   const location = useLocation();
@@ -32,10 +34,22 @@ import ManagerFAQPage from './Compo/managerFaqAnswer';
 const Layout = ({ children }) => {
   const location = useLocation();
   
+  // Define paths for pages where universal navigation should not be shown
+  const hideNavOnPages = ['/portfolio', '/login', '/signup', '/managerlogin', '/managersignup'];
+  
+  // Define paths specifically for manager-related pages
+  const managerPages = ['/managerfaqpage', '/managerapproval', '/managerupdate','/manager-dashboard'];
+
   return (
     <>
-      {/* Conditionally render Navigation except on portfolio page */}
-      {location.pathname !== '/portfolio' && <Navigation />}
+      {/* Conditionally render the universal Navigation if the current path is NOT in hideNavOnPages or managerPages */}
+      {!hideNavOnPages.includes(location.pathname) && !managerPages.includes(location.pathname) && <Navigation />}
+      
+      {/* Conditionally render ManagerNavigation on manager-specific paths */}
+      {managerPages.includes(location.pathname) && <ManagerNavigation />}
+
+{/* Conditionally render basic navigation for the users login pages */}
+{hideNavOnPages.includes(location.pathname) && <NavigationUnauthor />}
       {children}
     </>
   );

@@ -22,24 +22,17 @@ function BasicExample() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/dashboard" className="ps-3"> {/* Added left padding */}
+            <Nav.Link as={Link} to="/manager-dashboard" className="ps-3"> {/* Added left padding */}
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/money-transfer" className="ps-3"> {/* Added left padding */}
-              Transfer Money
+            <Nav.Link as={Link} to="/managerfaqpage" className="ps-3"> {/* Added left padding */}
+              Manager Faq
             </Nav.Link>
-            <Nav.Link as={Link} to="/billing" className="ps-3"> {/* Added left padding */}
-              Pay Bills
+            <Nav.Link as={Link} to="/managerapproval" className="ps-3"> {/* Added left padding */}
+              Manager Approval
             </Nav.Link>
-            <Nav.Link as={Link} to="/loan" className="ps-3"> {/* Added left padding */}
-              Loan Application
-            </Nav.Link>
-            <Nav.Link as={Link} to="/cards" className="ps-3"> {/* Added left padding */}
-              Card Management
-            </Nav.Link>
-           
-            <Nav.Link as={Link} to="/help" className="ps-3"> {/* Added left padding */}
-              Help
+            <Nav.Link as={Link} to="/managerupdate" className="ps-3"> {/* Added left padding */}
+              Update User
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
