@@ -38,7 +38,8 @@ const LoanPage = () => {
         method: 'POST',
         credentials: "include",
         headers: {
-          'Content-Type': 'application/json','Authorization': `Bearer ${token}`
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(formData),
       });
@@ -78,15 +79,21 @@ const LoanPage = () => {
 
           {/* New fields for attributes in the image */}
           <div className="form-group">
-            <DynamicInput
-              label="Loan Type"
-              type="text"
+            <label className="block text-gray-300 text-sm font-medium mb-2">Loan Type</label>
+            <select
               name="LOAN_TYPE"
               value={formData.LOAN_TYPE}
               onChange={handleChange}
+              className="w-full p-2 border rounded bg-white text-black"
               required
-            />
+            >
+              <option value="" disabled>Select Loan Type</option>
+              <option value="Personal">Personal</option>
+              <option value="Home">Home</option>
+              <option value="Auto">Auto</option>
+            </select>
           </div>
+
           <div className="form-group">
             <DynamicInput
               label="TENURE (in years)"
