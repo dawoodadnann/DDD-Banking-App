@@ -8,12 +8,16 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     fname: "",
     lname: "",
+    dob: "",
+    cnic: "",
+    info: "",
+    nationality: "",
+    gender: "",
     email: "",
     password: "",
     confirmPassword: "",
-    nationality: "",
-    gender: "",
   });
+
   const [error, setError] = useState("");
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
@@ -31,18 +35,15 @@ const Signup = () => {
     }
     setError("");
     try {
-
       const payloadt = {
         email1: formData.email,
         fname: formData.fname,
         lname: formData.lname,
       };
 
-      // Trigger OTP modal before registration
       setIsOtpModalOpen(true);
 
-      // Send email to initiate OTP (email part)
-      const response2 = await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
+      await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -55,93 +56,51 @@ const Signup = () => {
     }
   };
 
-  // // OTP verification and registration process
-  // const handleOtpVerification = async () => {
-  //   try {
-  //     // Send OTP to backend for verification
-  //     console.log(otp);
-  //     const payload2 = {
-  //       otp
-  //     };
-  //     const response3 = await fetch("http://localhost:5000/checkotp", {
-  //       method: "POST",
-  //       credentials: "include",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(payload2),
-  //     });
-
-  //     if (otp === "1234" || response3.ok)
-  //     {
-  //       // OTP is valid, now proceed with registration
-  //       alert('otp is valid registering new user');
-  //       const response = await fetch("http://localhost:5000/register", {
-  //         method: "POST",
-  //         headers: {
-  //           "Content-Type": "application/json",
-  //         },
-  //         body: JSON.stringify(formData),
-  //       });
-
-  //       if (response.ok) {
-  //         alert("Signup successful!");
-  //         setIsOtpModalOpen(false);
-  //         // Navigate to dashboard or login page here
-  //       } else {
-  //         const result = await response.json();
-  //         setError(result.message || "Signup failed");
-  //       }
-  //     } else {
-  //       setError("Invalid OTP. Please try again.");
-  //     }
-  //   } catch (error) {
-  //     setError("An error occurred during OTP verification");
-  //   }
-  // };
-  const handleOtpVerification =async () => {
+  const handleOtpVerification = async () => {
     const payload2 = {
-      otp
+      otp,
     };
-    const response3 = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(payload2),
-    });
+    const response3 = await fetch(
+      "https://online-banking-system-backend.vercel.app/checkotp",
+      {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload2),
+      }
+    );
 
     const data = await response3.json();
-    if (otp === "1234"|| response3.ok) {
-      // For demo purposes, replace with backend verification later
-      alert("Login successful!");
-      alert('otp is valid registering new user');
-        const response = await fetch("https://online-banking-system-backend.vercel.app/register", {
+    if (otp === "1234" || response3.ok) {
+      alert("OTP is valid, registering new user...");
+      const response = await fetch(
+        "https://online-banking-system-backend.vercel.app/register",
+        {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify(formData),
-        });
+        }
+      );
 
-        if (response.ok) {
-          alert("Signup successful!");
-          setIsOtpModalOpen(false);
-          // Navigate to dashboard or login page here
-          navigate('/login');
-        } else {
-          const result = await response.json();
-          setError(result.message || "Signup failed");
-        }    
+      if (response.ok) {
+        alert("Signup successful!");
+        setIsOtpModalOpen(false);
+        navigate("/login");
+      } else {
+        const result = await response.json();
+        setError(result.message || "Signup failed");
+      }
     } else {
       setError("Invalid OTP. Please try again.");
     }
   };
 
   return (
-    <div className="min-h-screen flex flex-col items-center ">
-      {/*bg-zinc-900 */}
+    <div className="min-h-screen flex flex-col items-center">
       <div className="w-full flex justify-between p-4 bg-zinc-800">
         <img src={logo} alt="E-bank" className="h-10" />
         <div className="flex gap-4">
@@ -167,24 +126,120 @@ const Signup = () => {
         </h3>
         <form onSubmit={handleSubmit}>
           {[
-            // Map through fields
             { label: "First Name", name: "fname", type: "text" },
             { label: "Last Name", name: "lname", type: "text" },
             { label: "Date of Birth", name: "dob", type: "date" },
             { label: "CNIC", name: "cnic", type: "text" },
             { label: "Additional Information", name: "info", type: "text" },
-            { label: "Nationality", name: "nationality", type: "text" },
-            { label: "Gender", name: "gender", type: "text" },
             { label: "E-mail", name: "email", type: "email" },
-            { label: "Password", name: "password", type: "password" },
-            {
-              label: "Confirm Password",
-              name: "confirmPassword",
-              type: "password",
-            },
           ].map((field, index) => (
             <div key={index} className="mb-4">
-              <DynamicInput // Use DynamicInput instead of input
+              <DynamicInput
+                label={field.label}
+                name={field.name}
+                type={field.type}
+                placeholder={field.label}
+                value={formData[field.name]}
+                onChange={handleChange}
+                required
+              />
+            </div>
+          ))}
+
+          {/* Nationality Dropdown */}
+          {/* Nationality Dropdown */}
+<div className="mb-4">
+  <select
+    name="nationality"
+    value={formData.nationality}
+    onChange={handleChange}
+    className="textbox"
+    required
+  >
+    <option value="" disabled>
+      Select Nationality
+    </option>
+    <option value="Afghanistan">Afghanistan</option>
+    <option value="Albania">Albania</option>
+    <option value="Algeria">Algeria</option>
+    <option value="Argentina">Argentina</option>
+    <option value="Australia">Australia</option>
+    <option value="Austria">Austria</option>
+    <option value="Bangladesh">Bangladesh</option>
+    <option value="Belgium">Belgium</option>
+    <option value="Brazil">Brazil</option>
+    <option value="Canada">Canada</option>
+    <option value="China">China</option>
+    <option value="Colombia">Colombia</option>
+    <option value="Denmark">Denmark</option>
+    <option value="Egypt">Egypt</option>
+    <option value="Ethiopia">Ethiopia</option>
+    <option value="Finland">Finland</option>
+    <option value="France">France</option>
+    <option value="Germany">Germany</option>
+    <option value="Ghana">Ghana</option>
+    <option value="Greece">Greece</option>
+    <option value="India">India</option>
+    <option value="Indonesia">Indonesia</option>
+    <option value="Iran">Iran</option>
+    <option value="Iraq">Iraq</option>
+    <option value="Ireland">Ireland</option>
+    <option value="Italy">Italy</option>
+    <option value="Japan">Japan</option>
+    <option value="Kenya">Kenya</option>
+    <option value="Malaysia">Malaysia</option>
+    <option value="Mexico">Mexico</option>
+    <option value="Netherlands">Netherlands</option>
+    <option value="New Zealand">New Zealand</option>
+    <option value="Nigeria">Nigeria</option>
+    <option value="Norway">Norway</option>
+    <option value="Pakistan">Pakistan</option>
+    <option value="Philippines">Philippines</option>
+    <option value="Poland">Poland</option>
+    <option value="Portugal">Portugal</option>
+    <option value="Russia">Russia</option>
+    <option value="Saudi Arabia">Saudi Arabia</option>
+    <option value="Singapore">Singapore</option>
+    <option value="South Africa">South Africa</option>
+    <option value="South Korea">South Korea</option>
+    <option value="Spain">Spain</option>
+    <option value="Sri Lanka">Sri Lanka</option>
+    <option value="Sweden">Sweden</option>
+    <option value="Switzerland">Switzerland</option>
+    <option value="Turkey">Turkey</option>
+    <option value="United Arab Emirates">United Arab Emirates</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="United States">United States</option>
+    <option value="Vietnam">Vietnam</option>
+    <option value="Zimbabwe">Zimbabwe</option>
+  </select>
+</div>
+
+
+          {/* Gender Dropdown */}
+          <div className="mb-4">
+            <select
+              name="gender"
+              value={formData.gender}
+              onChange={handleChange}
+              className="textbox"
+              required
+            >
+              <option value="" disabled>
+                Select Gender
+              </option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          {[
+            { label: "Password", name: "password", type: "password" },
+            { label: "Confirm Password", name: "confirmPassword", type: "password" },
+          ].map((field, index) => (
+            <div key={index} className="mb-4">
+              <DynamicInput
                 label={field.label}
                 name={field.name}
                 type={field.type}
@@ -206,28 +261,6 @@ const Signup = () => {
         {error && <div className="text-red-500 text-center mt-4">{error}</div>}
       </div>
       {/* OTP Modal */}
-      {isOtpModalOpen && (
-        <div className="otp-modal">
-          <div className="otp-modal-content">
-            <h3>Enter OTP</h3>
-            <input
-              type="text"
-              value={otp}
-              onChange={(e) => setOtp(e.target.value)}
-              placeholder="Enter OTP"
-            />
-            <button onClick={handleOtpVerification} className="verify-btn">
-              Verify OTP
-            </button>
-            <button
-              onClick={() => setIsOtpModalOpen(false)}
-              className="close-btn"
-            >
-              Cancel
-            </button>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

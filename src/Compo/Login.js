@@ -15,9 +15,9 @@ const Login = () => {
 
   // Redirect to dashboard if already logged in
   useEffect(() => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem("token");
     // if (token) {
-    //   navigate('/dashboard');  // Redirect to dashboard if already logged in
+    //   navigate("/dashboard");  // Redirect to dashboard if already logged in
     // }
   }, [navigate]);
 
@@ -31,7 +31,6 @@ const Login = () => {
     };
 
     try {
-      // Sending a POST request to the backend
       const response = await fetch("https://online-banking-system-backend.vercel.app/login", {
         method: "POST",
         credentials: "include",
@@ -44,19 +43,17 @@ const Login = () => {
       const data = await response.json();
 
       if (response.ok) {
-        // Store JWT token in localStorage
-        localStorage.setItem('jwttoken', data.token); // Store jwt token
-        
-        // Open OTP modal after successful login
+        localStorage.setItem("jwttoken", data.token);
+
         setIsOtpModalOpen(true);
 
         const payloadt = {
           email: null,
-          fname: '',
-          lname: ''
+          fname: "",
+          lname: "",
         };
 
-        const response2 = await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
+        await fetch("https://online-banking-system-backend.vercel.app/sendemail", {
           method: "POST",
           credentials: "include",
           headers: {
@@ -92,15 +89,13 @@ const Login = () => {
       });
 
       const data = await response3.json();
-      
+
       if (otp === "1234" || response3.ok) {
-        // OTP verification success
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
         alert("Login successful!");
         setIsOtpModalOpen(false);
 
-        // Redirect to dashboard after successful OTP verification
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         setError("Invalid OTP. Please try again.");
       }
@@ -111,38 +106,27 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container ">
+    <div className="login-container flex flex-col items-center justify-center min-h-screen p-4 bg-gray-900">
       {/* Navbar */}
-      <div className="navbar">
-        <img src={logo} alt="E-bank" className="logo" />
-        <div className="nav-buttons">
+      <div className="navbar w-full max-w-2xl flex justify-between items-center px-4 py-2 bg-gray-800 shadow-md md:px-6 lg:px-8">
+        <img src={logo} alt="E-bank" className="logo w-12 h-12 md:w-16 md:h-16" />
+        <div className="nav-buttons flex space-x-2">
           <Link to="/login">
-            <button className="login-btn">Log in</button>
+            <button className="login-btn px-4 py-1 text-sm font-semibold text-white bg-blue-600 rounded md:px-6 md:py-2">Log in</button>
           </Link>
           <Link to="/signup">
-            <button className="signup-btn">Sign up</button>
+            <button className="signup-btn px-4 py-1 text-sm font-semibold text-white bg-green-600 rounded md:px-6 md:py-2">Sign up</button>
           </Link>
-          <Link to="/billing">
-            <button className="signup-btn">Pay Bills</button>
-          </Link>
-          <Link to="/Dashboard">
-            <button className="signup-btn">Dashboard</button>
-          </Link>
-          <Link to="/money-transfer">
-            <button className="signup-btn">MONEY TRANSFER</button>
-          </Link>
-          <Link to="/manager-dashboard">
-            <button className="signup-btn">Manager Dash</button>
-          </Link>
+          {/* Add more links/buttons as needed */}
         </div>
       </div>
 
       {/* Login Box */}
-      <div className="login-box bg-zinc-800 text-white">
-        <img src={logo} alt="E-bank" className="logo-box" />
-        <h2>D-Pay</h2>
-        <h3>Sign In To Continue</h3>
-        <form onSubmit={handleSubmit}>
+      <div className="login-box w-full max-w-sm p-8 mt-6 bg-gray-800 text-white rounded-lg shadow-lg md:max-w-md lg:max-w-lg 2xl:max-w-xl">
+        <img src={logo} alt="E-bank" className="logo-box w-16 h-16 mx-auto md:w-20 md:h-20" />
+        <h2 className="text-3xl font-bold text-center md:text-4xl">D-Pay</h2>
+        <h3 className="mt-2 text-center text-lg font-semibold md:text-xl">Sign In To Continue</h3>
+        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
           <DynamicInput
             label="E-mail *"
             type="email"
@@ -157,33 +141,33 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="submit-btn">
+          <button type="submit" className="submit-btn w-full py-2 text-lg font-semibold text-white bg-blue-600 rounded md:py-3 md:text-xl">
             Log in
           </button>
         </form>
-        {error && <div className="error-message">{error}</div>}
+        {error && <div className="mt-4 text-red-500">{error}</div>}
       </div>
 
       {/* OTP Modal */}
       {isOtpModalOpen && (
-        <div className="otp-modal">
-          <div className="otp-modal-content">
-            <h3>Enter OTP</h3>
+        <div className="otp-modal fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="otp-modal-content w-full max-w-sm p-6 bg-white rounded-lg shadow-lg text-center md:max-w-md">
+            <h3 className="text-2xl font-bold">Enter OTP</h3>
             <input
               type="text"
               value={otp}
               onChange={(e) => setOtp(e.target.value)}
               placeholder="Enter OTP"
+              className="w-full px-4 py-2 mt-4 border rounded"
             />
-            <button onClick={handleOtpVerification} className="verify-btn">
-              Verify OTP
-            </button>
-            <button
-              onClick={() => setIsOtpModalOpen(false)}
-              className="close-btn"
-            >
-              Cancel
-            </button>
+            <div className="flex justify-center mt-4 space-x-4">
+              <button onClick={handleOtpVerification} className="verify-btn px-4 py-2 font-semibold text-white bg-blue-600 rounded">
+                Verify OTP
+              </button>
+              <button onClick={() => setIsOtpModalOpen(false)} className="close-btn px-4 py-2 font-semibold text-white bg-red-600 rounded">
+                Cancel
+              </button>
+            </div>
           </div>
         </div>
       )}
