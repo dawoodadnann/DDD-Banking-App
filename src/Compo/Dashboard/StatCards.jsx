@@ -14,7 +14,7 @@ export const StatCards = () => {
           method: "GET",
           credentials: "include",
           headers: {
-            "Content-Type": "application/json",'Authorization': `Bearer ${token}`,
+            "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
           },
         });
 
@@ -36,7 +36,7 @@ export const StatCards = () => {
           },
         });
 
-        const data2 = await response2.json(); // Correct response2.json
+        const data2 = await response2.json();
 
         if (data2.monthlyusage[0].total_monthly_expenditure) {
           console.log("Monthly expenditure retrieved successfully!");
@@ -71,10 +71,13 @@ export const StatCards = () => {
 
 const Card = ({ title, value, trend }) => {
   return (
-    <div className="col-span-4 p-4 rounded border border-stone-300 bg-lime-200 text-black">
+    <div 
+      className="col-span-4 p-4 rounded border border-stone-300 text-white"
+      style={{ background: "linear-gradient(90deg, #1E90FF 0%, #004AAD 100%)" }}
+    >
       <div className="flex mb-8 items-start justify-between">
         <div>
-          <h3 className="text-stone-500 mb-2 text-sm">{title}</h3>
+          <h3 className="text-white mb-2 text-lg font-semibold">{title}</h3>
           <p className="text-3xl pt-6 font-semibold">{value}</p>
         </div>
 

@@ -16,7 +16,7 @@ export const RouteSelect = () => {
   return (
     <div className="space-y-1">
       <Route Icon={FiHome} selected={true} title="Home" linkTo="/" />
-      <Route Icon={FiDollarSign} selected={false} title="Transfer Money" linkTo="/MoneyTransfer" />
+      <Route Icon={FiDollarSign} selected={false} title="Transfer Money" linkTo="/money-transfer" />
       <Route Icon={FiCalendar} selected={false} title="Pay Bills" linkTo="/billing" />
       <Route Icon={FiCalendar} selected={false} title="Loan Application" linkTo="/loan" />
       <Route Icon={FiCreditCard} selected={false} title="Card Management" linkTo="/cards" />

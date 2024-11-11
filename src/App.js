@@ -19,6 +19,7 @@ import ManagerApproval from './Compo/ManagerApproval';
 import UpdateCustomer from './Compo/ManagerUpdate';
 import ManagerFAQPage from './Compo/managerFaqAnswer';
 import NavigationUnauthor from './Compo/navigationUnauthor';
+import 'bootstrap/dist/css/bootstrap.min.css';
 // Helper component to conditionally render the Navbar
 // const Layout = ({ children }) => {
 //   const location = useLocation();

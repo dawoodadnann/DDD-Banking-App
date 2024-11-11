@@ -16,8 +16,7 @@ export const ActivityGraph = () => {
   useEffect(() => {
     const fetchDailyExpense = async () => {
       const token = localStorage.getItem('jwttoken');        
-      
-      
+        
       try {
         const response = await fetch("https://online-banking-system-backend.vercel.app/getdailyexpense", {
           method: "GET",
@@ -31,16 +30,15 @@ export const ActivityGraph = () => {
         const data = await response.json();
 
         if (data.dailyusage) {
-          // Process the response data to fit the Recharts data format
           const formattedData = data.dailyusage.map((entry) => ({
             name: new Date(entry.expenditure_date).toLocaleDateString("en-US", {
               day: "numeric",
               month: "short",
-            }), // Format date as "Oct 1", for example
+            }),
             totalExpenditure: parseFloat(entry.total_daily_expenditure),
           }));
 
-          setUsageData(formattedData); // Update the state with formatted data
+          setUsageData(formattedData);
           console.log("Daily expenditure retrieved successfully!");
         } else {
           console.log("No usage data found.");
@@ -54,9 +52,12 @@ export const ActivityGraph = () => {
   }, []);
 
   return (
-    <div className="col-span-8 overflow-hidden rounded border border-black bg-lime-200 text-black">
+    <div
+      className="col-span-8 overflow-hidden rounded"
+      style={{ background: "linear-gradient(90deg, #1E90FF 0%, #004AAD 100%)" }}
+    >
       <div className="p-4">
-        <h3 className="flex items-center gap-1.5 font-medium text-black">
+        <h3 className="flex items-center gap-1.5 font-medium text-white">
           <FiUser /> Banking Activity
         </h3>
       </div>
@@ -66,7 +67,7 @@ export const ActivityGraph = () => {
           <LineChart
             width={500}
             height={400}
-            data={usageData} // Use the dynamically fetched data
+            data={usageData}
             margin={{
               top: 0,
               right: 0,
@@ -74,36 +75,30 @@ export const ActivityGraph = () => {
               bottom: 0,
             }}
           >
-            {/* Update the grid stroke to black */}
-            <CartesianGrid stroke="#000000" />
-
-            {/* Set XAxis labels to black */}
+            <CartesianGrid stroke="#ffffff" />
             <XAxis
-              dataKey="name" // Display dates on the X-axis
+              dataKey="name"
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
+              tick={{ fill: "#ffffff", fontWeight: "bold" }}
               padding={{ right: 4 }}
             />
-            {/* Set YAxis labels to black */}
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
+              tick={{ fill: "#ffffff", fontWeight: "bold" }}
             />
             <Tooltip
               wrapperClassName="text-sm rounded"
-              labelClassName="text-xs text-black" // Tooltip label set to black
-              contentStyle={{ color: "#000000" }} // Tooltip content text set to black
+              labelClassName="text-xs text-white"
+              contentStyle={{ color: "#000000" }}
             />
-            
-            {/* Update the line stroke to black */}
             <Line
               type="monotone"
-              dataKey="totalExpenditure" // Expenditure data
-              stroke="#000000" // Change line color to black
-              fill="#000000"
-              name="Expenditure" // Tooltip label
+              dataKey="totalExpenditure"
+              stroke="#ffffff"
+              fill="#ffffff"
+              name="Expenditure"
             />
           </LineChart>
         </ResponsiveContainer>
