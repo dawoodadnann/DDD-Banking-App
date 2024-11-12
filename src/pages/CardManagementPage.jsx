@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import DynamicInput from "../Compo/DynamicInput"; // Assuming DynamicInput is in the same folder or adjust path accordingly
+import DynamicInput from "../Compo/DynamicInput"; 
 import logo from "../assets/logo3.png";
 import mastercard from "../assets/mastercard.png";
 import chip from "../assets/chip.jpg";
@@ -24,7 +24,7 @@ const CardManagementPage = () => {
         const response = await fetch("https://online-banking-system-backend.vercel.app/checkcardstatus", {
           method: "GET",
           credentials: "include",
-          headers: { "Content-Type": "application/json" ,'Authorization': `Bearer ${token}`,},
+          headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         });
 
         const data = await response.json();
@@ -45,11 +45,10 @@ const CardManagementPage = () => {
     try {
       const token = localStorage.getItem('jwttoken');     
       
-      
       const response = await fetch("https://online-banking-system-backend.vercel.app/carddetail", {
         method: "GET",
         credentials: "include",
-        headers: { "Content-Type": "application/json",'Authorization': `Bearer ${token}` },
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
       });
 
       if (response.ok) {
@@ -77,7 +76,6 @@ const CardManagementPage = () => {
     try {
       const token = localStorage.getItem('jwttoken');     
       
-     
       const response = await fetch("https://online-banking-system-backend.vercel.app/checkpin", {
         method: "POST",
         credentials: "include",
@@ -117,11 +115,10 @@ const CardManagementPage = () => {
     try {
       const token = localStorage.getItem('jwttoken');     
       
-      
       const response = await fetch("https://online-banking-system-backend.vercel.app/addcard", {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" ,'Authorization': `Bearer ${token}`},
+        headers: { "Content-Type": "application/json", 'Authorization': `Bearer ${token}` },
         body: JSON.stringify({
           type: "Debit",
           name: formData.name,
@@ -145,7 +142,7 @@ const CardManagementPage = () => {
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+      <div className="gradient-box p-6 rounded-lg shadow-lg w-full max-w-md">
         {hasCard ? (
           <div className="debit-card-container">
             <div className="debit-card">
@@ -156,7 +153,7 @@ const CardManagementPage = () => {
                 <img src={chip} alt="Debit Card Chip" />
               </div>
               {showCardDetails && cardDetails && (
-                <div className="card-details">
+                <div className="card-details text-white">
                   <p className="card-number">{cardDetails.data.card_num || "**** **** **** ****"}</p>
                   <p className="cardholder-name">{cardDetails.data.card_name || "John Doe"}</p>
                   <p className="card-id">Card ID: {cardDetails.data.card_id || "XXXX-XXXX-XXXX"}</p>
@@ -167,7 +164,10 @@ const CardManagementPage = () => {
               </div>
             </div>
 
-            <button onClick={toggleCardDetails} className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500">
+            <button
+              onClick={toggleCardDetails}
+              className="bg-gray-700 text-white p-2 rounded w-full hover:bg-gray-600 mt-4"
+            >
               {showCardDetails ? "Hide Card Details" : "Show Card Details"}
             </button>
           </div>
@@ -200,17 +200,16 @@ const CardManagementPage = () => {
               </div>
 
               <div className="mb-4">
-  <DynamicInput
-    label="Address"
-    type="text"
-    value={formData.address}
-    onChange={handleChange}
-    name="address"
-    placeholder="Enter your address"
-    className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
-  />
-</div>
-
+                <DynamicInput
+                  label="Address"
+                  type="text"
+                  value={formData.address}
+                  onChange={handleChange}
+                  name="address"
+                  placeholder="Enter your address"
+                  className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
+                />
+              </div>
 
               <div className="mb-4">
                 <DynamicInput
@@ -226,7 +225,7 @@ const CardManagementPage = () => {
 
               <button
                 type="submit"
-                className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500"
+                className="bg-gray-700 text-white p-2 rounded w-full hover:bg-gray-600"
                 disabled={addingCard}
               >
                 {addingCard ? "Submitting..." : "Submit Application"}
@@ -250,7 +249,7 @@ const CardManagementPage = () => {
             />
             <button
               onClick={handlePinSubmit}
-              className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500 mt-4"
+              className="bg-gray-700 text-white p-2 rounded w-full hover:bg-gray-600 mt-4"
               disabled={loading}
             >
               {loading ? "Verifying..." : "Verify PIN"}

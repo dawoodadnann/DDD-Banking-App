@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// Assuming DynamicInput is imported correctly from your project components
 import DynamicInput from "./DynamicInput";
 
 export const MoneyTransfer = () => {
@@ -21,21 +20,24 @@ export const MoneyTransfer = () => {
     }
 
     try {
-      const token = localStorage.getItem('jwttoken');     
-    
-     
-      const response = await fetch("https://online-banking-system-backend.vercel.app/interbanktransaction", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          Amount: amount,
-          accnum: accountNumber,
-          check: true,
-        }),
-      });
+      const token = localStorage.getItem("jwttoken");
+
+      const response = await fetch(
+        "https://online-banking-system-backend.vercel.app/interbanktransaction",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            Amount: amount,
+            accnum: accountNumber,
+            check: true,
+          }),
+        }
+      );
 
       const data = await response.json();
 
@@ -51,18 +53,17 @@ export const MoneyTransfer = () => {
   };
 
   return (
-    <div className=" min-h-screen flex items-center justify-center">
-      <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="gradient-box p-6 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-xl font-bold text-white text-center mb-4">
           Transfer Money With Just A Tap
         </h2>
 
-        {/* Tabs for Payment Method Selection */}
         <div className="mb-4">
           <div className="flex space-x-4 border-b border-gray-600 bg-zinc-600">
             <button
               className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "dPay" ? "bg-blue-600 text-white" : "text-gray-400"
+                paymentMethod === "dPay" ? "bg-dark-gray text-white" : "text-gray-400"
               }`}
               onClick={() => setPaymentMethod("dPay")}
             >
@@ -70,7 +71,7 @@ export const MoneyTransfer = () => {
             </button>
             <button
               className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "crossPlatform" ? "bg-blue-600 text-white" : "text-gray-400"
+                paymentMethod === "crossPlatform" ? "bg-dark-gray text-white" : "text-gray-400"
               }`}
               onClick={() => setPaymentMethod("crossPlatform")}
             >
@@ -79,9 +80,7 @@ export const MoneyTransfer = () => {
           </div>
         </div>
 
-        {/* Amount Input */}
         <div className="mb-4">
-          <label className="block text-white mb-1"></label>
           <DynamicInput
             label="Amount"
             type="number"
@@ -92,7 +91,6 @@ export const MoneyTransfer = () => {
           />
         </div>
 
-        {/* Conditional Bank/Payment App Selection */}
         {paymentMethod === "crossPlatform" && (
           <div className="mb-4">
             <label className="block text-white mb-1">Select Bank/Payments App</label>
@@ -110,9 +108,7 @@ export const MoneyTransfer = () => {
           </div>
         )}
 
-        {/* Account Number Input */}
         <div className="mb-4">
-          <label className="block text-white mb-1"></label>
           <DynamicInput
             label="Account Number"
             type="text"
@@ -125,7 +121,7 @@ export const MoneyTransfer = () => {
 
         <button
           onClick={handleTransfer}
-          className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500"
+          className="bg-dark-gray text-white p-2 rounded w-full hover:bg-gray-500"
         >
           Send
         </button>
@@ -137,3 +133,5 @@ export const MoneyTransfer = () => {
     </div>
   );
 };
+
+export default MoneyTransfer;

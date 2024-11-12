@@ -63,7 +63,10 @@
     display: flex;
     flex-direction: column;
     margin-top: 20px;
+    align-items: center;
+    text-align: center;
     font-family: 'Courier Prime';
+    color: grey;
   }
   
   .card-number {
@@ -237,3 +240,11 @@ textarea {
   color: red;
   margin-top: 10px;
 }
+
+.card-id {
+  color: grey; /* Set the color of the Card ID text to grey */
+  font-size: 0.9rem; /* Optional: Adjust font size if needed */
+  margin-top: 10px; /* Optional: Add margin for spacing */
+  font-weight: bold;
+}
+

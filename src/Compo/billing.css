@@ -17,44 +17,46 @@
 /* billing.css */
 /* General styling for the billing page */
 .grid {
-    display: grid;
-    gap: 1rem;
-    padding: 1.5rem;
-  }
-  
-  /* Styling for each bill box */
-  .bill-box {
-    width: 120px;
-    height: 80px;
-    padding: 8px;
-    border-radius: 8px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background: linear-gradient(135deg, #0061ff, #60efff); /* Sidebar gradient */
-    color: white;
-    transition: all 0.3s ease;
-  }
-  
-  .bill-box:hover {
-    transform: scale(1.05);
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-  }
-  
-  /* Title styling inside each bill box */
-  .bill-title {
-    font-size: 0.875rem; /* Small font size */
-    font-weight: 600;
-    text-align: center;
-    margin-top: 0.25rem;
-  }
-  
-  /* Icon styling */
-  .bill-logo {
-    width: 24px; /* Smaller icon */
-    height: 24px;
-    margin-top: 0.25rem;
-  }
-  
-  
+  display: grid;
+  gap: 1rem;
+  padding: 1.5rem;
+}
+
+/* Styling for each bill box */
+.bill-box {
+  width: 400px; /* Larger width for rectangular shape */
+  height: 120px; /* Larger height for rectangular shape */
+  padding: 10px;
+  border-radius: 12px; /* Curved borders */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0061ff, #60efff); /* Blue gradient */
+  color: white; /* White font color */
+  font-weight: bold; /* Bolder font for readability */
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.bill-box:hover {
+  transform: scale(1.05); /* Slight scale on hover */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Title styling inside each bill box */
+.bill-title {
+  font-size: 1rem; /* Larger font size */
+  font-weight: 700;
+  text-align: center;
+  /* margin-top: 0.5rem; */
+  color: white; /* Ensuring font color is white */
+}
+
+/* Icon styling */
+.bill-logo {
+  width: 40px; /* Larger icon size */
+  height: 40px;
+  /* margin-top: 0.5rem; */
+}
+
