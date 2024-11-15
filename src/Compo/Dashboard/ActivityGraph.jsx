@@ -90,7 +90,7 @@ export const ActivityGraph = () => {
             />
             <Tooltip
               wrapperClassName="text-sm rounded"
-              labelClassName="text-xs text-white"
+              labelClassName="text-xs text-black"
               contentStyle={{ color: "#000000" }}
             />
             <Line

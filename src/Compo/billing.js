@@ -172,92 +172,106 @@ const Billing = () => {
           <div className="popup-inner bg-zinc-800 p-6 rounded-lg shadow-lg">
             <h2 className="text-2xl font-semibold mb-4 text-white">Select Your {selectedBill} Company</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
-              <select
-                value={Company}
-                onChange={(e) => setCompany(e.target.value)}
-                required
-                className="block w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 text-black"
-              >
-                <option value="">Select Company</option>
-                {billOptions.map((company, index) => (
-                  <option key={index} value={company}>
-                    {company}
-                  </option>
-                ))}
-              </select>
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="text"
-                value={accnum}
-                onChange={(e) => setaccnum(e.target.value)}
-                required
-                placeholder="ACCOUNT NUM / CUSTOMER NUM"
-              />
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="text"
-                value={Username}
-                onChange={(e) => setUsername(e.target.value)}
-                required
-                placeholder="USERNAME"
-              />
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="number"
-                value={Amount}
-                onChange={(e) => setAmount(e.target.value)}
-                placeholder="Bill Amount"
-              />
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="text"
-                value={Month}
-                onChange={(e) => setMonth(e.target.value)}
-                placeholder="Billing Month"
-              />
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="text"
-                value={Email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Email (optional)"
-              />
-  
-              <input
-                className="textbox w-full p-2 border rounded-lg text-black"
-                type="text"
-                value={Address}
-                onChange={(e) => setAddress(e.target.value)}
-                required
-                placeholder="Address"
-              />
-  
-              <div className="flex items-center space-x-2">
-                <input
-                  type="checkbox"
-                  checked={Check}
-                  onChange={(e) => setCheck(e.target.checked)}
-                  className="h-4 w-4"
-                />
-                <label className="text-white text-sm">
-                  I agree to the company policy, and I understand that any vulnerabilities will not be considered as it is a test version.
-                </label>
-              </div>
-  
-              <div className="flex justify-end space-x-4 mt-4">
-                <button onClick={closePopup} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
-                  Close
-                </button>
-                <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
-                  Preview
-                </button>
-              </div>
-            </form>
+  <select
+    value={Company}
+    onChange={(e) => setCompany(e.target.value)}
+    required
+    className="block w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 text-black"
+  >
+    <option value="">Select Company</option>
+    {billOptions.map((company, index) => (
+      <option key={index} value={company}>
+        {company}
+      </option>
+    ))}
+  </select>
+
+  <input
+    className="textbox w-full p-2 border rounded-lg text-black"
+    type="text"
+    value={accnum}
+    onChange={(e) => setaccnum(e.target.value)}
+    required
+    placeholder="ACCOUNT NUM / CUSTOMER NUM"
+  />
+
+  <input
+    className="textbox w-full p-2 border rounded-lg text-black"
+    type="text"
+    value={Username}
+    onChange={(e) => setUsername(e.target.value)}
+    required
+    placeholder="USERNAME"
+  />
+
+  <input
+    className="textbox w-full p-2 border rounded-lg text-black"
+    type="number"
+    value={Amount}
+    onChange={(e) => setAmount(e.target.value)}
+    placeholder="Bill Amount"
+  />
+
+  <select
+    value={Month}
+    onChange={(e) => setMonth(e.target.value)}
+    required
+    className="block w-full p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 text-black"
+  >
+    <option value="">Select Billing Month</option>
+    <option value="January">January</option>
+    <option value="February">February</option>
+    <option value="March">March</option>
+    <option value="April">April</option>
+    <option value="May">May</option>
+    <option value="June">June</option>
+    <option value="July">July</option>
+    <option value="August">August</option>
+    <option value="September">September</option>
+    <option value="October">October</option>
+    <option value="November">November</option>
+    <option value="December">December</option>
+  </select>
+
+  <input
+    className="textbox w-full p-2 border rounded-lg text-black"
+    type="text"
+    value={Email}
+    onChange={(e) => setEmail(e.target.value)}
+    placeholder="Email (optional)"
+  />
+
+  <input
+    className="textbox w-full p-2 border rounded-lg text-black"
+    type="text"
+    value={Address}
+    onChange={(e) => setAddress(e.target.value)}
+    required
+    placeholder="Address"
+  />
+
+  <div className="flex items-center space-x-2">
+    <input
+      type="checkbox"
+      checked={Check}
+      onChange={(e) => setCheck(e.target.checked)}
+      className="h-4 w-4"
+    />
+    <label className="text-white text-sm">
+      I agree to the company policy, and I understand that any vulnerabilities will not be considered as it is a test version.
+    </label>
+  </div>
+
+  <div className="flex justify-end space-x-4 mt-4">
+    <button onClick={closePopup} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+      Close
+    </button>
+    <button type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition">
+      Preview
+    </button>
+  </div>
+</form>
+
           </div>
         </div>
       )}

@@ -1,4 +1,3 @@
-
 .card-management-page {
     padding: 20px;
     text-align: center;
@@ -94,22 +93,24 @@
   }
   
   .apply-card {
-    background-color: #1e1e1e;
+    background: linear-gradient(135deg, #1e3a8a, #3b82f6); /* Same gradient as the background */
     border-radius: 10px;
     padding: 20px;
     max-width: 600px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  }
-  
-  .apply-card h2 {
-    color: #007bff;
-  }
-  
-  .apply-card p,
-  .apply-card ol {
+    color: #ffffff; /* Ensure the text is readable */
+}
+
+.apply-card h2 {
+    color: #ffffff; /* Set heading color for better contrast */
+}
+
+.apply-card p,
+.apply-card ol {
     text-align: left;
-    color: #ffffff;
-  }
+    color: #f0f0f0; /* Slightly lighter text for readability */
+}
+
 
   .chip {
     width: 40px;  
@@ -146,7 +147,7 @@
 }
 
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 .label {
