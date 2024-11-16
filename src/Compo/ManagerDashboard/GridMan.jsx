@@ -1,20 +1,27 @@
-import React from 'react'
-import { StatCardMan } from './StatCardMan'
-import { GraphMan } from './GraphMan'
-// import { RecentTransactions } from '../Dashboard/RecentTransactions'
-//import { ActivityGraph } from '../Dashboard/ActivityGraph'
-import { AllRecentTransactions } from './AllRecentTransactions'
+import React from 'react';
+import { StatCardMan } from './StatCardMan';
+import { GraphMan } from './GraphMan';
+import { AllRecentTransactions } from './AllRecentTransactions';
 
 const GridMan = () => {
   return (
-    <div className="px-4 grid gap-3 grid-cols-12">
-    <StatCardMan/>
-    <GraphMan/>
-    <AllRecentTransactions/>
-   
+    <div className="px-4 grid gap-6 grid-cols-12">
+      {/* Stat Cards Section */}
+      <div className="col-span-12">
+        <StatCardMan />
+      </div>
 
-  </div>
-  )
-}
+      {/* Graph Section */}
+      <div className="col-span-12">
+        <GraphMan />
+      </div>
 
-export default GridMan
+      {/* Recent Transactions Section */}
+      <div className="col-span-12">
+        <AllRecentTransactions />
+      </div>
+    </div>
+  );
+};
+
+export default GridMan;

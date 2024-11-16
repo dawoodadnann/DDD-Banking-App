@@ -1,4 +1,5 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Login from './Compo/Login';
 import Signup from './Compo/SignUp';
@@ -23,15 +24,33 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css'; // Add your custom styles here
 
 const Layout = ({ children }) => {
+  const [scrollOpacity, setScrollOpacity] = useState(0.5); // Initial opacity value
   const location = useLocation();
 
   const hideNavOnPages = ['/portfolio', '/login', '/signup', '/managerlogin', '/managersignup'];
   const managerPages = ['/managerfaqpage', '/managerapproval', '/managerupdate', '/manager-dashboard'];
+
   const isPortfolioPage = location.pathname === '/portfolio';
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const opacity = Math.max(0.2, 1 - scrollPosition / 5000); // Use a larger divisor for gradual fade
+      setScrollOpacity(opacity);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <div className="app-wrapper">
-      {!isPortfolioPage && <div className="parallax-background"></div>}
+      {!isPortfolioPage && (
+        <div
+          className="parallax-background"
+          style={{ opacity: scrollOpacity }} // Dynamically set opacity
+        ></div>
+      )}
 
       {/* Navigation Bar Logic */}
       {!hideNavOnPages.includes(location.pathname) && !managerPages.includes(location.pathname) && <Navigation />}
@@ -43,6 +62,7 @@ const Layout = ({ children }) => {
     </div>
   );
 };
+
 
 
 const ProtectedRoute = ({ element }) => {

@@ -75,13 +75,13 @@ const UpdateCustomer = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <div className="w-full flex justify-between p-4 bg-zinc-800">
+      <div className="w-full flex justify-between p-4 col-span-12 p-4 rounded-lg shadow-md bg-gradient-to-r from-blue-500 to-blue-700 text-white">
         <img src={logo} alt="E-bank" className="h-10" />
         <h2 className="text-white text-2xl">Update Customer/Admin Data</h2>
       </div>
 
-      <div className="w-full max-w-md mt-8 p-8 bg-zinc-800 rounded-lg shadow-lg">
-        <h3 className="text-lg font-medium text-center text-gray-400 mb-6">
+      <div className="w-full max-w-md mt-8 p-8 col-span-12 p-4 rounded-lg shadow-md bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-lg shadow-lg">
+        <h3 className="text-lg font-medium text-center text-white mb-6">
           Enter ID or Email to Fetch Data
         </h3>
 
