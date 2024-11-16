@@ -6,14 +6,13 @@ body {
     font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  /* background-color: #f4f4f4 !important; */
   color: black !important; /* Change the text color to white */
 }
-/* Assuming you have a global stylesheet or tailwindcss config file */
+
 
 /* Hover effects for sidebar items */
 .sidebar-item:hover {
-  background-color: #006fe6; /* Darker blue on hover */
+  background-color: #006fe6;
   cursor: pointer;
 }
 
@@ -31,18 +30,18 @@ body {
 
 /* Custom CSS for sidebar links */
 .nav-link {
-  text-decoration: none; /* Remove underline */
-  font-size: 1.125rem; /* Increase font size */
-  color: white; /* Ensure the text remains white */
+  text-decoration: none;
+  font-size: 1.125rem;
+  color: white;
 }
 
 .nav-link:hover {
-  color: #f0f0f0; /* Optional: Change hover color */
+  color: #f0f0f0;
 }
 
 /* App.css */
 .navbar-gradient {
-  background: linear-gradient(to right, #1E90FF, #004AAD); /* Adjust colors as needed */
+  background: linear-gradient(to right, #1E90FF, #004AAD);
   color: white;
 }
 
@@ -56,12 +55,47 @@ body {
 }
 
 .gradient-box {
-  background: linear-gradient(135deg, #1E90FF , #004AAD); /* Blue gradient */
+  background: linear-gradient(135deg, #1E90FF , #004AAD);
   border-radius: 12px;
   padding: 1rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .bg-dark-gray {
-  background-color: #2e2e2e; /* Dark navy blue */
+  background-color: #2e2e2e;
 }
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.app-wrapper {
+  position: relative;
+  min-height: 100vh;
+  overflow-x: hidden; /* Prevent horizontal scroll due to background */
+}
+
+.parallax-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-image: url('/src/assets/bill_img/ai-generated-8174636_1280.jpg');
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  filter: brightness(1.1) contrast(1.1);
+  opacity: 0.85;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  background-color: rgba(255, 255, 255, 0.8);
+}
+
+

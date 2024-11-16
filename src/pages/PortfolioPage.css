@@ -5,6 +5,11 @@ body {
   background-color: #f4f4f4;
 }
 
+.portfolio-page {
+  background-image: none !important;
+  background: #ffffff !important;
+}
+
 /* Hero Section */
 .hero-section {
   height: 100vh;
@@ -320,9 +325,3 @@ body {
 .carousel-button:hover {
   background-color: #0056b3;
 }
-
-
-
-
-
-

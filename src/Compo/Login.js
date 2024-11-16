@@ -106,7 +106,7 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container flex flex-col items-center justify-center min-h-screen p-4 bg-gray-900">
+    <div className="login-container flex flex-col items-center justify-center min-h-screen p-4">
       {/* Navbar */}
       <div className="navbar w-full max-w-2xl flex justify-between items-center px-4 py-2 bg-gray-800 shadow-md md:px-6 lg:px-8">
         <img src={logo} alt="E-bank" className="logo w-12 h-12 md:w-16 md:h-16" />

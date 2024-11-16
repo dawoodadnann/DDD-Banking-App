@@ -34,7 +34,7 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="portfolio-page">
+    <div className="portfolio-page" style={{ backgroundImage: 'none' }}>
       {/* Hero Section */}
       <section className="hero-section">
         <div className="hero-content">

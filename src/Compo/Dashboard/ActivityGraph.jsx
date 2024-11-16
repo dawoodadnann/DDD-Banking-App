@@ -96,7 +96,7 @@ export const ActivityGraph = () => {
             <Line
               type="monotone"
               dataKey="totalExpenditure"
-              stroke="#ffffff"
+              stroke="#000000"
               fill="#ffffff"
               name="Expenditure"
             />
