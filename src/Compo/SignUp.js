@@ -261,6 +261,28 @@ const Signup = () => {
         {error && <div className="text-red-500 text-center mt-4">{error}</div>}
       </div>
       {/* OTP Modal */}
+      {isOtpModalOpen && (
+        <div className="otp-modal">
+          <div className="otp-modal-content">
+            <h3>Enter OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+            />
+            <button onClick={handleOtpVerification} className="verify-btn">
+              Verify OTP
+            </button>
+            <button
+              onClick={() => setIsOtpModalOpen(false)}
+              className="close-btn"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

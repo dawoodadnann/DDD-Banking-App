@@ -121,6 +121,7 @@ const Signup = () => {
     { label: "Date of Birth", name: "dob", type: "date" },
     { label: "CNIC", name: "cnic", type: "text" },
     { label: "Additional Information", name: "info", type: "text" },
+    { label: "E-mail", name: "email", type: "email" },
   ].map((field, index) => (
     <div key={index} className="mb-4">
       <DynamicInput
