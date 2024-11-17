@@ -24,6 +24,26 @@ const Signup = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+  
+    // If the field being changed is the date of birth
+    if (name === "dob") {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+      const dayDiff = today.getDate() - selectedDate.getDate();
+  
+      // Adjust age if the current date is before the user's birthday this year
+      const adjustedAge = monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) ? age - 1 : age;
+  
+      if (adjustedAge < 15) {
+        setError("Age must be greater than 15.");
+        return;
+      } else {
+        setError("");
+      }
+    }
+  
     setFormData({ ...formData, [name]: value });
   };
 

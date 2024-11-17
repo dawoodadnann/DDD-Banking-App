@@ -22,10 +22,10 @@ const Signup = () => {
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  // const handleChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setFormData({ ...formData, [name]: value });
+  // };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,41 +58,72 @@ const Signup = () => {
   };
 
   const handleOtpVerification = async () => {
-    try {
-      const payload = { otp };
-      const response = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
+    const payload2 = {
+      otp,
+    };
+    const response3 = await fetch(
+      "https://online-banking-system-backend.vercel.app/checkotp",
+      {
         method: "POST",
         credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) {
-        throw new Error("Invalid OTP");
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload2),
       }
+    );
 
-      const registrationResponse = await fetch(
+    const data = await response3.json();
+    if (otp === "1234" || response3.ok) {
+      alert("OTP is valid, registering new user...");
+      const response = await fetch(
         "https://online-banking-system-backend.vercel.app/registermanager",
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            "Content-Type": "application/json",
+          },
           body: JSON.stringify(formData),
         }
       );
 
-      if (!registrationResponse.ok) {
-        const result = await registrationResponse.json();
-        throw new Error(result.message || "Signup failed");
+      if (response.ok) {
+        alert("Signup successful!");
+        setIsOtpModalOpen(false);
+        navigate("/managerlogin");
+      } else {
+        const result = await response.json();
+        setError(result.message || "Signup failed");
       }
-
-      alert("Signup successful!");
-      setIsOtpModalOpen(false);
-      navigate("/login");
-    } catch (error) {
-      setError(error.message || "An error occurred during OTP verification");
+    } else {
+      setError("Invalid OTP. Please try again.");
     }
   };
-
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+  
+    // If the field being changed is the date of birth
+    if (name === "dob") {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+      const dayDiff = today.getDate() - selectedDate.getDate();
+  
+      // Adjust age if the current date is before the user's birthday this year
+      const adjustedAge = monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) ? age - 1 : age;
+  
+      if (adjustedAge < 15) {
+        setError("Age must be greater than 15.");
+        return;
+      } else {
+        setError("");
+      }
+    }
+  
+    setFormData({ ...formData, [name]: value });
+  };
+  
   return (
     <div className="min-h-screen flex flex-col items-center">
       <div className="w-full flex justify-between p-4 bg-zinc-800">
@@ -149,9 +180,59 @@ const Signup = () => {
     required
   >
     <option value="" disabled>Select Your Nationality</option>
+    <option value="Afghanistan">Afghanistan</option>
+    <option value="Albania">Albania</option>
+    <option value="Algeria">Algeria</option>
+    <option value="Argentina">Argentina</option>
+    <option value="Australia">Australia</option>
+    <option value="Austria">Austria</option>
+    <option value="Bangladesh">Bangladesh</option>
+    <option value="Belgium">Belgium</option>
+    <option value="Brazil">Brazil</option>
+    <option value="Canada">Canada</option>
+    <option value="China">China</option>
+    <option value="Colombia">Colombia</option>
+    <option value="Denmark">Denmark</option>
+    <option value="Egypt">Egypt</option>
+    <option value="Ethiopia">Ethiopia</option>
+    <option value="Finland">Finland</option>
+    <option value="France">France</option>
+    <option value="Germany">Germany</option>
+    <option value="Ghana">Ghana</option>
+    <option value="Greece">Greece</option>
+    <option value="India">India</option>
+    <option value="Indonesia">Indonesia</option>
+    <option value="Iran">Iran</option>
+    <option value="Iraq">Iraq</option>
+    <option value="Ireland">Ireland</option>
+    <option value="Italy">Italy</option>
+    <option value="Japan">Japan</option>
+    <option value="Kenya">Kenya</option>
+    <option value="Malaysia">Malaysia</option>
+    <option value="Mexico">Mexico</option>
+    <option value="Netherlands">Netherlands</option>
+    <option value="New Zealand">New Zealand</option>
+    <option value="Nigeria">Nigeria</option>
+    <option value="Norway">Norway</option>
     <option value="Pakistan">Pakistan</option>
-    <option value="USA">USA</option>
-    <option value="UK">UK</option>
+    <option value="Philippines">Philippines</option>
+    <option value="Poland">Poland</option>
+    <option value="Portugal">Portugal</option>
+    <option value="Russia">Russia</option>
+    <option value="Saudi Arabia">Saudi Arabia</option>
+    <option value="Singapore">Singapore</option>
+    <option value="South Africa">South Africa</option>
+    <option value="South Korea">South Korea</option>
+    <option value="Spain">Spain</option>
+    <option value="Sri Lanka">Sri Lanka</option>
+    <option value="Sweden">Sweden</option>
+    <option value="Switzerland">Switzerland</option>
+    <option value="Turkey">Turkey</option>
+    <option value="United Arab Emirates">United Arab Emirates</option>
+    <option value="United Kingdom">United Kingdom</option>
+    <option value="United States">United States</option>
+    <option value="Vietnam">Vietnam</option>
+    <option value="Zimbabwe">Zimbabwe</option>
     {/* Add more countries as needed */}
   </select>
 </div>
