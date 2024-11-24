@@ -7,7 +7,6 @@ export const MoneyTransfer = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("dPay");
   const [selectedBank, setSelectedBank] = useState("");
-
   const handleTransfer = async () => {
     if (!amount || !accountNumber) {
       setStatusMessage("Please enter both account number and amount.");
@@ -22,22 +21,33 @@ export const MoneyTransfer = () => {
     try {
       const token = localStorage.getItem("jwttoken");
 
-      const response = await fetch(
-        "https://online-banking-system-backend.vercel.app/interbanktransaction",
-        {
-          method: "POST",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({
-            Amount: amount,
-            accnum: accountNumber,
-            check: true,
-          }),
-        }
-      );
+      // Choose the API endpoint based on the payment method
+      const endpoint =
+        paymentMethod === "dPay"
+          ? "https://online-banking-system-backend.vercel.app/interbanktransaction"
+          : "https://online-banking-system-backend.vercel.app/CBT";
+
+      // Prepare the request body
+      const requestBody = paymentMethod === "dPay"
+        ? {
+          Amount: amount,
+          accnum: accountNumber,
+          check: true,
+        } : {
+          amount: amount,
+          accnum: accountNumber,
+          selectedBank: selectedBank,
+        };
+
+      const response = await fetch(endpoint, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(requestBody),
+      });
 
       const data = await response.json();
 
@@ -52,6 +62,7 @@ export const MoneyTransfer = () => {
     }
   };
 
+
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="gradient-box p-6 rounded-lg shadow-lg w-full max-w-sm">
@@ -62,17 +73,15 @@ export const MoneyTransfer = () => {
         <div className="mb-4">
           <div className="flex space-x-4 border-b border-gray-600 bg-zinc-600">
             <button
-              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "dPay" ? "bg-dark-gray text-white" : "text-gray-400"
-              }`}
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${paymentMethod === "dPay" ? "bg-dark-gray text-white" : "text-gray-400"
+                }`}
               onClick={() => setPaymentMethod("dPay")}
             >
               Pay with D-Pay
             </button>
             <button
-              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "crossPlatform" ? "bg-dark-gray text-white" : "text-gray-400"
-              }`}
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${paymentMethod === "crossPlatform" ? "bg-dark-gray text-white" : "text-gray-400"
+                }`}
               onClick={() => setPaymentMethod("crossPlatform")}
             >
               Pay Cross Platform

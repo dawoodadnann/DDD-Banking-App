@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "Correct the USER and Manager Signup Page and  ADDED MIN 15 YEAR AGE CONTRAINT"
+git commit -m "Correct Cross Banking"
 git status
 git push -u origin main
 
