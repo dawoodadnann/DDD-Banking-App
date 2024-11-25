@@ -35,7 +35,7 @@ export const Sidebar = () => {
       </div>
       <div className={`mt-auto p-3 ${isOpen ? '' : 'd-none'}`}>
         <Nav className="flex-column">
-          <Link to="/logout">
+          <Link to="/portfolio">
             <button
               className="flex items-center justify-start gap-2 w-full rounded px-2 py-1.5 text-sm transition-[box-shadow,_background-color,_color] hover:bg-zinc-800 bg-transparent text-white shadow-none"
             >

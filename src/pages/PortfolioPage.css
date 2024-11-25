@@ -188,6 +188,14 @@ body {
   animation: fadeIn 1.5s ease-in-out;
 }
 
+iframe {
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+  border: 0;
+  margin: 0 auto;
+  display: block; /* Center the iframe */
+}
 .contact-form input,
 .contact-form textarea {
   padding: 15px;

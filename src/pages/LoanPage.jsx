@@ -13,6 +13,7 @@ const LoanPage = () => {
     GUARANTOR_CNIC: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,7 +25,7 @@ const LoanPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitted(true);
+    setLoading(true);
 
     try {
       const token = localStorage.getItem("jwttoken");
@@ -41,16 +42,24 @@ const LoanPage = () => {
           body: JSON.stringify(formData),
         }
       );
-      const data = await response.json();
-      console.log("Response from backend:", data);
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Response from backend:", data);
+      } else {
+        console.error("Error in response:", response.statusText);
+      }
     } catch (error) {
       console.error("Error sending data to backend:", error);
+    } finally {
+      setLoading(false);
+      setSubmitted(true); // Ensure redirection to loan details block
     }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center">
-      <div className="loan-gradient-box p-6 rounded-lg shadow-lg w-full max-w-md">
+      <div className="gradient-box p-6 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-xl font-bold text-white text-center mb-4">
           Loan Application
         </h1>
@@ -78,9 +87,8 @@ const LoanPage = () => {
                 className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
               />
             </div>
-
-            {/* New fields for Loan Attributes */}
-            <div className="form-group mb-4">
+             {/* New fields for Loan Attributes */}
+             <div className="form-group mb-4">
               <label className="block text-gray-300 text-sm font-medium mb-2">
                 Loan Type
               </label>
@@ -143,12 +151,12 @@ const LoanPage = () => {
                 className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
               />
             </div>
-
             <button
               type="submit"
               className="bg-gray-700 text-white p-2 rounded w-full hover:bg-gray-600"
+              disabled={loading}
             >
-              Apply for Loan
+              {loading ? "Submitting..." : "Apply for Loan"}
             </button>
           </form>
         ) : (
@@ -158,7 +166,7 @@ const LoanPage = () => {
               Your loan application has been submitted. We will review your
               request and contact you shortly.
             </p>
-            <h3>Loan Details</h3>
+            {/* Loan details */}
             <p>Requested Amount: ${formData.LOAN_AMOUNT}</p>
             <p>Loan Type: {formData.LOAN_TYPE}</p>
             <p>Tenure: {formData.TENURE} years</p>

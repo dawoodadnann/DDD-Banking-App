@@ -7,6 +7,8 @@ export const MoneyTransfer = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("dPay");
   const [selectedBank, setSelectedBank] = useState("");
+  const [isSending, setIsSending] = useState(false); // Loading state for the Send button
+
   const handleTransfer = async () => {
     if (!amount || !accountNumber) {
       setStatusMessage("Please enter both account number and amount.");
@@ -18,6 +20,9 @@ export const MoneyTransfer = () => {
       return;
     }
 
+    setIsSending(true); // Set loading state
+    setStatusMessage(""); // Clear previous messages
+
     try {
       const token = localStorage.getItem("jwttoken");
 
@@ -28,16 +33,18 @@ export const MoneyTransfer = () => {
           : "https://online-banking-system-backend.vercel.app/CBT";
 
       // Prepare the request body
-      const requestBody = paymentMethod === "dPay"
-        ? {
-          Amount: amount,
-          accnum: accountNumber,
-          check: true,
-        } : {
-          amount: amount,
-          accnum: accountNumber,
-          selectedBank: selectedBank,
-        };
+      const requestBody =
+        paymentMethod === "dPay"
+          ? {
+              Amount: amount,
+              accnum: accountNumber,
+              check: true,
+            }
+          : {
+              amount: amount,
+              accnum: accountNumber,
+              selectedBank: selectedBank,
+            };
 
       const response = await fetch(endpoint, {
         method: "POST",
@@ -59,9 +66,10 @@ export const MoneyTransfer = () => {
     } catch (error) {
       console.error("Error processing transfer:", error);
       setStatusMessage("An error occurred. Please try again.");
+    } finally {
+      setIsSending(false); // Reset loading state
     }
   };
-
 
   return (
     <div className="min-h-screen flex items-center justify-center">
@@ -73,15 +81,21 @@ export const MoneyTransfer = () => {
         <div className="mb-4">
           <div className="flex space-x-4 border-b border-gray-600 bg-zinc-600">
             <button
-              className={`py-2 px-4 rounded-t-lg focus:outline-none ${paymentMethod === "dPay" ? "bg-dark-gray text-white" : "text-gray-400"
-                }`}
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
+                paymentMethod === "dPay"
+                  ? "bg-dark-gray text-white"
+                  : "text-gray-400"
+              }`}
               onClick={() => setPaymentMethod("dPay")}
             >
               Pay with D-Pay
             </button>
             <button
-              className={`py-2 px-4 rounded-t-lg focus:outline-none ${paymentMethod === "crossPlatform" ? "bg-dark-gray text-white" : "text-gray-400"
-                }`}
+              className={`py-2 px-4 rounded-t-lg focus:outline-none ${
+                paymentMethod === "crossPlatform"
+                  ? "bg-dark-gray text-white"
+                  : "text-gray-400"
+              }`}
               onClick={() => setPaymentMethod("crossPlatform")}
             >
               Pay Cross Platform
@@ -102,13 +116,17 @@ export const MoneyTransfer = () => {
 
         {paymentMethod === "crossPlatform" && (
           <div className="mb-4">
-            <label className="block text-white mb-1">Select Bank/Payments App</label>
+            <label className="block text-white mb-1">
+              Select Bank/Payments App
+            </label>
             <select
               value={selectedBank}
               onChange={(e) => setSelectedBank(e.target.value)}
               className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
             >
-              <option value="" disabled>Select a bank/payment app</option>
+              <option value="" disabled>
+                Select a bank/payment app
+              </option>
               <option value="BankA">Bank A</option>
               <option value="BankB">Bank B</option>
               <option value="PaymentAppA">Payment App A</option>
@@ -130,14 +148,15 @@ export const MoneyTransfer = () => {
 
         <button
           onClick={handleTransfer}
-          className="bg-dark-gray text-white p-2 rounded w-full hover:bg-gray-500"
+          className={`bg-dark-gray text-white p-2 rounded w-full hover:bg-gray-500 ${
+            isSending ? "cursor-not-allowed bg-gray-500" : ""
+          }`}
+          disabled={isSending} // Disable button while loading
         >
-          Send
+          {isSending ? "Sending..." : "Send"}
         </button>
 
-        {statusMessage && (
-          <p className="text-white mt-2">{statusMessage}</p>
-        )}
+        {statusMessage && <p className="text-white mt-2">{statusMessage}</p>}
       </div>
     </div>
   );

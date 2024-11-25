@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+// Import bill images
 import bill_1 from "../assets/bill_img/bill 1.png";
 import bill_2 from "../assets/bill_img/bill 2.png";
 import bill_3 from "../assets/bill_img/bill 3.png";
@@ -28,10 +29,12 @@ const Billing = () => {
   const [Email, setEmail] = useState("");
   const [Check, setCheck] = useState(false);
   const [Address, setAddress] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const billCompanies = {
     Electricity: ["K-Electric", "WAPDA", "Reliance"],
     Water: ["AquaFina", "Nestle", "Dasani"],
+    Gas: ["SUI Gas", "OGRA"],
     Internet: ["PTCL", "Flash Fiber", "TNC"],
     Telephone: ["PTCL"],
     Tax: ["FBR"],
@@ -55,13 +58,13 @@ const Billing = () => {
   const closePopup = () => {
     setPopupVisible(false);
   };
+
   const closePopup2 = () => {
     setPopup2Visible(false);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     const data = {
       selectedBill,
       accnum,
@@ -73,7 +76,6 @@ const Billing = () => {
       email: Email,
       address: Address,
     };
-
     setSubmittedData(data);
     setPopupVisible(false);
     setPopup2Visible(true);
@@ -81,39 +83,44 @@ const Billing = () => {
 
   const handlerouter = async (e) => {
     e.preventDefault();
-
+    setIsLoading(true); // Start loading
     try {
-      const token = localStorage.getItem('jwttoken');     
-      
-     
-      const response = await fetch("https://online-banking-system-backend.vercel.app/billing", {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
-        },
-        body: JSON.stringify(SubmittedData),
-      });
+      const token = localStorage.getItem("jwttoken");
+
+      const response = await fetch(
+        "https://online-banking-system-backend.vercel.app/billing",
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(SubmittedData),
+        }
+      );
 
       const result = await response.json();
 
       if (response.ok) {
         alert("Payment successful: " + result.message);
         setPopup2Visible(false);
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
         alert("Payment failed: " + result.message);
       }
     } catch (error) {
       console.error("Error during payment:", error);
       alert("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Stop loading
     }
   };
 
   const billOptions = billCompanies[selectedBill] || [];
 
   return (
-    <div className="pt-16 h-screen">
+<div className="pt-16 h-screen">
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 p-6">
         {/* Bill Boxes */}
         <div className="bill-box p-4 cursor-pointer" onClick={() => handleBoxClick("Electricity")}>
@@ -169,7 +176,7 @@ const Billing = () => {
       {/* Popup Form */}
       {isPopupVisible && (
         <div className="popup fixed inset-0 bg-zinc-800 bg-opacity-50 flex justify-center items-center z-50">
-          <div className="popup-inner bg-zinc-800 p-6 rounded-lg shadow-lg">
+          <div className="popup-inner gradient-box p-6 rounded-lg shadow-lg w-full max-w-md">
             <h2 className="text-2xl font-semibold mb-4 text-white">Select Your {selectedBill} Company</h2>
             <form onSubmit={handleSubmit} className="space-y-4">
   <select
@@ -275,7 +282,7 @@ const Billing = () => {
           </div>
         </div>
       )}
-  
+
       {/* Payment Preview Popup */}
       {isPopup2Visible && SubmittedData && (
         <div className="popup fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center z-50">
@@ -290,18 +297,29 @@ const Billing = () => {
             <p>Email: {SubmittedData.email}</p>
             <p>Address: {SubmittedData.address}</p>
             <div className="flex justify-end space-x-4 mt-4">
-              <button onClick={closePopup2} className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition">
+              <button
+                onClick={closePopup2}
+                className="bg-gray-500 text-white px-4 py-2 rounded-lg hover:bg-gray-600 transition"
+              >
                 Close
               </button>
-              <button onClick={handlerouter} className="bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition">
-                Pay Now
+              <button
+                onClick={handlerouter}
+                disabled={isLoading}
+                className={`px-4 py-2 rounded-lg transition ${
+                  isLoading
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-500 hover:bg-green-600 text-white"
+                }`}
+              >
+                {isLoading ? "Processing..." : "Pay Now"}
               </button>
             </div>
           </div>
         </div>
       )}
     </div>
-  );  
+  );
 };
 
 export default Billing;

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "./PortfolioPage.css";
-import { Link } from "react-router-dom"; // Import Link to handle routing
 
 const PortfolioPage = () => {
   localStorage.clear();
@@ -43,82 +42,6 @@ const PortfolioPage = () => {
           <a href="#about" className="cta-button">
             Learn More
           </a>
-        </div>
-      </section>
-
-      {/* Button Section */}
-      <section className="button-section py-8">
-        <div className="container mx-auto flex flex-wrap justify-center gap-4">
-          <Link to="/portfolio" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Portfolio
-            </button>
-          </Link>
-          <Link to="/login" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Login
-            </button>
-          </Link>
-          <Link to="/signup" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Signup
-            </button>
-          </Link>
-          <Link to="/billing" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Billing
-            </button>
-          </Link>
-          <Link to="/dashboard" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Dashboard
-            </button>
-          </Link>
-          <Link to="/loan" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Loan
-            </button>
-          </Link>
-          <Link to="/help" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Help
-            </button>
-          </Link>
-          <Link to="/cards" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Cards
-            </button>
-          </Link>
-          <Link to="/manager-dashboard" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Dashboard
-            </button>
-          </Link>
-          <Link to="/money-transfer" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Money Transfer
-            </button>
-          </Link>
-          <Link to="/managerlogin" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Login
-            </button>
-          </Link>
-          <Link to="/managersignup" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Signup
-            </button>
-          </Link>
-          <Link to="/managerapproval" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Approval
-            </button>
-          </Link>
-          <Link to="/managerupdate" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Update
-            </button>
-          </Link>
         </div>
       </section>
 
