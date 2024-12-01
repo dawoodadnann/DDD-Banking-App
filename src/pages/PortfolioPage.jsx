@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./PortfolioPage.css";
+import FooterComponent from "../Compo/FooterComponent"
 import { Link } from "react-router-dom"; // Import Link to handle routing
 
 const PortfolioPage = () => {
@@ -46,89 +47,12 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* Button Section */}
-      <section className="button-section py-8">
-        <div className="container mx-auto flex flex-wrap justify-center gap-4">
-          <Link to="/portfolio" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Portfolio
-            </button>
-          </Link>
-          <Link to="/login" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Login
-            </button>
-          </Link>
-          <Link to="/signup" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Signup
-            </button>
-          </Link>
-          <Link to="/billing" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Billing
-            </button>
-          </Link>
-          <Link to="/dashboard" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Dashboard
-            </button>
-          </Link>
-          <Link to="/loan" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Loan
-            </button>
-          </Link>
-          <Link to="/help" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Help
-            </button>
-          </Link>
-          <Link to="/cards" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Cards
-            </button>
-          </Link>
-          <Link to="/manager-dashboard" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Dashboard
-            </button>
-          </Link>
-          <Link to="/money-transfer" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Money Transfer
-            </button>
-          </Link>
-          <Link to="/managerlogin" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Login
-            </button>
-          </Link>
-          <Link to="/managersignup" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Signup
-            </button>
-          </Link>
-          <Link to="/managerapproval" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Approval
-            </button>
-          </Link>
-          <Link to="/managerupdate" className="btn btn-primary">
-            <button className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600">
-              Manager Update
-            </button>
-          </Link>
-        </div>
-      </section>
 
       {/* About Section */}
       <section id="about" className="about-section">
         <h2>About D-Pay Bank</h2>
         <p>
-          D-Pay Bank, headquartered in Karachi, provides cutting-edge solutions
-          for individuals and businesses alike. Our vision is to lead innovation
-          in the financial sector.
+        Dpay is a modern banking solution designed to simplify your financial life. With secure money transfers, bill payments, card management, and real-time balance updates, we empower you to take full control of your finances. Our innovative platform integrates advanced fraud detection and seamless transaction verification to ensure your banking experience is safe, efficient, and hassle-free. At Dpay, we’re committed to delivering smarter, faster, and more secure financial services tailored to your needs.
         </p>
       </section>
 
@@ -172,25 +96,10 @@ const PortfolioPage = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
-      <section id="contact" className="contact-section">
-        <h2>Contact Us</h2>
-        <iframe
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3620.2034778801476!2d67.26468379999999!3d24.856899100000007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3eb3316c5276e35b%3A0x823a6a0100195ffd!2sFAST%20National%20University%20Karachi%20Campus!5e0!3m2!1sen!2s!4v1731161463047!5m2!1sen!2s"
-        width="600"
-        height="450"
-        style={{ border: 0 }}
-        allowFullScreen=""
-        loading="lazy"
-        referrerPolicy="no-referrer-when-downgrade"
-        title="Google Map of FAST National University Karachi Campus"
-      ></iframe>
-        <div className="contact-details">
-          <p>Email: support@dpaybank.com</p>
-          <p>Phone: +92 21 111 222 333</p>
-          <p>Address: D-Pay Bank, FAST NUCES Main Campus, Karachi, Pakistan</p>
-        </div>
-      </section>
+      
+
+         {/* Footer */}
+         <FooterComponent />
     </div>
   );
 };
