@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
+import ReCAPTCHA from "react-google-recaptcha";
 import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
 import DynamicInput from "./DynamicInput";
 import '../App.css';
 
+const RECAPTCHA_SITE_KEY = "6Lc2X48qAAAAAH9LDbBMH8cHpUt1mL34GUYigCOM";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [recaptchaToken, setRecaptchaToken] = useState("");
   const [error, setError] = useState("");
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
@@ -22,8 +26,19 @@ const Login = () => {
     // }
   }, [navigate]);
 
+  const handleRecaptchaChange = (token) => {
+    setRecaptchaToken(token);
+    setError(""); // Clear any previous errors
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!recaptchaToken) {
+      setError("Please complete the reCAPTCHA verification.");
+      return;
+    }
+
     setIsLoading(true); // Set login loading state
 
     const payload = {
@@ -45,7 +60,6 @@ const Login = () => {
 
       if (response.ok) {
         localStorage.setItem("jwttoken", data.token);
-
         setIsOtpModalOpen(true);
 
         const payloadt = {
@@ -146,12 +160,17 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
+          {/* reCAPTCHA */}
+          <ReCAPTCHA
+            sitekey={RECAPTCHA_SITE_KEY}
+            onChange={handleRecaptchaChange}
+          />
           <button
             type="submit"
             className={`submit-btn w-full py-2 text-lg font-semibold rounded md:py-3 md:text-xl ${
               isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600"
             }`}
-            disabled={isLoading} // Disable the button when loading
+            disabled={isLoading || !recaptchaToken} // Disable the button if no reCAPTCHA token
           >
             {isLoading ? "Logging in..." : "Log in"}
           </button>
