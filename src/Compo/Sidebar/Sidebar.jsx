@@ -1,46 +1,49 @@
 import React, { useState } from 'react';
-import AccountToggle from './AccountToggle';
-import Search from './Search';
+import { Nav, Button } from 'react-bootstrap';
 import RouteSelect from './RouteSelect';
-import Plan from './Plan';
+import { FiLogOut, FiMenu } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
 
-const Sidebar = () => {
-  const [isOpen, setIsOpen] = useState(false);
+export const Sidebar = () => {
+  const [isOpen, setIsOpen] = useState(true);
 
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div className="relative">
-      {/* Sidebar */}
-      <div
-        className={`fixed top-0 left-0 h-[100vh] text-white transition-transform duration-300 ${
-          isOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'
-        } z-40 pt-16`} >
-        {/* Main Sidebar Content */}
-        <AccountToggle />
-        <Search />
-        <RouteSelect />
+    <div 
+      className={`d-flex flex-column h-100 text-white transition-all ${isOpen ? 'w-250' : 'w-60'}`}
+      style={{
+        background: 'linear-gradient(180deg, #1E90FF 0%, #004AAD 100%)'
+      }}
+    >
+      <div className="p-3 d-flex justify-content-between align-items-center">
+        <span className={`h5 mb-0 text-white ${isOpen ? '' : 'd-none'}`}>D-Pay</span>
+        <Button 
+          onClick={toggleSidebar} 
+          style={{ backgroundColor: 'transparent', borderColor: 'transparent', color: 'white' }}
+          className="p-1"
+        >
+          <FiMenu />
+        </Button>
       </div>
-
-      {/* Button to toggle sidebar */}
-      <button
-        onClick={toggleSidebar}
-        className={`absolute top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-3 py-2 z-50 rounded-l-full transition-transform duration-300 ${
-          isOpen ? 'left-[16rem]' : 'left-[4rem]'
-        }`}
-      >
-        {isOpen ? '←' : '→'}
-      </button>
-
-      {/* Main Content */}
-      <div
-        className={`flex-1 transition-all duration-300 ${
-          isOpen ? 'ml-64' : 'ml-0'
-        }`}
-      >
-        <h1 className="text-center text-2xl"></h1>
+      <div className={`p-3 ${isOpen ? '' : 'd-none'}`}>
+        <Nav className="flex-column">
+          <RouteSelect />
+        </Nav>
+      </div>
+      <div className={`mt-auto p-3 ${isOpen ? '' : 'd-none'}`}>
+        <Nav className="flex-column">
+          <Link to="/portfolio">
+            <button
+              className="flex items-center justify-start gap-2 w-full rounded px-2 py-1.5 text-sm transition-[box-shadow,_background-color,_color] hover:bg-zinc-800 bg-transparent text-white shadow-none"
+            >
+              <FiLogOut />
+              <span>Logout</span>
+            </button>
+          </Link>
+        </Nav>
       </div>
     </div>
   );

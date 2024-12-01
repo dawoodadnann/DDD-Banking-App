@@ -7,9 +7,13 @@ import logo from '../assets/logo2.png';
 
 function BasicExample() {
   return (
-    <Navbar bg="dark" data-bs-theme="dark">
+    <Navbar
+      bg="dark"
+      className="bg-gradient-to-r from-blue-500 to-blue-700 text-white shadow-md" // Gradient added here
+      data-bs-theme="dark"
+    >
       <Container>
-        <Navbar.Brand href="/">
+        <Navbar.Brand href="/" className="text-white">
           <img
             alt="logo"
             src={logo}
@@ -22,16 +26,32 @@ function BasicExample() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ms-auto">
-            <Nav.Link as={Link} to="/manager-dashboard" className="ps-3"> {/* Added left padding */}
+            <Nav.Link
+              as={Link}
+              to="/manager-dashboard"
+              className="ps-3 text-white hover:text-gray-200" // Added white text color and hover effect
+            >
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to="/managerfaqpage" className="ps-3"> {/* Added left padding */}
+            <Nav.Link
+              as={Link}
+              to="/managerfaqpage"
+              className="ps-3 text-white hover:text-gray-200" // Added white text color and hover effect
+            >
               Manager Faq
             </Nav.Link>
-            <Nav.Link as={Link} to="/managerapproval" className="ps-3"> {/* Added left padding */}
+            <Nav.Link
+              as={Link}
+              to="/managerapproval"
+              className="ps-3 text-white hover:text-gray-200" // Added white text color and hover effect
+            >
               Manager Approval
             </Nav.Link>
-            <Nav.Link as={Link} to="/managerupdate" className="ps-3"> {/* Added left padding */}
+            <Nav.Link
+              as={Link}
+              to="/managerupdate"
+              className="ps-3 text-white hover:text-gray-200" // Added white text color and hover effect
+            >
               Update User
             </Nav.Link>
           </Nav>

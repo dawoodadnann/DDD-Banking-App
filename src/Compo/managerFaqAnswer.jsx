@@ -63,12 +63,12 @@ const ManagerFAQPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col items-center">
-      <div className="bg-blue-700 w-full p-6 flex justify-between items-center">
+      <div className="bg-gradient-to-r from-blue-500 to-blue-700 text-white w-full p-6 flex justify-between items-center">
         <h2 className="text-white text-2xl">Manager FAQ Response Panel</h2>
       </div>
-      <div className="w-full max-w-xl bg-white mt-8 p-8 rounded-lg shadow-md">
+      <div className="w-full max-w-xl bg-gradient-to-r from-blue-500 to-blue-700 text-white mt-8 p-8 rounded-lg shadow-md">
         <h3 className="text-lg font-medium text-center mb-6">FAQ {currentFAQIndex + 1} of {faqs.length}</h3>
-        <div className="text-gray-700 mb-6">
+        <div className="text-white mb-6">
           <p><strong>User ID:</strong> {user_id}</p>
           <p><strong>Name:</strong> {name}</p>
           <p><strong>Email:</strong> {email}</p>

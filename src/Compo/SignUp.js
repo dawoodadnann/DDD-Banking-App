@@ -21,9 +21,30 @@ const Signup = () => {
   const [error, setError] = useState("");
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isVerifyingOtp, setIsVerifyingOtp] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
+    // Validate Date of Birth for age > 15
+    if (name === "dob") {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      const age = today.getFullYear() - selectedDate.getFullYear();
+      const monthDiff = today.getMonth() - selectedDate.getMonth();
+      const dayDiff = today.getDate() - selectedDate.getDate();
+      const adjustedAge =
+        monthDiff < 0 || (monthDiff === 0 && dayDiff < 0) ? age - 1 : age;
+
+      if (adjustedAge < 15) {
+        setError("Age must be greater than 15.");
+        return;
+      } else {
+        setError("");
+      }
+    }
+
     setFormData({ ...formData, [name]: value });
   };
 
@@ -34,6 +55,8 @@ const Signup = () => {
       return;
     }
     setError("");
+    setIsSubmitting(true);
+
     try {
       const payloadt = {
         email1: formData.email,
@@ -53,49 +76,53 @@ const Signup = () => {
       });
     } catch (error) {
       setError("An error occurred while sending the OTP");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleOtpVerification = async () => {
-    const payload2 = {
-      otp,
-    };
-    const response3 = await fetch(
-      "https://online-banking-system-backend.vercel.app/checkotp",
-      {
-        method: "POST",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload2),
-      }
-    );
+    setIsVerifyingOtp(true);
+    const payload2 = { otp };
 
-    const data = await response3.json();
-    if (otp === "1234" || response3.ok) {
-      alert("OTP is valid, registering new user...");
-      const response = await fetch(
-        "https://online-banking-system-backend.vercel.app/register",
+    try {
+      const response3 = await fetch(
+        "https://online-banking-system-backend.vercel.app/checkotp",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(formData),
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload2),
         }
       );
 
-      if (response.ok) {
-        alert("Signup successful!");
-        setIsOtpModalOpen(false);
-        navigate("/login");
+      const data = await response3.json();
+      if (otp === "1234" || response3.ok) {
+        alert("OTP is valid, registering new user...");
+        const response = await fetch(
+          "https://online-banking-system-backend.vercel.app/register",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        if (response.ok) {
+          alert("Signup successful!");
+          setIsOtpModalOpen(false);
+          navigate("/login");
+        } else {
+          const result = await response.json();
+          setError(result.message || "Signup failed");
+        }
       } else {
-        const result = await response.json();
-        setError(result.message || "Signup failed");
+        setError("Invalid OTP. Please try again.");
       }
-    } else {
-      setError("Invalid OTP. Please try again.");
+    } catch (error) {
+      setError("An error occurred during OTP verification.");
+    } finally {
+      setIsVerifyingOtp(false);
     }
   };
 
@@ -146,20 +173,18 @@ const Signup = () => {
             </div>
           ))}
 
-          {/* Nationality Dropdown */}
-          {/* Nationality Dropdown */}
-<div className="mb-4">
-  <select
-    name="nationality"
-    value={formData.nationality}
-    onChange={handleChange}
-    className="textbox"
-    required
-  >
-    <option value="" disabled>
-      Select Nationality
-    </option>
-    <option value="Afghanistan">Afghanistan</option>
+          <div className="mb-4">
+            <select
+              name="nationality"
+              value={formData.nationality}
+              onChange={handleChange}
+              className="textbox"
+              required
+            >
+              <option value="" disabled>
+                Select Nationality
+              </option>
+              <option value="Afghanistan">Afghanistan</option>
     <option value="Albania">Albania</option>
     <option value="Algeria">Algeria</option>
     <option value="Argentina">Argentina</option>
@@ -212,11 +237,9 @@ const Signup = () => {
     <option value="United States">United States</option>
     <option value="Vietnam">Vietnam</option>
     <option value="Zimbabwe">Zimbabwe</option>
-  </select>
-</div>
+            </select>
+          </div>
 
-
-          {/* Gender Dropdown */}
           <div className="mb-4">
             <select
               name="gender"
@@ -253,14 +276,49 @@ const Signup = () => {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded mt-4 hover:bg-blue-700"
+            className={`w-full py-3 rounded mt-4 ${
+              isSubmitting
+                ? "bg-gray-400 cursor-not-allowed"
+                : "bg-blue-600 hover:bg-blue-700 text-white"
+            }`}
+            disabled={isSubmitting}
           >
-            Sign up
+            {isSubmitting ? "Signing up..." : "Sign up"}
           </button>
         </form>
         {error && <div className="text-red-500 text-center mt-4">{error}</div>}
       </div>
-      {/* OTP Modal */}
+
+      {isOtpModalOpen && (
+        <div className="otp-modal">
+          <div className="otp-modal-content">
+            <h3>Enter OTP</h3>
+            <input
+              type="text"
+              value={otp}
+              onChange={(e) => setOtp(e.target.value)}
+              placeholder="Enter OTP"
+            />
+            <button
+              onClick={handleOtpVerification}
+              className={`verify-btn ${
+                isVerifyingOtp
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-600 text-white"
+              }`}
+              disabled={isVerifyingOtp}
+            >
+              {isVerifyingOtp ? "Verifying..." : "Verify OTP"}
+            </button>
+            <button
+              onClick={() => setIsOtpModalOpen(false)}
+              className="close-btn"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

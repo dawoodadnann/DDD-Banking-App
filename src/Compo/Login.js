@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
-import DynamicInput from "./DynamicInput"; // Adjust the import based on your file structure
+import DynamicInput from "./DynamicInput";
 import '../App.css';
 
 const Login = () => {
@@ -11,19 +11,20 @@ const Login = () => {
   const [error, setError] = useState("");
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false); // Loading state for login button
+  const [isOtpLoading, setIsOtpLoading] = useState(false); // Loading state for OTP verification
   const navigate = useNavigate();
 
-  // Redirect to dashboard if already logged in
   useEffect(() => {
     const token = localStorage.getItem("token");
     // if (token) {
-    //   navigate("/dashboard");  // Redirect to dashboard if already logged in
+    //   navigate("/dashboard");
     // }
   }, [navigate]);
 
-  // Function to send data to the backend
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true); // Set login loading state
 
     const payload = {
       email,
@@ -69,11 +70,14 @@ const Login = () => {
     } catch (error) {
       console.error("Error logging in:", error);
       setError("An error occurred. Please try again.");
+    } finally {
+      setIsLoading(false); // Reset login loading state
     }
   };
 
-  // Function to verify OTP
   const handleOtpVerification = async () => {
+    setIsOtpLoading(true); // Set OTP loading state
+
     const payload2 = {
       otp,
     };
@@ -102,11 +106,13 @@ const Login = () => {
     } catch (error) {
       console.error("Error verifying OTP:", error);
       setError("An error occurred. Please try again.");
+    } finally {
+      setIsOtpLoading(false); // Reset OTP loading state
     }
   };
 
   return (
-    <div className="login-container flex flex-col items-center justify-center min-h-screen p-4 bg-gray-900">
+    <div className="login-container flex flex-col items-center justify-center min-h-screen p-4">
       {/* Navbar */}
       <div className="navbar w-full max-w-2xl flex justify-between items-center px-4 py-2 bg-gray-800 shadow-md md:px-6 lg:px-8">
         <img src={logo} alt="E-bank" className="logo w-12 h-12 md:w-16 md:h-16" />
@@ -117,7 +123,6 @@ const Login = () => {
           <Link to="/signup">
             <button className="signup-btn px-4 py-1 text-sm font-semibold text-white bg-green-600 rounded md:px-6 md:py-2">Sign up</button>
           </Link>
-          {/* Add more links/buttons as needed */}
         </div>
       </div>
 
@@ -141,8 +146,14 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          <button type="submit" className="submit-btn w-full py-2 text-lg font-semibold text-white bg-blue-600 rounded md:py-3 md:text-xl">
-            Log in
+          <button
+            type="submit"
+            className={`submit-btn w-full py-2 text-lg font-semibold rounded md:py-3 md:text-xl ${
+              isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600"
+            }`}
+            disabled={isLoading} // Disable the button when loading
+          >
+            {isLoading ? "Logging in..." : "Log in"}
           </button>
         </form>
         {error && <div className="mt-4 text-red-500">{error}</div>}
@@ -161,10 +172,20 @@ const Login = () => {
               className="w-full px-4 py-2 mt-4 border rounded"
             />
             <div className="flex justify-center mt-4 space-x-4">
-              <button onClick={handleOtpVerification} className="verify-btn px-4 py-2 font-semibold text-white bg-blue-600 rounded">
-                Verify OTP
+              <button
+                onClick={handleOtpVerification}
+                className={`verify-btn px-4 py-2 font-semibold rounded ${
+                  isOtpLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white"
+                }`}
+                disabled={isOtpLoading} // Disable the button when loading
+              >
+                {isOtpLoading ? "Verifying..." : "Verify OTP"}
               </button>
-              <button onClick={() => setIsOtpModalOpen(false)} className="close-btn px-4 py-2 font-semibold text-white bg-red-600 rounded">
+              <button
+                onClick={() => setIsOtpModalOpen(false)}
+                className="close-btn px-4 py-2 font-semibold text-white bg-red-600 rounded"
+                disabled={isOtpLoading} // Disable Cancel button while OTP is loading
+              >
                 Cancel
               </button>
             </div>

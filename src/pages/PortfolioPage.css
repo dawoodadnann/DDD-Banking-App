@@ -5,6 +5,11 @@ body {
   background-color: #f4f4f4;
 }
 
+.portfolio-page {
+  background-image: none !important;
+  background: #ffffff !important;
+}
+
 /* Hero Section */
 .hero-section {
   height: 100vh;
@@ -183,6 +188,14 @@ body {
   animation: fadeIn 1.5s ease-in-out;
 }
 
+iframe {
+  width: 100%;
+  max-width: 600px;
+  height: 450px;
+  border: 0;
+  margin: 0 auto;
+  display: block; /* Center the iframe */
+}
 .contact-form input,
 .contact-form textarea {
   padding: 15px;
@@ -320,9 +333,3 @@ body {
 .carousel-button:hover {
   background-color: #0056b3;
 }
-
-
-
-
-
-

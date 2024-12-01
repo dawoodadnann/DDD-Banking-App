@@ -10,23 +10,25 @@ import {
   LineChart,
 } from "recharts";
 
-export const  GraphMan = () => {
+export const GraphMan = () => {
   const [usageData, setUsageData] = useState([]);
- 
+
   useEffect(() => {
     const fetchDailyExpense = async () => {
-      const token = localStorage.getItem('jwttoken');        
-      
-      
+      const token = localStorage.getItem("jwttoken");
+
       try {
-        const response = await fetch("https://online-banking-system-backend.vercel.app/getbankdailyexpense", {
-          method: "GET",
-          credentials: "include",
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${token}`
-          },
-        });
+        const response = await fetch(
+          "https://online-banking-system-backend.vercel.app/getbankdailyexpense",
+          {
+            method: "GET",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         const data = await response.json();
         console.log(data);
@@ -38,9 +40,8 @@ export const  GraphMan = () => {
               month: "short",
             }), // Format date as "Oct 1", for example
             totalExpenditure: parseFloat(entry.total_daily_spending),
-          
           }));
-            console.log(formattedData);
+          console.log(formattedData);
           setUsageData(formattedData); // Update the state with formatted data
           console.log("Daily expenditure retrieved successfully!");
         } else {
@@ -55,13 +56,15 @@ export const  GraphMan = () => {
   }, []);
 
   return (
-    <div className="col-span-8 overflow-hidden rounded border border-black bg-lime-200 text-black">
+    <div className="col-span-8 overflow-hidden rounded-lg shadow-md bg-gradient-to-r from-blue-500 to-blue-700 text-white">
+      {/* Header Section */}
       <div className="p-4">
-        <h3 className="flex items-center gap-1.5 font-medium text-black">
+        <h3 className="flex items-center gap-1.5 font-medium">
           <FiUser /> Banking Activity
         </h3>
       </div>
 
+      {/* Graph Section */}
       <div className="h-64 px-4">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
@@ -75,36 +78,37 @@ export const  GraphMan = () => {
               bottom: 0,
             }}
           >
-            {/* Update the grid stroke to black */}
-            <CartesianGrid stroke="#000000" />
+            {/* Update the grid stroke to white */}
+            <CartesianGrid stroke="#ffffff" strokeDasharray="3 3" />
 
-            {/* Set XAxis labels to black */}
+            {/* Set XAxis labels to white */}
             <XAxis
               dataKey="name" // Display dates on the X-axis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
+              tick={{ fill: "#ffffff", fontWeight: "bold" }} // Text color set to white
               padding={{ right: 4 }}
             />
-            {/* Set YAxis labels to black */}
+            {/* Set YAxis labels to white */}
             <YAxis
               axisLine={false}
               tickLine={false}
-              tick={{ fill: "#000000", fontWeight: "bold" }} // Text color set to black
+              tick={{ fill: "#ffffff", fontWeight: "bold" }} // Text color set to white
             />
             <Tooltip
               wrapperClassName="text-sm rounded"
-              labelClassName="text-xs text-black" // Tooltip label set to black
-              contentStyle={{ color: "#000000" }} // Tooltip content text set to black
+              labelClassName="text-xs text-black"
+              contentStyle={{
+                color: "#000000", // Tooltip content text set to black
+              }}
             />
-            
-            {/* Update the line stroke to black */}
+
             <Line
               type="monotone"
-              dataKey="totalExpenditure" // Expenditure data
-              stroke="#000000" // Change line color to black
-              fill="#000000"
-              name="Expenditure" // Tooltip label
+              dataKey="totalExpenditure"
+              stroke="#000000"
+              fill="#ffffff"
+              name="Expenditure"
             />
           </LineChart>
         </ResponsiveContainer>

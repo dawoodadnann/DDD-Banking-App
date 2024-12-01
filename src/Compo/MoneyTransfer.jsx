@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-// Assuming DynamicInput is imported correctly from your project components
 import DynamicInput from "./DynamicInput";
 
 export const MoneyTransfer = () => {
@@ -8,6 +7,7 @@ export const MoneyTransfer = () => {
   const [statusMessage, setStatusMessage] = useState("");
   const [paymentMethod, setPaymentMethod] = useState("dPay");
   const [selectedBank, setSelectedBank] = useState("");
+  const [isSending, setIsSending] = useState(false); // Loading state for the Send button
 
   const handleTransfer = async () => {
     if (!amount || !accountNumber) {
@@ -20,21 +20,40 @@ export const MoneyTransfer = () => {
       return;
     }
 
+    setIsSending(true); // Set loading state
+    setStatusMessage(""); // Clear previous messages
+
     try {
-      const token = localStorage.getItem('jwttoken');     
-    
-     
-      const response = await fetch("https://online-banking-system-backend.vercel.app/interbanktransaction", {
+      const token = localStorage.getItem("jwttoken");
+
+      // Choose the API endpoint based on the payment method
+      const endpoint =
+        paymentMethod === "dPay"
+          ? "https://online-banking-system-backend.vercel.app/interbanktransaction"
+          : "https://online-banking-system-backend.vercel.app/CBT";
+
+      // Prepare the request body
+      const requestBody =
+        paymentMethod === "dPay"
+          ? {
+              Amount: amount,
+              accnum: accountNumber,
+              check: true,
+            }
+          : {
+              amount: amount,
+              accnum: accountNumber,
+              selectedBank: selectedBank,
+            };
+
+      const response = await fetch(endpoint, {
         method: "POST",
         credentials: "include",
         headers: {
-          "Content-Type": "application/json", 'Authorization': `Bearer ${token}`,
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({
-          Amount: amount,
-          accnum: accountNumber,
-          check: true,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
       const data = await response.json();
@@ -47,22 +66,25 @@ export const MoneyTransfer = () => {
     } catch (error) {
       console.error("Error processing transfer:", error);
       setStatusMessage("An error occurred. Please try again.");
+    } finally {
+      setIsSending(false); // Reset loading state
     }
   };
 
   return (
-    <div className=" min-h-screen flex items-center justify-center">
-      <div className="bg-zinc-800 p-6 rounded-lg shadow-lg w-full max-w-sm">
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="gradient-box p-6 rounded-lg shadow-lg w-full max-w-sm">
         <h2 className="text-xl font-bold text-white text-center mb-4">
           Transfer Money With Just A Tap
         </h2>
 
-        {/* Tabs for Payment Method Selection */}
         <div className="mb-4">
           <div className="flex space-x-4 border-b border-gray-600 bg-zinc-600">
             <button
               className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "dPay" ? "bg-blue-600 text-white" : "text-gray-400"
+                paymentMethod === "dPay"
+                  ? "bg-dark-gray text-white"
+                  : "text-gray-400"
               }`}
               onClick={() => setPaymentMethod("dPay")}
             >
@@ -70,7 +92,9 @@ export const MoneyTransfer = () => {
             </button>
             <button
               className={`py-2 px-4 rounded-t-lg focus:outline-none ${
-                paymentMethod === "crossPlatform" ? "bg-blue-600 text-white" : "text-gray-400"
+                paymentMethod === "crossPlatform"
+                  ? "bg-dark-gray text-white"
+                  : "text-gray-400"
               }`}
               onClick={() => setPaymentMethod("crossPlatform")}
             >
@@ -79,9 +103,7 @@ export const MoneyTransfer = () => {
           </div>
         </div>
 
-        {/* Amount Input */}
         <div className="mb-4">
-          <label className="block text-white mb-1"></label>
           <DynamicInput
             label="Amount"
             type="number"
@@ -92,16 +114,19 @@ export const MoneyTransfer = () => {
           />
         </div>
 
-        {/* Conditional Bank/Payment App Selection */}
         {paymentMethod === "crossPlatform" && (
           <div className="mb-4">
-            <label className="block text-white mb-1">Select Bank/Payments App</label>
+            <label className="block text-white mb-1">
+              Select Bank/Payments App
+            </label>
             <select
               value={selectedBank}
               onChange={(e) => setSelectedBank(e.target.value)}
               className="w-full bg-gray-700 text-white p-2 rounded focus:outline-none"
             >
-              <option value="" disabled>Select a bank/payment app</option>
+              <option value="" disabled>
+                Select a bank/payment app
+              </option>
               <option value="BankA">Bank A</option>
               <option value="BankB">Bank B</option>
               <option value="PaymentAppA">Payment App A</option>
@@ -110,9 +135,7 @@ export const MoneyTransfer = () => {
           </div>
         )}
 
-        {/* Account Number Input */}
         <div className="mb-4">
-          <label className="block text-white mb-1"></label>
           <DynamicInput
             label="Account Number"
             type="text"
@@ -125,15 +148,18 @@ export const MoneyTransfer = () => {
 
         <button
           onClick={handleTransfer}
-          className="bg-blue-600 text-white p-2 rounded w-full hover:bg-blue-500"
+          className={`bg-dark-gray text-white p-2 rounded w-full hover:bg-gray-500 ${
+            isSending ? "cursor-not-allowed bg-gray-500" : ""
+          }`}
+          disabled={isSending} // Disable button while loading
         >
-          Send
+          {isSending ? "Sending..." : "Send"}
         </button>
 
-        {statusMessage && (
-          <p className="text-white mt-2">{statusMessage}</p>
-        )}
+        {statusMessage && <p className="text-white mt-2">{statusMessage}</p>}
       </div>
     </div>
   );
 };
+
+export default MoneyTransfer;

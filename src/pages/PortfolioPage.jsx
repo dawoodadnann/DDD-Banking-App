@@ -52,7 +52,7 @@ const PortfolioPage = () => {
       <section id="about" className="about-section">
         <h2>About D-Pay Bank</h2>
         <p>
-        Dpay is a modern banking solution designed to simplify your financial life. With secure money transfers, bill payments, card management, and real-time balance updates, we empower you to take full control of your finances. Our innovative platform integrates advanced fraud detection and seamless transaction verification to ensure your banking experience is safe, efficient, and hassle-free. At Dpay, we’re committed to delivering smarter, faster, and more secure financial services tailored to your needs.
+         Dpay is a modern banking solution designed to simplify your financial life. With secure money transfers, bill payments, card management, and real-time balance updates, we empower you to take full control of your finances. Our innovative platform integrates advanced fraud detection and seamless transaction verification to ensure your banking experience is safe, efficient, and hassle-free. At Dpay, we’re committed to delivering smarter, faster, and more secure financial services tailored to your needs.
         </p>
       </section>
 
