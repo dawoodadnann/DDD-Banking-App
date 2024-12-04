@@ -84,12 +84,16 @@ const App = () => {
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+         
           <Route path="/billing" element={<ProtectedRoute element={<Billing />} />} />
           <Route path="/dashboard" element={<ProtectedRoute element={<Dashboard />} />} />
           <Route path="/loan" element={<ProtectedRoute element={<LoanPage />} />} />
           <Route path="/help" element={<ProtectedRoute element={<HelpPage />} />} />
           <Route path="/cards" element={<ProtectedRoute element={<CardManagementPage />} />} />
           <Route path="/money-transfer" element={<ProtectedRoute element={<MoneyTransfer />} />} />
+
+          
+
           <Route path="/managerlogin" element={<ManagerLogin />} />
           <Route path="/managersignup" element={<ManagerSignup />} />
           <Route path="/manager-dashboard" element={<ManagerProtectedRoute element={<ManagerDashboard />} />} />

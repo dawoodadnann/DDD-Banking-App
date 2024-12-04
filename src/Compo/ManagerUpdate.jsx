@@ -91,7 +91,7 @@ const UpdateCustomer = () => {
             placeholder="Enter User/Admin ID or Email"
             value={idOrEmail}
             onChange={(e) => setIdOrEmail(e.target.value)}
-            className="w-full px-4 py-2 text-black rounded"
+            className="w-full px-4 py-2 text-white rounded"
           />
           <button
             className="bg-blue-600 text-white px-4 py-2 rounded mt-4 hover:bg-blue-700 w-full"
@@ -113,7 +113,7 @@ const UpdateCustomer = () => {
                   name="fname"
                   value={customer.fname}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -123,7 +123,7 @@ const UpdateCustomer = () => {
                   name="lname"
                   value={customer.lname}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
              
@@ -134,7 +134,7 @@ const UpdateCustomer = () => {
                   name="cnic"
                   value={customer.cnic}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -144,7 +144,7 @@ const UpdateCustomer = () => {
                   name="gender"
                   value={customer.gender}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -154,7 +154,7 @@ const UpdateCustomer = () => {
                   name="nationality"
                   value={customer.nationality}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -164,7 +164,7 @@ const UpdateCustomer = () => {
                   name="dob"
                   value={customer.dob && customer.dob.substring(0, 10)}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -174,7 +174,7 @@ const UpdateCustomer = () => {
                   name="joined"
                   value={customer.joined && customer.joined.substring(0, 19)}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
@@ -184,7 +184,7 @@ const UpdateCustomer = () => {
                   name="info"
                   value={customer.info}
                   onChange={handleChange}
-                  className="w-full px-4 py-2 text-black rounded"
+                  className="w-full px-4 py-2 text-white rounded"
                 />
               </div>
               <div className="mb-4">
