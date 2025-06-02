@@ -1,22 +1,18 @@
 import React, { useState, useEffect } from "react";
-import ReCAPTCHA from "react-google-recaptcha";
 import "./Login.css";
 import logo from "../assets/logo2.png";
 import { useNavigate, Link } from "react-router-dom";
 import DynamicInput from "./DynamicInput";
 import '../App.css';
 
-const RECAPTCHA_SITE_KEY = "6Lc2X48qAAAAAH9LDbBMH8cHpUt1mL34GUYigCOM";
-
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [recaptchaToken, setRecaptchaToken] = useState("");
   const [error, setError] = useState("");
   const [isOtpModalOpen, setIsOtpModalOpen] = useState(false);
   const [otp, setOtp] = useState("");
-  const [isLoading, setIsLoading] = useState(false); // Loading state for login button
-  const [isOtpLoading, setIsOtpLoading] = useState(false); // Loading state for OTP verification
+  const [isLoading, setIsLoading] = useState(false);
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -26,25 +22,11 @@ const Login = () => {
     // }
   }, [navigate]);
 
-  const handleRecaptchaChange = (token) => {
-    setRecaptchaToken(token);
-    setError(""); // Clear any previous errors
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    if (!recaptchaToken) {
-      setError("Please complete the reCAPTCHA verification.");
-      return;
-    }
-
-    setIsLoading(true); // Set login loading state
-
-    const payload = {
-      email,
-      password,
-    };
+    const payload = { email, password };
 
     try {
       const response = await fetch("https://online-banking-system-backend.vercel.app/login", {
@@ -85,16 +67,14 @@ const Login = () => {
       console.error("Error logging in:", error);
       setError("An error occurred. Please try again.");
     } finally {
-      setIsLoading(false); // Reset login loading state
+      setIsLoading(false);
     }
   };
 
   const handleOtpVerification = async () => {
-    setIsOtpLoading(true); // Set OTP loading state
+    setIsOtpLoading(true);
 
-    const payload2 = {
-      otp,
-    };
+    const payload2 = { otp };
 
     try {
       const response3 = await fetch("https://online-banking-system-backend.vercel.app/checkotp", {
@@ -112,7 +92,6 @@ const Login = () => {
         localStorage.setItem("token", data.token);
         alert("Login successful!");
         setIsOtpModalOpen(false);
-
         navigate("/dashboard");
       } else {
         setError("Invalid OTP. Please try again.");
@@ -121,7 +100,7 @@ const Login = () => {
       console.error("Error verifying OTP:", error);
       setError("An error occurred. Please try again.");
     } finally {
-      setIsOtpLoading(false); // Reset OTP loading state
+      setIsOtpLoading(false);
     }
   };
 
@@ -160,17 +139,12 @@ const Login = () => {
             onChange={(e) => setPassword(e.target.value)}
             required
           />
-          {/* reCAPTCHA */}
-          <ReCAPTCHA
-            sitekey={RECAPTCHA_SITE_KEY}
-            onChange={handleRecaptchaChange}
-          />
           <button
             type="submit"
             className={`submit-btn w-full py-2 text-lg font-semibold rounded md:py-3 md:text-xl ${
               isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600"
             }`}
-            disabled={isLoading || !recaptchaToken} // Disable the button if no reCAPTCHA token
+            disabled={isLoading}
           >
             {isLoading ? "Logging in..." : "Log in"}
           </button>
@@ -196,14 +170,14 @@ const Login = () => {
                 className={`verify-btn px-4 py-2 font-semibold rounded ${
                   isOtpLoading ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 text-white"
                 }`}
-                disabled={isOtpLoading} // Disable the button when loading
+                disabled={isOtpLoading}
               >
                 {isOtpLoading ? "Verifying..." : "Verify OTP"}
               </button>
               <button
                 onClick={() => setIsOtpModalOpen(false)}
                 className="close-btn px-4 py-2 font-semibold text-white bg-red-600 rounded"
-                disabled={isOtpLoading} // Disable Cancel button while OTP is loading
+                disabled={isOtpLoading}
               >
                 Cancel
               </button>

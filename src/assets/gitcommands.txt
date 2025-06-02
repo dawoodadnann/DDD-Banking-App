@@ -1,7 +1,7 @@
 git status
 git add .
 git status
-git commit -m "Willing to Correct the deployment"
+git commit -m "Diacarding the recaptcha due to issues"
 git status
 git push -u origin main
 
